@@ -30,20 +30,33 @@ public class Brand extends javax.swing.JDialog {
 
     public static String setNextID() {
         String lastId = getLastIdFromDatabase();
-        if (lastId == null) {
-            // No previous ID in the database, return the first ID
+        if (lastId == null || lastId.length() <= PREFIX.length()) {
+            // No previous ID in the database or invalid format, return the first ID
             return PREFIX + "00001";
         }
 
-        // Extract the numeric part from the last ID
-        String numericPart = lastId.substring(PREFIX.length());
-        int lastNumber = Integer.parseInt(numericPart);
+        // Validate that the lastId starts with the expected PREFIX
+        if (!lastId.startsWith(PREFIX)) {
+            System.err.println("Error: Last ID retrieved does not start with the expected prefix.");
+            return PREFIX + "00001"; // Fallback to default if format is incorrect
+        }
 
-        // Increment the numeric part
-        int nextNumber = lastNumber + 1;
+        try {
+            // Extract the numeric part from the last ID
+            String numericPart = lastId.substring(PREFIX.length());
 
-        // Format the new ID
-        return String.format("%s%05d", PREFIX, nextNumber);
+            // Ensure the numeric part is actually a number
+            int lastNumber = Integer.parseInt(numericPart);
+
+            // Increment the numeric part
+            int nextNumber = lastNumber + 1;
+
+            // Format the new ID
+            return String.format("%s%05d", PREFIX, nextNumber);
+        } catch (NumberFormatException e) {
+            System.err.println("Error: Last ID contains an invalid numeric part. Resetting to default.");
+            return PREFIX + "00001"; // Reset in case of unexpected format
+        }
     }
 
     private static String getLastIdFromDatabase() {
@@ -53,6 +66,9 @@ public class Brand extends javax.swing.JDialog {
 
             if (rs.next()) {
                 lastID = rs.getString("id");
+                if (lastID == null || lastID.trim().isEmpty()) {
+                    lastID = null; // Ensure we return null if the ID is invalid
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -378,7 +394,7 @@ public class Brand extends javax.swing.JDialog {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        if (jTable1.getSelectedRow()!= -1) {
+        if (jTable1.getSelectedRow() != -1) {
             try {
 
                 String name = jTextField2.getText();
@@ -419,7 +435,7 @@ public class Brand extends javax.swing.JDialog {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }else {
+        } else {
             JOptionPane.showConfirmDialog(this, "Please select a row", "Warning", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_jButton3ActionPerformed
@@ -492,6 +508,8 @@ public class Brand extends javax.swing.JDialog {
 
         jTextField1.setEditable(true);
         jButton1.setEnabled(true);
+        jTextField1.setText(setNextID());
+        loadBrand();
     }
 
 }
