@@ -97,84 +97,23 @@ After setting up and running the application, you can explore the following proc
 ## Our Team Members (AlgouniX)
 
 <!-- readme: contributors -start -->
-<table align="center">
-<tr>
-    <td align="center">
-        <a href="https://github.com/cusaldmsr" text-decoration="none">
-            <img src="src/AlgouniXTM/Cusaldmsr.png" width="100;" alt="Cusaldmsr"/>
-            <br />
-            <sub><b>Cusaldmsr</b></sub>
-        </a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/JananaSheshaka">
-            <img src="src/AlgouniXTM/Jananasheshaka.png" width="100;" alt=""/>
-            <br />
-            <sub><b>Jananasheshaka</b></sub>
-        </a>
-    </td>
-   <td align="center">
-        <a href="https://github.com/Iruthprabash">
-            <img src="src/AlgouniXTM/Iruthprabash.png" width="100;" alt=""/>
-            <br />
-            <sub><b>Iruthprabash</b></sub>
-        </a>
-    </td>
-</tr>
-</table>
+<div align="center">
 
-<table align="center">
-   <tr>
-   <td align="center">
-        <a href="https://github.com/Sadeeshadilshan">
-            <img src="src/AlgouniXTM/Sadeeshadilshan.png" width="100;" alt=""/>
-            <br />
-            <sub><b>Sadeeshadilshan</b></sub>
-        </a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/themikadilushanka">
-            <img src="src/AlgouniXTM/Themikadilushanka.png" width="100;" alt=""/>
-            <br />
-            <sub><b>Themikadilushanka</b></sub>
-        </a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/Sithuninudara">
-            <img src="src/AlgouniXTM/Sithuninudara.png" width="100;" alt=""/>
-            <br />
-            <sub><b>Sithuninudara</b></sub>
-        </a>
-    </td>
-      </tr>
-</table>
+|            Member                                                                                                                                 |                Name                                |                Role                                                                   |            Assigned Section          |
+| ------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------- |-------------------------------------------------------------------------------------- | ------------------------------------ |
+| <div align="center"><a href="https://github.com/cusaldmsr"><img src="src/AlgouniXTM/Cusaldmsr.png" width="100;" alt=""/></a></div>                | <div align="center">  **Kusal Damsara** </div>     | <ul><li> **Full-stack Engineer** </li><li> **Project Manager** </li></ul>             |                                      |
+| <div align="center"><a href="https://github.com/JananaSheshaka"><img src="src/AlgouniXTM/Jananasheshaka.png" width="100;" alt=""/></a></div>      | <div align="center">  **Janana Sheshaka** </div>   | <ul><li> **Full-stack Engineer** </li><li> **Team Leader** </li></ul>                 |                                      |
+| <div align="center"><a href="https://github.com/Sadeeshadilshan"><img src="src/AlgouniXTM/Sadeeshadilshan.png" width="100;" alt=""/></a></div>    | <div align="center">  **Sadeesha Dilshan** </div>  | <ul><li> **Full-stack Engineer** </li></ul>                                           |                                      |
+| <div align="center"><a href="https://github.com/Shenurarasheen"><img src="src/AlgouniXTM/Shenurarasheen.png" width="100;" alt=""/></a></div>      | <div align="center">  **Shenura Rasheen** </div>   | <ul><li> **Full-stack Engineer** </li></ul>                                           |                                      |
+| <div align="center"><a href="https://github.com/themikadilushanka"><img src="src/AlgouniXTM/Themikadilushanka.png" width="100;" alt=""/></a></div>| <div align="center">  **Themika Dilushanka** </div>| <ul><li> **Full-stack Engineer** </li></ul>                                           |                                      |
+| <div align="center"><a href="https://github.com/Iruthprabash"><img src="src/AlgouniXTM/Iruthprabash.png" width="100;" alt=""/></a></div>          | <div align="center">  **Iruth Prabash** </div>     | <ul><li> **Full-stack Engineer** </li></ul>                                           |                                      |
+| <div align="center"><a href="https://github.com/monikalakshani"><img src="src/AlgouniXTM/Monikalakshani.png" width="100;" alt=""/></a></div>      | <div align="center">  **Dinethma Namindi** </div>  | <ul><li> **Full-stack Engineer** </li></ul>                                           |                                      |
+| <div align="center"><a href="https://github.com/Sithuninudara"><img src="src/AlgouniXTM/Sithuninudara.png" width="100;" alt=""/></a></div>        | <div align="center">  **Sithuni Nudara** </div>    | <ul><li> **Full-stack Engineer** </li></ul>                                           |                                      |
+| <div align="center"><a href="https://github.com/HRDinethma"><img src="src/AlgouniXTM/Dinethmanamindi.png" width="100;" alt=""/></a></div>         | <div align="center">  **Monica Lakshani** </div>   | <ul><li> **Full-stack Engineer** </li></ul>                                           |                                      |
 
-<table align="center">
-   <tr>
-    <td align="center">
-        <a href="https://github.com/monikalakshani">
-            <img src="src/AlgouniXTM/Monikalakshani.png" width="100;" alt=""/>
-            <br />
-            <sub><b>Monikalakshani</b></sub>
-        </a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/Shenurarasheen">
-            <img src="src/AlgouniXTM/Shenurarasheen.png" width="100;" alt=""/>
-            <br />
-            <sub><b>Shenurarasheen</b></sub>
-        </a>
-    </td>
-   <td align="center">
-        <a href="https://github.com/HRDinethma">
-            <img src="src/AlgouniXTM/Dinethmanamindi.png" width="100;" alt=""/>
-            <br />
-            <sub><b>Dinethmanamindi</b></sub>
-        </a>
-    </td>
-   </tr>
-</table>
-<!-- readme: contributors -end -->
+</div>
+
+
 
 
 ## Contribution
