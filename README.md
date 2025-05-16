@@ -97,87 +97,52 @@ After setting up and running the application, you can explore the following proc
 ## Our Team Members (AlgouniX)
 
 <!-- readme: contributors -start -->
-<table align="center">
-<tr>
-    <td align="center">
-        <a href="https://github.com/cusaldmsr" text-decoration="none">
-            <img src="src/AlgouniXTM/Cusaldmsr.png" width="150;" alt="Cusaldmsr"/>
-            <br />
-            <sub><b>Cusaldmsr</b></sub>
-        </a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/JananaSheshaka">
-            <img src="src/AlgouniXTM/Jananasheshaka.png" width="150;" alt=""/>
-            <br />
-            <sub><b>Jananasheshaka</b></sub>
-        </a>
-    </td>
-   <td align="center">
-        <a href="https://github.com/Iruthprabash">
-            <img src="src/AlgouniXTM/Iruthprabash.png" width="150;" alt=""/>
-            <br />
-            <sub><b>Iruthprabash</b></sub>
-        </a>
-    </td>
-</tr>
-</table>
+<div align="center">
 
-<table align="center">
-   <tr>
-   <td align="center">
-        <a href="https://github.com/Sadeeshadilshan">
-            <img src="src/AlgouniXTM/Sadeeshadilshan.png" width="150;" alt=""/>
-            <br />
-            <sub><b>Sadeeshadilshan</b></sub>
-        </a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/themikadilushanka">
-            <img src="src/AlgouniXTM/Themikadilushanka.png" width="150;" alt=""/>
-            <br />
-            <sub><b>Themikadilushanka</b></sub>
-        </a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/Sithuninudara">
-            <img src="src/AlgouniXTM/Sithuninudara.png" width="150;" alt=""/>
-            <br />
-            <sub><b>Sithuninudara</b></sub>
-        </a>
-    </td>
-      </tr>
-</table>
+|            Member                                                                                                                                 |                Name                                |                Role                                                                   |            Assigned Section          |
+| ------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------- |-------------------------------------------------------------------------------------- | ------------------------------------ |
+| <div align="center"><a href="https://github.com/cusaldmsr"><img src="src/AlgouniXTM/Cusaldmsr.png" width="100;" alt=""/></a></div>                | <div align="center">  **Kusal Damsara** </div>     | <ul><li> **Full-stack Engineer** </li><li> **Project Manager** </li></ul>             |<ul><li> **Sign In** </li><li> **Sign Out** </li><li> **Setup Connection** </li><li> **Change Password** </li><li> **Navigator** </li><li> **Backup Data** </li><li> **Admin Dashboard GUI** </li><li> **Doctor Dashboard GUI** </li><li> **Pharmacy Dashboard GUI** </li><li> **Backoffice Dashboard GUI** </li><li> **Reception Dashboard GUI** </li><li> **Security Dashboard GUI** </li></ul>   |
+| <div align="center"><a href="https://github.com/JananaSheshaka"><img src="src/AlgouniXTM/Jananasheshaka.png" width="100;" alt=""/></a></div>      | <div align="center">  **Janana Sheshaka** </div>   | <ul><li> **Full-stack Engineer** </li><li> **Team Leader** </li></ul>                 |<ul><li> **Employee Salary** </li><li> **Doctor Salary** </li><li> **Admin Dashboard Panel** </li><li> **Doctor Dashboard Panel** </li><li> **Pharmacy Dashboard Panel** </li><li> **Backoffice Dashboard Panel** </li><li> **Reception Dashboard Panel** </li><li> **Attendance Panel** </li><li> **Employee Attendance** </li></ul>   |
+| <div align="center"><a href="https://github.com/Sadeeshadilshan"><img src="src/AlgouniXTM/Sadeeshadilshan.png" width="100;" alt=""/></a></div>    | <div align="center">  **Sadeesha Dilshan** </div>  | <ul><li> **Full-stack Engineer** </li></ul>                                           |<ul><li> **Pharmacy Invoice** </li><li> **Reception Invoice** </li><li> **Hospital Stock Transfer** </li><li> **Pharmacy Stock Transfer** </li><li> **GRN List** </li><li> **Discharged Patient List** </li><li> **OPD** </li><li> **Attendance Panel** </li><li> **Laboratory** </li></ul> |
+| <div align="center"><a href="https://github.com/Shenurarasheen"><img src="src/AlgouniXTM/Shenurarasheen.png" width="100;" alt=""/></a></div>      | <div align="center">  **Shenura Rasheen** </div>   | <ul><li> **Full-stack Engineer** </li></ul>                                           |<ul><li> **Doctor Attendance Panel** </li><li> **Patient Admit Panel** </li><li> **Prescription** </li><li> **Channeling Panel** </li><li> **Channeling Appointment Confirmation Pop-up Window** </li><li> **Channeling List Panel** </li><li> **OPD** </li><li> **Patient Discharge Panel** </li><li> **Patient Que List** </li></ul> |
+| <div align="center"><a href="https://github.com/themikadilushanka"><img src="src/AlgouniXTM/Themikadilushanka.png" width="100;" alt=""/></a></div>| <div align="center">  **Themika Dilushanka** </div>| <ul><li> **Full-stack Engineer** </li></ul>                                           |<ul><li> **Hospital Stock Panel** </li><li> **GRN Panel** </li><li> **Doctor Registration Panel** </li><li> **Doctor List Panel** </li><li> **Laboratory** </li><li> **Doctor Fees Panel** </li></ul> |
+| <div align="center"><a href="https://github.com/Iruthprabash"><img src="src/AlgouniXTM/Iruthprabash.png" width="100;" alt=""/></a></div>          | <div align="center">  **Iruth Prabash** </div>     | <ul><li> **Full-stack Engineer** </li></ul>                                           |<ul><li> **Patient Registration Panel** </li><li> **Patient List Panel** </li><li> **Patient Report & Prescription** </li><li> **Employee Registration Panel** </li><li> **Employee List Panel** </li><li> **Laboratory** </li></ul> |
+| <div align="center"><a href="https://github.com/HRDinethma"><img src="src/AlgouniXTM/Dinethmanamindi.png" width="100;" alt=""/></a></div>      | <div align="center">  **Dinethma Namindi** </div>  | <ul><li> **Full-stack Engineer** </li></ul>                                           |<ul><li> **Room Map Panel** </li><li> **Update Room Panel** </li><li> **Add Product Panel** </li><li> **Add Product Pop-Up Window** </li><li> **Main Stock List Panel** </li><li> **Pharmacy Stock List Panel** </li><li> **Pharmacy Stock Panel** </li></ul> |
+| <div align="center"><a href="https://github.com/Sithuninudara"><img src="src/AlgouniXTM/Sithuninudara.png" width="100;" alt=""/></a></div>        | <div align="center">  **Sithuni Nudara** </div>    | <ul><li> **Full-stack Engineer** </li></ul>                                           |<ul><li> **Kitchen or Resturent** </li><li> **Reports** </li><li> **Laboratory** </li></ul> |
+| <div align="center"><a href="https://github.com/monikalakshani"><img src="src/AlgouniXTM/Monikalakshani.png" width="100;" alt=""/></a></div>         | <div align="center">  **Monica Lakshani** </div>   | <ul><li> **Full-stack Engineer** </li></ul>                                           |<ul><li> **Payment History Panel** </li><li> **Supplier Registration Panel** </li><li> **Supplier List Panel** </li><li> **Company Registation Pop-up Window** </li><li> **Supplier List Pop-up Window** </li><li> **Brand Registration Pop-up Window** </li></ul> |
 
-<table align="center">
-   <tr>
-    <td align="center">
-        <a href="https://github.com/monikalakshani">
-            <img src="src/AlgouniXTM/Monikalakshani.png" width="150;" alt=""/>
-            <br />
-            <sub><b>Monikalakshani</b></sub>
-        </a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/Shenurarasheen">
-            <img src="src/AlgouniXTM/Shenurarasheen.png" width="150;" alt=""/>
-            <br />
-            <sub><b>Shenurarasheen</b></sub>
-        </a>
-    </td>
-   <td align="center">
-        <a href="https://github.com/HRDinethma">
-            <img src="src/AlgouniXTM/Dinethmanamindi.png" width="150;" alt=""/>
-            <br />
-            <sub><b>Dinethmanamindi</b></sub>
-        </a>
-    </td>
-   </tr>
-</table>
-<!-- readme: contributors -end -->
+</div>
+
+
 
 
 ## Contribution
+
+<a href="https://github.com/cusaldmsr">
+  <img src="src/AlgouniXTM/Cusaldmsr.png" width="40;" alt=""/>
+</a>
+<a href="https://github.com/JananaSheshaka">
+  <img src="src/AlgouniXTM/Jananasheshaka.png" width="40;" alt=""/>
+</a>
+<a href="https://github.com/Iruthprabash">
+  <img src="src/AlgouniXTM/Iruthprabash.png" width="40;" alt=""/>
+</a>
+<a href="https://github.com/Sadeeshadilshan">
+  <img src="src/AlgouniXTM/Sadeeshadilshan.png" width="40;" alt=""/>
+</a>
+<a href="https://github.com/Shenurarasheen">
+  <img src="src/AlgouniXTM/Shenurarasheen.png" width="40;" alt=""/>
+</a>
+<a href="https://github.com/monikalakshani">
+  <img src="src/AlgouniXTM/Monikalakshani.png" width="40;" alt=""/>
+</a>
+<a href="https://github.com/Sithuninudara">
+  <img src="src/AlgouniXTM/Sithuninudara.png" width="40;" alt=""/>
+</a>
+<a href="https://github.com/HRDinethma">
+  <img src="src/AlgouniXTM/Dinethmanamindi.png" width="40;" alt=""/>
+</a>
+
 
 This project is a group effort, and we encourage collaboration and improvement. If you would like to contribute, feel free to fork the repository and submit a pull request.
 
