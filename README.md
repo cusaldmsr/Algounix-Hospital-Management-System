@@ -101,21 +101,21 @@ After setting up and running the application, you can explore the following proc
 <tr>
     <td align="center">
         <a href="https://github.com/cusaldmsr" text-decoration="none">
-            <img src="src/AlgouniXTM/Cusaldmsr.png" width="150;" alt="Cusaldmsr"/>
+            <img src="src/AlgouniXTM/Cusaldmsr.png" width="100;" alt="Cusaldmsr"/>
             <br />
             <sub><b>Cusaldmsr</b></sub>
         </a>
     </td>
     <td align="center">
         <a href="https://github.com/JananaSheshaka">
-            <img src="src/AlgouniXTM/Jananasheshaka.png" width="150;" alt=""/>
+            <img src="src/AlgouniXTM/Jananasheshaka.png" width="100;" alt=""/>
             <br />
             <sub><b>Jananasheshaka</b></sub>
         </a>
     </td>
    <td align="center">
         <a href="https://github.com/Iruthprabash">
-            <img src="src/AlgouniXTM/Iruthprabash.png" width="150;" alt=""/>
+            <img src="src/AlgouniXTM/Iruthprabash.png" width="100;" alt=""/>
             <br />
             <sub><b>Iruthprabash</b></sub>
         </a>
@@ -127,21 +127,21 @@ After setting up and running the application, you can explore the following proc
    <tr>
    <td align="center">
         <a href="https://github.com/Sadeeshadilshan">
-            <img src="src/AlgouniXTM/Sadeeshadilshan.png" width="150;" alt=""/>
+            <img src="src/AlgouniXTM/Sadeeshadilshan.png" width="100;" alt=""/>
             <br />
             <sub><b>Sadeeshadilshan</b></sub>
         </a>
     </td>
     <td align="center">
         <a href="https://github.com/themikadilushanka">
-            <img src="src/AlgouniXTM/Themikadilushanka.png" width="150;" alt=""/>
+            <img src="src/AlgouniXTM/Themikadilushanka.png" width="100;" alt=""/>
             <br />
             <sub><b>Themikadilushanka</b></sub>
         </a>
     </td>
     <td align="center">
         <a href="https://github.com/Sithuninudara">
-            <img src="src/AlgouniXTM/Sithuninudara.png" width="150;" alt=""/>
+            <img src="src/AlgouniXTM/Sithuninudara.png" width="100;" alt=""/>
             <br />
             <sub><b>Sithuninudara</b></sub>
         </a>
@@ -153,21 +153,21 @@ After setting up and running the application, you can explore the following proc
    <tr>
     <td align="center">
         <a href="https://github.com/monikalakshani">
-            <img src="src/AlgouniXTM/Monikalakshani.png" width="150;" alt=""/>
+            <img src="src/AlgouniXTM/Monikalakshani.png" width="100;" alt=""/>
             <br />
             <sub><b>Monikalakshani</b></sub>
         </a>
     </td>
     <td align="center">
         <a href="https://github.com/Shenurarasheen">
-            <img src="src/AlgouniXTM/Shenurarasheen.png" width="150;" alt=""/>
+            <img src="src/AlgouniXTM/Shenurarasheen.png" width="100;" alt=""/>
             <br />
             <sub><b>Shenurarasheen</b></sub>
         </a>
     </td>
    <td align="center">
         <a href="https://github.com/HRDinethma">
-            <img src="src/AlgouniXTM/Dinethmanamindi.png" width="150;" alt=""/>
+            <img src="src/AlgouniXTM/Dinethmanamindi.png" width="100;" alt=""/>
             <br />
             <sub><b>Dinethmanamindi</b></sub>
         </a>
@@ -178,6 +178,32 @@ After setting up and running the application, you can explore the following proc
 
 
 ## Contribution
+
+<a href="https://github.com/cusaldmsr">
+  <img src="src/AlgouniXTM/Cusaldmsr.png" width="40;" alt=""/>
+</a>
+<a href="https://github.com/JananaSheshaka">
+  <img src="src/AlgouniXTM/Jananasheshaka.png" width="40;" alt=""/>
+</a>
+<a href="https://github.com/Iruthprabash">
+  <img src="src/AlgouniXTM/Iruthprabash.png" width="40;" alt=""/>
+</a>
+<a href="https://github.com/Sadeeshadilshan">
+  <img src="src/AlgouniXTM/Sadeeshadilshan.png" width="40;" alt=""/>
+</a>
+<a href="https://github.com/Shenurarasheen">
+  <img src="src/AlgouniXTM/Shenurarasheen.png" width="40;" alt=""/>
+</a>
+<a href="https://github.com/monikalakshani">
+  <img src="src/AlgouniXTM/Monikalakshani.png" width="40;" alt=""/>
+</a>
+<a href="https://github.com/Sithuninudara">
+  <img src="src/AlgouniXTM/Sithuninudara.png" width="40;" alt=""/>
+</a>
+<a href="https://github.com/HRDinethma">
+  <img src="src/AlgouniXTM/Dinethmanamindi.png" width="40;" alt=""/>
+</a>
+
 
 This project is a group effort, and we encourage collaboration and improvement. If you would like to contribute, feel free to fork the repository and submit a pull request.
 
