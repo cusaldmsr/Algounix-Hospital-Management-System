@@ -66,17 +66,17 @@ To run this project locally:
    
    - **HTTPS**
      ```bash
-     git clone https://github.com/cusaldmsr/Algounix-HMS.git
+     git clone https://github.com/cusaldmsr/Algounix-Hospital-Management-System.git
      
    - **SSH**
      ```bash
-     git clone git@github.com:cusaldmsr/Algounix-HMS.git
+     git clone git@github.com:cusaldmsr/Algounix-Hospital-Management-System.git
      
    - **GitHub CLI**
      ```bash
-     git clone gh repo clone cusaldmsr/Algounix-HMS
+     git clone gh repo clone cusaldmsr/Algounix-Hospital-Management-System.git
 
-2. Open the project in your preferred Java IDE (such as Eclipse or IntelliJ).
+2. Open the project in your preferred Java IDE (such as Netbeans, Eclipse or IntelliJ).
 
 3. Make sure you have Java JDK-17 installed.
 
@@ -185,36 +185,8 @@ This project is a group effort, and we encourage collaboration and improvement. 
 
 This project is licensed under the MIT License. See the LICENSE file for more details.
 
-## Here are Some GUI Screenshots of our Project
 
-
-<div align="Center">
-   <h2>Sign In & Sign Out</h2>
-   <img align="Left" width="47%" src="https://github.com/user-attachments/assets/f6ff00d8-b657-4fd7-a829-4925ad066c89"/>
-   <img align="Right" width="47%" src="https://github.com/user-attachments/assets/84fce1f1-6436-4358-9658-3cf057ca8517"/>
-   <p>^^^^^^^^^^^^^^^^^^^^^^^^^^^^</p>
- <br>
-
-   
-   <h2>Employee Registration & Employee List</h2>
-   
-   <img align="Left" width="47%" src="https://github.com/user-attachments/assets/fb6713cf-7f47-417c-aef5-67b1660d0c6f"/>
-   <img align="Right" width="47%" src="https://github.com/user-attachments/assets/b99e23f4-9a75-4f4d-a7c6-15170ef4c71e"/>
-   <p>^^^^^^^^^^^^^^^^^^^^^^^^^^^^</p>
- <br>
-
-   <h2>Patient Admit & Patient Discharge</h2>
-   
-   <img align="Left" width="47%" src="https://github.com/user-attachments/assets/e7d81f67-a230-441e-b2c0-14a75c2adfa2"/>
-   <img align="Right" width="47%" src="https://github.com/user-attachments/assets/b59f22f8-0a3b-4577-8037-ad3dafdb35a8"/>
-   <p>^^^^^^^^^^^^^^^^^^^^^^^^^^^^</p>
- <br>
-
-
-
-
-</div>
-
+<br>
 
 <div align="center">
    <p>Thank you for checking out our project! We hope it serves as a valuable tool for hospital management.</p>
@@ -228,10 +200,6 @@ This project is licensed under the MIT License. See the LICENSE file for more de
 
 **Email :  Algounix@gmail.com**
 
-<br>
-
 **Email :  Cusaldmsr@gmail.com**
-
-<br>
 
 **Email :  Jananasheshaka@gmail.com**
