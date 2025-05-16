@@ -184,8 +184,15 @@ This project is a group effort, and we encourage collaboration and improvement. 
 ## License
 
 This project is licensed under the MIT License. See the LICENSE file for more details.
+## Contact Details
 
 
+**Email :  Algounix@gmail.com**
+
+**Email :  Cusaldmsr@gmail.com**
+
+**Email :  Jananasheshaka@gmail.com**
+##
 <br>
 
 <div align="center">
@@ -195,11 +202,4 @@ This project is licensed under the MIT License. See the LICENSE file for more de
 
 </div>
 
-## Contact Details
 
-
-**Email :  Algounix@gmail.com**
-
-**Email :  Cusaldmsr@gmail.com**
-
-**Email :  Jananasheshaka@gmail.com**
