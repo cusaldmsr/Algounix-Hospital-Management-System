@@ -4,6 +4,9 @@
  */
 package com.algounix.Panel;
 
+import com.algounix.Model.MySQL;
+import java.awt.Color;
+import java.sql.ResultSet;
 import java.util.HashMap;
 import javax.swing.JButton;
 
@@ -17,6 +20,54 @@ public class RoomMap extends javax.swing.JPanel {
     
     public RoomMap() {
         initComponents();
+        updateButtonColorsFromDatabase();
+    }
+    
+    public void updateButtonColor(JButton button, String status) {
+        
+        switch (status) {
+            case "1":
+                button.setBackground(Color.green);
+                break;
+            case "2":
+                button.setBackground(Color.red);
+                break;
+            case "3":
+                button.setBackground(Color.GRAY);
+                break;
+            default:
+                button.setBackground(Color.white); 
+                break;
+        }
+    }
+    
+    private void updateButtonColorsFromDatabase() {
+        try {
+            
+            String query = "SELECT * FROM `room`";
+
+            ResultSet rs = MySQL.executeSearch(query);
+            
+            while (rs.next()) {
+                String roomNo = rs.getString("id");
+                String status = rs.getString("room_status_id");
+                
+                JButton roomBtn = getButtonByRoomNumber(roomNo);
+                
+                if (roomBtn != null) {
+                    updateButtonColor(roomBtn, status);
+                }else{
+                    
+                }
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public JButton getButtonByRoomNumber(String roomNo) {
+        return roomButtonMap.get(roomNo); 
     }
 
     /**
