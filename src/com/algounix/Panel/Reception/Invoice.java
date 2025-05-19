@@ -6,6 +6,7 @@ package com.algounix.Panel.Reception;
 
 import com.algounix.GUI.SignIn;
 import com.algounix.Model.MySQL;
+import com.algounix.Panel.Doctor.PatientDischarge;
 import com.algounix.Panel.Doctor.PatientDischargeList;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import java.awt.Color;
@@ -100,6 +101,11 @@ public class Invoice extends javax.swing.JFrame {
             if (empRs.next()) {
                 jLabel63.setText(SignIn.empID);
                 jLabel65.setText(empRs.getString("first_name") + " " + empRs.getString("last_name"));
+            }else{
+                if(SignIn.docID != null){
+                    jLabel63.setText(SignIn.docID);
+                    jLabel65.setText(SignIn.docName);
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -1475,6 +1481,8 @@ public class Invoice extends javax.swing.JFrame {
                 timer.start();
                 
                 dischargeList.confirmPayment(invoiceID);
+                
+                PatientDischarge.setIsPaymentSuccess(true, invoiceID);
 
                 JOptionPane.showMessageDialog(this, " This Window Close Automatically After 10 Seconds.", "Warning", JOptionPane.WARNING_MESSAGE);
                 
