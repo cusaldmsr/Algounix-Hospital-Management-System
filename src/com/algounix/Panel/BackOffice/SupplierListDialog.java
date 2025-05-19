@@ -397,11 +397,12 @@ public class SupplierListDialog extends javax.swing.JDialog {
         int row = jTable1.getSelectedRow();
         if(evt.getClickCount() == 2){
             if(grn != null){
+                String id = String.valueOf(jTable1.getValueAt(row, 0));
                 String mobile = String.valueOf(jTable1.getValueAt(row, 3));
                 String email = String.valueOf(jTable1.getValueAt(row, 4));
                 String name = String.valueOf(jTable1.getValueAt(row, 1)+" "+String.valueOf(jTable1.getValueAt(row, 2)));
                 
-                grn.setSupplierFeilds(mobile, email, name);
+                grn.setSupplierFeilds(id, mobile, email, name);
                 this.dispose();
             }
         }
