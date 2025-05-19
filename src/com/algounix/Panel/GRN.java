@@ -1,13 +1,19 @@
-
 package com.algounix.Panel;
 
 import com.algounix.Components.ScrollBar;
+import com.algounix.GUI.SignIn;
 import com.algounix.Model.GRNItem;
+import com.algounix.Model.MySQL;
 import com.algounix.Panel.BackOffice.Product;
 import com.algounix.Panel.BackOffice.SupplierListDialog;
+import java.awt.Color;
+import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Vector;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
@@ -18,31 +24,43 @@ import javax.swing.table.DefaultTableModel;
 public class GRN extends javax.swing.JPanel {
 
     HashMap<String, GRNItem> grnItemMap = new HashMap<>();
+
     /**
      * Creates new form newGRN
      */
     public GRN() {
         initComponents();
-          jScrollPane1.setVerticalScrollBar(new ScrollBar());
-          loadGRNItems();
-          reset();
+        jScrollPane1.setVerticalScrollBar(new ScrollBar());
+        generateGRNId();
+        loadGRNItems();
     }
-    
-     private void loadGRNItems() {
+
+    private void generateGRNId() {
+        int id = (int) (System.currentTimeMillis() % Integer.MAX_VALUE);
+        jLabel9.setText(String.valueOf(id));
+    }
+
+    private void loadGRNItems() {
 
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
 
         double total = 0;
 
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
         for (GRNItem grnItem : grnItemMap.values()) {
             Vector<String> vector = new Vector<>();
+            vector.add(jLabel9.getText());
             vector.add(grnItem.getProductId());
-            vector.add(grnItem.getBrandName());
             vector.add(grnItem.getProductName());
+            vector.add(grnItem.getBrandName());
+            vector.add(jLabel14.getText());
             vector.add(String.valueOf(grnItem.getQty()));
             vector.add(String.valueOf(grnItem.getBuyingPrice()));
             vector.add(String.valueOf(grnItem.getSellingPrice()));
+            vector.add(String.valueOf(sdf.format(grnItem.getMfd())));
+            vector.add(String.valueOf(sdf.format(grnItem.getExp())));
 
             double itemTotal = grnItem.getQty() * grnItem.getBuyingPrice();
             total += itemTotal;
@@ -52,10 +70,10 @@ public class GRN extends javax.swing.JPanel {
         }
 
         jLabel27.setText(String.valueOf(total));
+
     }
 
     private void reset() {
-        jLabel9.setText("GRN id here");
         jLabel10.setText("Product id here");
         jLabel11.setText("Supplier mobile here");
         jLabel12.setText("Supplier email here");
@@ -63,16 +81,18 @@ public class GRN extends javax.swing.JPanel {
         jLabel14.setText("Product category here");
         jLabel16.setText("Select a Product");
         jLabel15.setText("Product brand here");
+        jLabel28.setText(" ");
         jSpinner1.setValue(0);
-        
+
         jTextField1.setText("");
         jTextField2.setText("");
         jTextField3.setText("");
         jDateChooser1.setDate(null);
         jDateChooser2.setDate(null);
         jTable1.clearSelection();
-        
+
         jLabel26.setText(">>>>>>>>>>>");
+        generateGRNId();
 
     }
 
@@ -116,6 +136,7 @@ public class GRN extends javax.swing.JPanel {
         jLabel21 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
+        jLabel28 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
         jLabel23 = new javax.swing.JLabel();
@@ -290,7 +311,7 @@ public class GRN extends javax.swing.JPanel {
 
         jLabel5.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel5.setText("Supplier :");
+        jLabel5.setText("Supplier & Id :");
 
         jTextField2.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
 
@@ -305,6 +326,10 @@ public class GRN extends javax.swing.JPanel {
         jLabel15.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
         jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel15.setText("Brand");
+
+        jLabel28.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+        jLabel28.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel28.setText("id");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -331,7 +356,7 @@ public class GRN extends javax.swing.JPanel {
                                 .addGroup(jPanel5Layout.createSequentialGroup()
                                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(7, 7, 7)
-                                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(jPanel5Layout.createSequentialGroup()
                                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(7, 7, 7)
@@ -345,14 +370,6 @@ public class GRN extends javax.swing.JPanel {
                                     .addGap(12, 12, 12)
                                     .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(7, 7, 7)
-                        .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(186, 186, 186)
-                        .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(12, 12, 12)
-                        .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(7, 7, 7)
@@ -376,10 +393,21 @@ public class GRN extends javax.swing.JPanel {
                         .addGap(186, 186, 186)
                         .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(12, 12, 12)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(7, 7, 7)
+                                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(186, 186, 186)
+                        .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(12, 12, 12)
+                        .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
                 .addComponent(grnICO, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(48, Short.MAX_VALUE))
+                .addContainerGap(57, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -426,7 +454,9 @@ public class GRN extends javax.swing.JPanel {
                         .addGap(4, 4, 4)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5)
-                            .addComponent(jLabel13)
+                            .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel13)
+                                .addComponent(jLabel28))
                             .addGroup(jPanel5Layout.createSequentialGroup()
                                 .addGap(3, 3, 3)
                                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -498,6 +528,11 @@ public class GRN extends javax.swing.JPanel {
         jLabel25.setText("Balence :");
 
         jTextField3.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+        jTextField3.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField3KeyReleased(evt);
+            }
+        });
 
         jLabel26.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
         jLabel26.setText(">>>>>>>>>>>>>");
@@ -714,25 +749,66 @@ public class GRN extends javax.swing.JPanel {
         SL.setVisible(true);
     }//GEN-LAST:event_jButton5ActionPerformed
 
-    public void setSupplierFeilds(String mobile,String email, String name){
+    public void setSupplierFeilds(String id, String mobile, String email, String name) {
+        jLabel28.setText(id);
         jLabel11.setText(mobile);
         jLabel12.setText(email);
         jLabel13.setText(name);
     }
-    
-    public void setProductFeilds(String name, String brand, String cat){
+
+    public void setProductFeilds(String id, String name, String brand, String cat) {
+        jLabel10.setText(id);
         jLabel16.setText(name);
         jLabel15.setText(brand);
         jLabel14.setText(cat);
     }
-    
+
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
         reset();
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        // TODO add your handling code here:
+
+        Date mfd = jDateChooser1.getDate();
+        Date exp = jDateChooser2.getDate();
+
+        if (mfd == null || exp == null) {
+            JOptionPane.showMessageDialog(this, "Please select both MFD and EXP dates.", "Input Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        int qty = (Integer) jSpinner1.getValue();
+
+        String buying_price = jTextField1.getText();
+        String selling_price = jTextField2.getText();
+
+        GRNItem grnItem = new GRNItem();
+        grnItem.setProductId(jLabel10.getText());
+        grnItem.setBrandName(jLabel15.getText());
+        grnItem.setProductName(jLabel16.getText());
+        grnItem.setQty(qty);
+        grnItem.setBuyingPrice(Double.parseDouble(buying_price));
+        grnItem.setSellingPrice(Double.parseDouble(selling_price));
+        grnItem.setMfd(mfd);
+        grnItem.setExp(exp);
+
+        if (grnItemMap.get(jLabel10.getText()) == null) {
+            grnItemMap.put(jLabel10.getText(), grnItem);
+            loadGRNItems();
+        } else {
+            GRNItem found = grnItemMap.get(jLabel10.getText());
+
+            if (found.getBuyingPrice() == Double.parseDouble(buying_price)
+                    && found.getSellingPrice() == Double.parseDouble(selling_price)) {
+
+                found.setQty(found.getQty() + qty);
+                loadGRNItems();
+            } else {
+                JOptionPane.showMessageDialog(this, "GRN item already exists with different prices", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
@@ -740,16 +816,111 @@ public class GRN extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-        // TODO add your handling code here:
+        try {
+
+            String grnId = jLabel9.getText();
+            String supplierId = jLabel28.getText();
+            String employeeId = SignIn.empID;
+            String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+            String paidAmount = jTextField3.getText();
+            String total = jLabel27.getText();
+
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+            String sql = "INSERT INTO `grn` (`id`,`date`,`total_amount`,`paid_amount`,`employee_id`,`supplier_id`) "
+                    + "VALUES('" + grnId + "','" + date + "','" + total + "','" + paidAmount + "',"
+                    + "'" + employeeId + "','" + supplierId + "')";
+
+            MySQL.executeIUD(sql);
+
+            for (GRNItem grnItem : grnItemMap.values()) {
+
+                // ✅ Validate and format mfd and exp dates
+                if (grnItem.getMfd() == null || grnItem.getExp() == null) {
+                    JOptionPane.showMessageDialog(this, "Invalid MFD or EXP date. Please check the values.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                String formattedMfd = sdf.format(grnItem.getMfd());
+                String formattedExp = sdf.format(grnItem.getExp());
+
+                ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `main_stock` WHERE "
+                        + "`medicine_id`= '" + grnItem.getProductId() + "' AND "
+                        + "`selling_price`='" + grnItem.getSellingPrice() + "'");
+
+                String sid = "";
+
+                if (resultSet.next()) {
+                    // existing stock
+                    sid = resultSet.getString("id");
+
+                    String currentQty = resultSet.getString("qty");
+                    String updatedQuantity = String.valueOf(Double.parseDouble(currentQty) + grnItem.getQty());
+                    MySQL.executeIUD("UPDATE `main_stock` SET `qty` = '" + updatedQuantity + "' WHERE `id` = '" + sid + "'");
+
+                    JOptionPane.showMessageDialog(this, "Stock Updated", "Success", JOptionPane.INFORMATION_MESSAGE);
+
+                } else {
+                    // new stock
+                    MySQL.executeIUD("INSERT INTO `main_stock`(`selling_price`,`qty`,`mfd`,`exp`,`medicine_id`,`transfered_status_id`,`received_qty`,`last_updated_date`) "
+                            + "VALUES('" + grnItem.getSellingPrice() + "','" + grnItem.getQty() + "','" + formattedMfd + "','" + formattedExp + "',"
+                            + "'" + grnItem.getProductId() + "','1','0','" + date + "')");
+
+                    ResultSet resultSet2 = MySQL.executeSearch("SELECT * FROM `main_stock` WHERE "
+                            + "`medicine_id`= '" + grnItem.getProductId() + "' AND "
+                            + "`selling_price`='" + grnItem.getSellingPrice() + "' AND "
+                            + "`mfd` = '" + formattedMfd + "' AND "
+                            + "`exp` = '" + formattedExp + "'");
+
+                    if (resultSet2.next()) {
+                        sid = resultSet2.getString("id");
+                    }
+                }
+
+                MySQL.executeIUD("INSERT INTO `grn_item`(`buying_price`,`qty`,`grn_id`,`main_stock_id`) "
+                        + "VALUES('" + grnItem.getBuyingPrice() + "','" + grnItem.getQty() + "','" + grnId + "','" + sid + "')");
+
+                JOptionPane.showMessageDialog(this, "GRN Saved", "Success", JOptionPane.INFORMATION_MESSAGE);
+            }
+
+            // ✅ Clear table after saving all data
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+            model.setRowCount(0); // This clears all rows from the table
+
+            // ✅ Reset other UI elements
+            reset();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-      JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+        JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
         Product com = new Product(parentFrame, true);
         com.setGrn(this);
         com.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jTextField3KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField3KeyReleased
+        String total = jLabel27.getText();
+        String payment = jTextField3.getText();
+
+        if (payment.isEmpty()) {
+            payment = "0";
+        } else if (!payment.matches("^(0|[1-9]\\d*)?(\\.\\d+)?(?<=\\d)$")) {
+
+            jLabel26.setText("INVALID");
+            jLabel26.setForeground(Color.RED);
+        } else {
+
+            double balance = Double.parseDouble(payment) - Double.parseDouble(total);
+            jLabel26.setText(String.valueOf(balance));
+//            jLabel26.setForeground(Color.WHITE);
+        }
+    }//GEN-LAST:event_jTextField3KeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -783,6 +954,7 @@ public class GRN extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
