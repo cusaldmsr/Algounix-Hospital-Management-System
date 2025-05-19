@@ -5,7 +5,15 @@
 package com.algounix.Panel.BackOffice;
 
 import com.algounix.GUI.SignOut;
+import com.algounix.Model.MySQL;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
+import java.awt.Font;
+import java.sql.ResultSet;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.data.category.DefaultCategoryDataset;
 
 /**
  *
@@ -18,8 +26,55 @@ public class DashboardBackOffice extends javax.swing.JPanel {
      */
     public DashboardBackOffice() {
         initComponents();
-           FlatSVGIcon iconLogo = new FlatSVGIcon("com//algounix//Resources//BackofficeDashboard.svg", jLabel22.getWidth(), jLabel22.getHeight());
-        jLabel22.setIcon(iconLogo);
+        displayCharts();
+    }
+    
+    private void displayCharts() {
+
+        chart1.add(createBarChartPanel(createAvaliableStock(), "Low Stock Items"));
+        chart1.revalidate();
+        chart1.repaint();
+
+        chart1.setLayout(new java.awt.GridLayout(1, 3));
+    }
+
+    //barchart panel
+    private ChartPanel createBarChartPanel(DefaultCategoryDataset dataset, String chartTitle) {
+        JFreeChart barChart = ChartFactory.createBarChart(
+                chartTitle,
+                "Item",
+                "Quantity",
+                dataset
+        );
+
+        CategoryPlot plot = barChart.getCategoryPlot();
+        plot.getDomainAxis().setTickLabelFont(new Font("SansSerif", Font.PLAIN, 10));
+        plot.getRangeAxis().setTickLabelFont(new Font("SansSerif", Font.PLAIN, 10));
+        barChart.getTitle().setFont(new Font("SansSerif", Font.BOLD, 12));
+        barChart.getLegend().setItemFont(new Font("SansSerif", Font.PLAIN, 10));
+
+        return new ChartPanel(barChart);
+    }
+     //stock chart
+    private DefaultCategoryDataset createAvaliableStock() {
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+        try {
+            ResultSet rs = MySQL.executeSearch("SELECT m.name AS item_name, s.qty AS current_stock\n"
+                    + "FROM main_stock AS s\n"
+                    + "JOIN medicine AS m ON m.id = s.medicine_id\n"
+                    + "WHERE s.qty <= 100\n"
+                    + "ORDER BY s.qty ASC\n"
+                    + "LIMIT 10");
+
+            while (rs.next()) {
+                dataset.addValue(rs.getInt("current_stock"), "Stock Level", rs.getString("item_name"));
+            }
+
+            rs.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return dataset;
     }
 
     /**
@@ -59,14 +114,13 @@ public class DashboardBackOffice extends javax.swing.JPanel {
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
-        jPanel19 = new javax.swing.JPanel();
-        jLabel22 = new javax.swing.JLabel();
         jPanel22 = new javax.swing.JPanel();
         jComboBox1 = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jPanel23 = new javax.swing.JPanel();
         jButton4 = new javax.swing.JButton();
+        chart1 = new javax.swing.JPanel();
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -342,21 +396,6 @@ public class DashboardBackOffice extends javax.swing.JPanel {
                 .addGap(31, 31, 31))
         );
 
-        jPanel19.setBackground(new java.awt.Color(255, 255, 255));
-
-        jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-
-        javax.swing.GroupLayout jPanel19Layout = new javax.swing.GroupLayout(jPanel19);
-        jPanel19.setLayout(jPanel19Layout);
-        jPanel19Layout.setHorizontalGroup(
-            jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel22, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        jPanel19Layout.setVerticalGroup(
-            jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel22, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-
         jPanel22.setBackground(new java.awt.Color(255, 255, 255));
 
         jComboBox1.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
@@ -424,6 +463,19 @@ public class DashboardBackOffice extends javax.swing.JPanel {
                 .addContainerGap(25, Short.MAX_VALUE))
         );
 
+        chart1.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout chart1Layout = new javax.swing.GroupLayout(chart1);
+        chart1.setLayout(chart1Layout);
+        chart1Layout.setHorizontalGroup(
+            chart1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        chart1Layout.setVerticalGroup(
+            chart1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -442,7 +494,7 @@ public class DashboardBackOffice extends javax.swing.JPanel {
                             .addComponent(jPanel18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jPanel20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(chart1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(jPanel23, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -473,7 +525,7 @@ public class DashboardBackOffice extends javax.swing.JPanel {
                                 .addComponent(jPanel18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jPanel20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jPanel19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(chart1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel23, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
@@ -486,6 +538,7 @@ public class DashboardBackOffice extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel chart1;
     private javax.swing.JButton jButton4;
     private com.toedter.calendar.JCalendar jCalendar1;
     private javax.swing.JComboBox<String> jComboBox1;
@@ -499,7 +552,6 @@ public class DashboardBackOffice extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -514,7 +566,6 @@ public class DashboardBackOffice extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel16;
     private javax.swing.JPanel jPanel17;
     private javax.swing.JPanel jPanel18;
-    private javax.swing.JPanel jPanel19;
     private javax.swing.JPanel jPanel20;
     private javax.swing.JPanel jPanel22;
     private javax.swing.JPanel jPanel23;
