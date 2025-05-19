@@ -33,7 +33,10 @@ public class Prescription extends javax.swing.JFrame {
     private HashMap<String, String> presDetails;
     private DoctorChanelling docChanelling;
     private PatientAdmit patientAdmit;
-    
+    private PatientDischarge patientDischarge;
+
+    private boolean isDischarge = false;
+
     public Prescription() {
         initComponents();
         loadUI();
@@ -42,6 +45,7 @@ public class Prescription extends javax.swing.JFrame {
     public Prescription(HashMap<String, String> presDetails, DoctorChanelling chanelling) {
         initComponents();
         loadUI();
+        this.isDischarge = false;
         this.presDetails = presDetails;
         this.docChanelling = chanelling;
         setPrescriptionDetails();
@@ -50,10 +54,11 @@ public class Prescription extends javax.swing.JFrame {
         validateSpinner2();
         clearAll();
     }
-    
-    public Prescription(HashMap<String, String> presDetails, PatientAdmit admit){
+
+    public Prescription(HashMap<String, String> presDetails, PatientAdmit admit) {
         initComponents();
         loadUI();
+        this.isDischarge = false;
         this.presDetails = presDetails;
         this.patientAdmit = admit;
         setPrescriptionDetails();
@@ -61,6 +66,19 @@ public class Prescription extends javax.swing.JFrame {
         validateSpinner1();
         validateSpinner2();
         clearAll();
+    }
+
+    public Prescription(HashMap<String, String> presDetails, PatientDischarge discharge) {
+        initComponents();
+        loadUI();
+        this.isDischarge = true;
+        this.presDetails = presDetails;
+        this.patientDischarge = discharge;
+        setPrescriptionDetails();
+        jTextField1.setText(generatePrescriptionID());
+        validateSpinner1();
+        validateSpinner2();
+        clearAll();      
     }
 
     private void loadUI() {
@@ -693,11 +711,11 @@ public class Prescription extends javax.swing.JFrame {
 
         int rowCount = jTable1.getRowCount();
 
-        boolean isFound = false;       
+        boolean isFound = false;
         for (int i = 0; i < rowCount; i++) {
-            
+
             String medID2 = String.valueOf(jTable1.getValueAt(i, 0));
-            
+
             if (medID1.equals(medID2)) {
                 String currentQty = String.valueOf(jTable1.getValueAt(i, 3));
                 int subQty = Integer.valueOf(qty) + Integer.valueOf(currentQty);
@@ -721,68 +739,92 @@ public class Prescription extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton4ActionPerformed
 
-    
     //Generate prescription id 
-    private String generatePrescriptionID(){
+    private String generatePrescriptionID() {
         String lastID = null;
         int nextNumber = 1;
+
+        if (isDischarge) {
+            loadPrescriptionItems();
+            return presDetails.get("prescriptionID");
+        }
+
         try {
             ResultSet resultSet = MySQL.executeSearch("SELECT `id` FROM `prescription` ORDER BY `id` DESC LIMIT 1");
-            
-            if(resultSet.next()){
+
+            if (resultSet.next()) {
                 lastID = resultSet.getString("id");
             }
-            
-            if(lastID != null){
+
+            if (lastID != null) {
                 String numericVal = lastID.substring(3);
                 nextNumber = Integer.parseInt(numericVal) + 1;
             }
-            
+
             return String.format("PRE%05d", nextNumber);
-            
+
         } catch (Exception e) {
             e.printStackTrace();
         }
         return String.format("PRE%05d", nextNumber);
     }
 
-    
     //Save and print prescription
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 
         int rowCount = jTable1.getRowCount();
-        
-        if(rowCount == 0){
-            JOptionPane.showMessageDialog(this, "Please add medicines to prescription first.","Warning",JOptionPane.WARNING_MESSAGE);
+
+        if (rowCount == 0) {
+            JOptionPane.showMessageDialog(this, "Please add medicines to prescription first.", "Warning", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        
+
         //insert to prescription and prescription items
         String presID = jTextField1.getText();
         String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
         String duration = String.valueOf(jSpinner1.getValue());
         String patientID = jLabel36.getText();
-        
+
         try {
-            //Insert to Prescription
-            MySQL.executeIUD("INSERT INTO `prescription` VALUES ('"+presID+"','"+date+"','"+SignIn.docID+"','"+duration+"','"+patientID+"')");
             
-            //Insert to Prescription Item
-            for(int i = 0; i < rowCount; i++){
-                String medID = String.valueOf(jTable1.getValueAt(i, 0));
-                String qty = String.valueOf(jTable1.getValueAt(i, 3));
+            if(this.isDischarge){
                 
-                MySQL.executeIUD("INSERT INTO `prescription_item` (`medicine_id`,`qty`,`prescription_id`) VALUES "
-                        + "('"+medID+"','"+qty+"','"+presID+"')");
+                String dateToday = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+                String dateCount = String.valueOf(jSpinner1.getValue());
+                String prescriptionId = this.presDetails.get("prescriptionID");
+                
+                String query = "UPDATE `prescription` SET `date`='"+dateToday+"',`duration_from_days`='"+dateCount+"' "
+                        + "WHERE `id`='"+prescriptionId+"'";
+                MySQL.executeIUD(query);               
+                
+                JOptionPane.showMessageDialog(this, "Prescription updated successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
+                
+                this.patientDischarge.getUpdateStatusLabel().setText("Updated");
+                this.patientDischarge.getUpdateStatusLabel().setForeground(Color.green);
+                
+            }else{
+                
+                //Insert to Prescription
+                MySQL.executeIUD("INSERT INTO `prescription` VALUES ('" + presID + "','" + date + "','" + SignIn.docID + "','" + duration + "','" + patientID + "')");
             }
             
-            if(docChanelling != null){
+
+            //Insert to Prescription Item
+            for (int i = 0; i < rowCount; i++) {
+                String medID = String.valueOf(jTable1.getValueAt(i, 0));
+                String qty = String.valueOf(jTable1.getValueAt(i, 3));
+
+                MySQL.executeIUD("INSERT INTO `prescription_item` (`medicine_id`,`qty`,`prescription_id`) VALUES "
+                        + "('" + medID + "','" + qty + "','" + presID + "')");
+            }
+
+            if (docChanelling != null) {
                 docChanelling.getPrescriptionStatusLabel().setText("Prescription Added");
                 docChanelling.getPrescriptionStatusLabel().setForeground(Color.GREEN);
                 docChanelling = null;
-            } 
-            
-            if(patientAdmit != null){
+            }
+
+            if (patientAdmit != null) {
                 patientAdmit.getPrescriptionStatusLabel().setVisible(true);
                 patientAdmit.getPrescriptionStatusLabel().setText("Added");
                 patientAdmit.getPrescriptionStatusLabel().setForeground(Color.GREEN);
@@ -790,10 +832,12 @@ public class Prescription extends javax.swing.JFrame {
             }
             this.dispose();
             
+            this.isDischarge = false;
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-               
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     //Claear All
@@ -806,6 +850,38 @@ public class Prescription extends javax.swing.JFrame {
         jSpinner2.setValue(1);
         jLabel51.setVisible(false);
         jButton4.setEnabled(false);
+    }
+
+    private void loadPrescriptionItems() {
+
+        if (isDischarge) {
+            String prescriptionId = presDetails.get("prescriptionID");
+
+            try {
+                String query = "SELECT * FROM `prescription_item` INNER JOIN `medicine` ON "
+                        + "`prescription_item`.`medicine_id`=`medicine`.`id` INNER JOIN `category` ON "
+                        + "`medicine`.`category_id`=`category`.`id` "
+                        + "WHERE `prescription_item`.`prescription_id`='" + prescriptionId + "'";
+
+                ResultSet resultSet = MySQL.executeSearch(query);
+
+                DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+                model.setRowCount(0);
+
+                while (resultSet.next()) {
+                    Vector<String> vector = new Vector();
+                    vector.add(resultSet.getString("prescription_item.medicine_id"));
+                    vector.add(resultSet.getString("medicine.name"));
+                    vector.add(resultSet.getString("medicine.name"));
+                    vector.add(resultSet.getString("prescription_item.qty"));
+
+                    model.addRow(vector);
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

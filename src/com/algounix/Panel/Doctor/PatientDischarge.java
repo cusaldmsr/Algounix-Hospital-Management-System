@@ -9,6 +9,9 @@ import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.HashMap;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -16,12 +19,16 @@ import java.time.temporal.ChronoUnit;
  */
 public class PatientDischarge extends javax.swing.JPanel {
 
-    public final int ADMITTED_STATUS_ID = 4;
-    public final int DISCHARGED_STATUS_ID = 5;
+    public static final int ADMITTED_STATUS_ID = 4;
+    public static final int DISCHARGED_STATUS_ID = 5;
+
+    private boolean isReportAvailable = false;
 
     public PatientDischarge() {
         initComponents();
-        loadAdmittedPatients();
+        loadAdmittedPatients("");
+        jLabel29.setText("Not Upadted");
+        jLabel29.setForeground(Color.red);
     }
 
     @SuppressWarnings("unchecked")
@@ -290,7 +297,11 @@ public class PatientDischarge extends javax.swing.JPanel {
         jLabel12.setText("Patient Age Here");
 
         jTextField1.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
-        jTextField1.setText("327326");
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField1KeyReleased(evt);
+            }
+        });
 
         jLabel18.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
         jLabel18.setText("Patient NIC");
@@ -389,6 +400,11 @@ public class PatientDischarge extends javax.swing.JPanel {
 
         jButton5.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
         jButton5.setText("Update report");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         jLabel29.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
         jLabel29.setForeground(new java.awt.Color(51, 204, 0));
@@ -413,8 +429,8 @@ public class PatientDischarge extends javax.swing.JPanel {
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel29)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
+                        .addComponent(jLabel29, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
                         .addComponent(jButton5))
                     .addComponent(jScrollPane3)
                     .addGroup(jPanel5Layout.createSequentialGroup()
@@ -512,12 +528,35 @@ public class PatientDischarge extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    //Save prescription
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+
+        String patientId = jTextField1.getText();
+        int selectedRow = jTable1.getSelectedRow();
+
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Please select a row first.", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else {
+
+            String selectedPatientId = String.valueOf(jTable1.getValueAt(selectedRow, 1));
+
+            if (!selectedPatientId.equals(patientId)) {
+                JOptionPane.showMessageDialog(this, "Invalid patient details.", "Warning", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            String prescriptionId = String.valueOf(jTable1.getValueAt(selectedRow, 5));
+
+            updatePrescription(prescriptionId);
+        }
+
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         int clickedCount = evt.getClickCount();
+        
+        jLabel29.setText("Not Upadted");
+        jLabel29.setForeground(Color.red);
 
         if (clickedCount == 2) {
             int selectedRow = jTable1.getSelectedRow();
@@ -531,6 +570,35 @@ public class PatientDischarge extends javax.swing.JPanel {
             loadPatientReportDetails(patient_id, doctor_id, addmitted_date);
         }
     }//GEN-LAST:event_jTable1MouseClicked
+
+    //update report button
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        int selectedRow = jTable1.getSelectedRow();
+
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Please select a patient first.", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else {
+            String patient_id = String.valueOf(jTable1.getValueAt(selectedRow, 1));
+            String doctor_id = SignIn.docID;
+            String admitted_date = String.valueOf(jTable1.getValueAt(selectedRow, 3));
+
+            String patient_id_in_input_field = jTextField1.getText();
+
+            if (patient_id.equals(patient_id_in_input_field)) {
+                //valid
+                updatePatientReportDetails(patient_id, doctor_id, admitted_date);
+            } else {
+                //invalid
+                JOptionPane.showMessageDialog(this, "Invalid patient id", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    //Key released on patient id field
+    private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
+      
+        loadAdmittedPatients(jTextField1.getText());
+    }//GEN-LAST:event_jTextField1KeyReleased
 
     //load room details
     private void loadRoomDetails(String roomId) {
@@ -606,14 +674,15 @@ public class PatientDischarge extends javax.swing.JPanel {
     }
 
     //load patient details
-    private void loadAdmittedPatients() {
+    private void loadAdmittedPatients(String searchText) {
 
         String query1 = "SELECT * FROM `patient_admit` "
                 + "INNER JOIN `patient` ON `patient_admit`.`patient_id`=`patient`.`id` "
                 + "INNER JOIN `patient_report` ON `patient_admit`.`patient_report_id`=`patient_report`.`id` "
                 + "INNER JOIN `doctor` ON `patient_report`.`doctor_id`=`doctor`.`id` "
                 + "WHERE `appoinment_status_id`='" + ADMITTED_STATUS_ID + "' AND "
-                + "`patient_report`.`doctor_id`='"+SignIn.docID+"'";
+                + "`patient_report`.`doctor_id`='" + SignIn.docID + "' AND "
+                + "`patient`.`id` LIKE '%"+searchText+"%'";
 
         String query2 = "SELECT `first_name`,`last_name` FROM `doctor` WHERE `doctor`.`id`='" + SignIn.docID + "'";
 
@@ -661,12 +730,16 @@ public class PatientDischarge extends javax.swing.JPanel {
                 jLabel27.setText(resultSet.getString("patient_report.id"));
                 jTextArea1.setText(resultSet.getString("patient_report.description"));
 
+                isReportAvailable = true;
+
             } else {
                 //No old reports
                 jLabel30.setText("No Old Reports");
                 jLabel30.setForeground(Color.red);
                 jLabel2.setText("ID Here");
                 jTextArea1.setText("");
+
+                isReportAvailable = false;
             }
 
         } catch (Exception e) {
@@ -674,6 +747,89 @@ public class PatientDischarge extends javax.swing.JPanel {
         }
     }
 
+    //Update patient report details
+    private void updatePatientReportDetails(String patientId, String doctorId, String admittedDate) {
+
+        if (isReportAvailable) {
+
+            try {
+
+                String query1 = "SELECT `description` FROM `patient_report` WHERE "
+                        + "`patient_id`='" + patientId + "' AND"
+                        + "`doctor_id`='" + doctorId + "' AND"
+                        + "`date`='" + admittedDate + "'";
+
+                ResultSet resultSet1 = MySQL.executeSearch(query1);
+
+                if (resultSet1.next()) {
+
+                    String newReportText = jTextArea1.getText();
+
+                    if (resultSet1.getString("description").equals(newReportText)) {
+                        JOptionPane.showMessageDialog(this, "Please update report description first.", "Warning", JOptionPane.WARNING_MESSAGE);
+                    } else {
+                        //update report
+                        String query2 = "UPDATE `patient_report` SET `description`='" + newReportText + "' "
+                                + "WHERE `patient_id`='" + patientId + "' AND "
+                                + "`doctor_id`='" + doctorId + "' AND "
+                                + "`date`='" + admittedDate + "'";
+
+                        MySQL.executeIUD(query2);
+
+                        JOptionPane.showMessageDialog(this, "Report updated successfully.", "Warning", JOptionPane.WARNING_MESSAGE);
+
+                    }
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(this, "No report availale for this person to update.", "Warning", JOptionPane.WARNING_MESSAGE);
+        }
+
+    }
+
+    //Update prescription
+    private void updatePrescription(String prescriptionId) {
+        try {
+            String query = "SELECT * FROM `prescription` WHERE `id`='" + prescriptionId + "'";
+
+            ResultSet resultSet = MySQL.executeSearch(query);
+
+            if (resultSet.next()) {
+                String prescriptionID = prescriptionId;
+                String patientId = jTextField1.getText();
+                String patientName = jLabel10.getText();
+                String bloodGroup = jLabel11.getText();
+                String age = jLabel12.getText();
+                String doctorID = SignIn.docID;
+                String doctorName = SignIn.docName;
+
+                HashMap<String, String> presDetails = new HashMap<>();
+                presDetails.put("prescriptionID", prescriptionID);
+                presDetails.put("patientID", patientId);
+                presDetails.put("patientName", patientName);
+                presDetails.put("bloodGroup", bloodGroup);
+                presDetails.put("age", age);
+                presDetails.put("doctorID", doctorID);
+                presDetails.put("doctorName", doctorName);
+
+                new Prescription(presDetails, this).setVisible(true);
+
+            } else {
+                JOptionPane.showMessageDialog(this, "No such a prescription", "Warning", JOptionPane.WARNING_MESSAGE);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public JLabel getUpdateStatusLabel() {
+        return this.jLabel29;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton3;
