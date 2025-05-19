@@ -4,7 +4,13 @@
  */
 package com.algounix.Panel;
 
+import com.algounix.Model.MySQL;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
+import java.sql.ResultSet;
+import java.util.HashMap;
+import java.util.Vector;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -12,14 +18,115 @@ import com.formdev.flatlaf.extras.FlatSVGIcon;
  */
 public class DoctorList extends javax.swing.JPanel {
 
+    private static HashMap<String, String> unitMap = new HashMap<>();
+    private static HashMap<String, String> typeMap = new HashMap<>();
     /**
      * Creates new form DoctorList
      */
     public DoctorList() {
         initComponents();
+        loadUnit();
+        loadType();
+        loadDoctors();
         FlatSVGIcon iconLogo = new FlatSVGIcon("com//algounix//Resources//DoctorList.svg",jLabel5.getWidth(), jLabel5.getHeight());
         jLabel5.setIcon(iconLogo);
     }
+
+    private void  loadUnit() {
+    
+        try {
+             //String index =String.valueOf( jComboBox4.getSelectedIndex()) ;
+             ResultSet resultSet = MySQL.executeSearch(" SELECT * FROM `units`  ");
+             
+             Vector<String> vector = new Vector<>();
+             vector.add("Select");
+             
+             while(resultSet.next()){
+             
+                 vector.add(resultSet.getString("name"));
+                 unitMap.put(resultSet.getString("name"), resultSet.getString("id"));
+             }
+             
+             DefaultComboBoxModel model = new DefaultComboBoxModel(vector);
+             jComboBox2.setModel(model);
+             
+          
+             
+             
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    
+    
+    }
+     private void  loadType() {
+    
+        try {
+             //String index =String.valueOf( jComboBox4.getSelectedIndex()) ;
+             ResultSet resultSet = MySQL.executeSearch(" SELECT * FROM `doctor_type`  ");
+             
+             Vector<String> vector = new Vector<>();
+             vector.add("Select");
+             
+             while(resultSet.next()){
+             
+                 vector.add(resultSet.getString("name"));
+                 typeMap.put(resultSet.getString("name"), resultSet.getString("id"));
+             }
+             
+             DefaultComboBoxModel model = new DefaultComboBoxModel(vector);
+             jComboBox1.setModel(model);
+             
+          
+             
+             
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    
+    
+    }
+     
+     private void  loadDoctors() {
+         try {
+             
+              String query = "SELECT doctor.id AS doctor_id, " +
+                       "doctor.first_name AS First_Name, " +
+                       "doctor.last_name AS Last_Name, " +
+                       "doctor_type.name AS Type, " +
+                       "units.name AS Unit, " +
+                       "doctor_status.name AS Status " +
+                       "FROM doctor " +
+                       "INNER JOIN doctor_type ON doctor.doctor_type_id = doctor_type.id " +
+                       "INNER JOIN doctor_has_units ON doctor.id = doctor_has_units.doctor_id " +
+                       "INNER JOIN units ON doctor_has_units.units_id = units.id " +
+                       "INNER JOIN doctor_status ON doctor.doctor_status_id = doctor_status.id";
+
+        ResultSet rs = MySQL.executeSearch(query);
+
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+            model.setRowCount(0);
+
+
+            while (rs.next()) {
+
+                Vector<String> v = new Vector<>();
+                v.add(rs.getString("doctor_id"));
+                v.add(rs.getString("First_Name"));
+                v.add(rs.getString("Last_Name"));
+                v.add(rs.getString("Type"));
+                v.add(rs.getString("Unit"));
+                v.add(rs.getString("Status"));
+               
+                model.addRow(v);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+     
+     }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -40,6 +147,7 @@ public class DoctorList extends javax.swing.JPanel {
         jComboBox2 = new javax.swing.JComboBox<>();
         jTextField1 = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
+        jButton7 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -88,12 +196,21 @@ public class DoctorList extends javax.swing.JPanel {
 
         jTextField1.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
 
+        jButton7.setBackground(new java.awt.Color(137, 207, 243));
+        jButton7.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+        jButton7.setText("Print Table");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(230, Short.MAX_VALUE)
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 422, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -102,18 +219,19 @@ public class DoctorList extends javax.swing.JPanel {
                     .addComponent(jTextField1)
                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 254, Short.MAX_VALUE)
+                    .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(26, 26, 26)
                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(71, 71, 71)
+                        .addGap(45, 45, 45)
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -124,7 +242,9 @@ public class DoctorList extends javax.swing.JPanel {
                         .addGap(38, 38, 38)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton7)))
                 .addContainerGap())
         );
 
@@ -185,8 +305,14 @@ public class DoctorList extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        // TODO add your handling code here:
+      
+    }//GEN-LAST:event_jButton7ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton7;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
