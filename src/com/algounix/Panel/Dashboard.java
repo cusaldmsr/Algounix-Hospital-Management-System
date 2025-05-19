@@ -16,6 +16,7 @@ import org.jfree.chart.plot.PiePlot;
 
 // JDBC
 import com.algounix.Model.MySQL;
+import java.awt.Color;
 import java.sql.ResultSet;
 
 
@@ -110,13 +111,10 @@ public class Dashboard extends javax.swing.JPanel {
 
     private void displayCharts() {
 
-//        chart1.add(createBarChartPanel(createAvaliableStock(), "Low Stock Items"));
         chart2.add(createPieChartPanel(createPatientGenderDataset(), "Patient Gender Distribution"));
         chart3.add(createLineChartPanel(createIncomeDataset(), "Daily Income Chart"));
         chart4.add(createPieChartPanel(createPieChartPaymentMethodDataset(), "Payment Method Distribution"));
 
-//        chart1.revalidate();
-//        chart1.repaint();
         chart2.revalidate();
         chart2.repaint();
         chart3.revalidate();
@@ -124,7 +122,6 @@ public class Dashboard extends javax.swing.JPanel {
         chart4.revalidate();
         chart4.repaint();
 
-//        chart1.setLayout(new java.awt.GridLayout(1, 3));
         chart2.setLayout(new java.awt.GridLayout(1, 3));
         chart3.setLayout(new java.awt.GridLayout(1, 3));
         chart4.setLayout(new java.awt.GridLayout(1, 3));
@@ -143,6 +140,7 @@ public class Dashboard extends javax.swing.JPanel {
         CategoryPlot plot = barChart.getCategoryPlot();
         plot.getDomainAxis().setTickLabelFont(new Font("SansSerif", Font.PLAIN, 10));
         plot.getRangeAxis().setTickLabelFont(new Font("SansSerif", Font.PLAIN, 10));
+        plot.setBackgroundPaint(Color.WHITE);
         barChart.getTitle().setFont(new Font("SansSerif", Font.BOLD, 12));
         barChart.getLegend().setItemFont(new Font("SansSerif", Font.PLAIN, 10));
 
@@ -160,6 +158,7 @@ public class Dashboard extends javax.swing.JPanel {
         );
 
         PiePlot plot = (PiePlot) pieChart.getPlot();
+        plot.setBackgroundPaint(Color.WHITE);
         plot.setLabelFont(new Font("SansSerif", Font.PLAIN, 10));
         pieChart.getTitle().setFont(new Font("SansSerif", Font.BOLD, 12));
         pieChart.getLegend().setItemFont(new Font("SansSerif", Font.PLAIN, 10));
@@ -176,6 +175,7 @@ public class Dashboard extends javax.swing.JPanel {
         );
 
         CategoryPlot plot = lineChart.getCategoryPlot();
+        plot.setBackgroundPaint(Color.WHITE);
         plot.getDomainAxis().setTickLabelFont(new Font("SansSerif", Font.PLAIN, 10));
         plot.getRangeAxis().setTickLabelFont(new Font("SansSerif", Font.PLAIN, 10));
         lineChart.getTitle().setFont(new Font("SansSerif", Font.BOLD, 12));
@@ -225,29 +225,6 @@ public class Dashboard extends javax.swing.JPanel {
         }
         return dataset;
     }
-//
-//    //stock chart
-//    private DefaultCategoryDataset createAvaliableStock() {
-//        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-//        try {
-//            ResultSet rs = MySQL.executeSearch("SELECT m.name AS item_name, s.qty AS current_stock\n"
-//                    + "FROM main_stock AS s\n"
-//                    + "JOIN medicine AS m ON m.id = s.medicine_id\n"
-//                    + "WHERE s.qty <= 100\n"
-//                    + "ORDER BY s.qty ASC\n"
-//                    + "LIMIT 10");
-//
-//            while (rs.next()) {
-//                dataset.addValue(rs.getInt("current_stock"), "Stock Level", rs.getString("item_name"));
-//            }
-//
-//            rs.close();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return dataset;
-//    }
-
     //payment Chart
     private DefaultPieDataset createPieChartPaymentMethodDataset() {
         DefaultPieDataset dataset = new DefaultPieDataset();
