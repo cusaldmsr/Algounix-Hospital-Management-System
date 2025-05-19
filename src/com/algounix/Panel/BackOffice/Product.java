@@ -9,6 +9,7 @@ import java.util.HashMap;
 import javax.swing.DefaultComboBoxModel;
 import com.algounix.Model.MySQL;
 import com.algounix.Panel.Doctor.Prescription;
+import com.algounix.Panel.GRN;
 import com.algounix.Panel.Pharmacy.PharmacyInvoice;
 import java.awt.Color;
 import java.time.LocalDate;
@@ -28,6 +29,7 @@ public class Product extends javax.swing.JDialog {
 
     private Prescription prescription;
     private PharmacyInvoice invoice;
+    private GRN grn;
 
     /**
      * Creates new form Product
@@ -53,6 +55,10 @@ public class Product extends javax.swing.JDialog {
     //  Set Pharmacy Stok to Product
     public void setPharmacyInvoice(PharmacyInvoice invoice) {
         this.invoice = invoice;
+    }
+    
+    public void setGrn(GRN grn){
+        this.grn = grn;
     }
 
     private void loadBrand() {
@@ -736,9 +742,18 @@ public class Product extends javax.swing.JDialog {
                 String id = String.valueOf(jTable1.getValueAt(row, 0));
                 String name = String.valueOf(jTable1.getValueAt(row, 1));
                 String brand = String.valueOf(jTable1.getValueAt(row, 2));
-                String category = String.valueOf(jTable1.getValueAt(row, 3));
 
                 invoice.setMedicineLabels(id, name, brand, name);
+                this.dispose();
+            }
+            
+            if(grn != null){
+                String id = String.valueOf(jTable1.getValueAt(row, 0));
+                String name = String.valueOf(jTable1.getValueAt(row, 1));
+                String brand = String.valueOf(jTable1.getValueAt(row, 2));
+                String category = String.valueOf(jTable1.getValueAt(row, 3));
+                
+                grn.setProductFeilds(id, name, brand, category);
                 this.dispose();
             }
 

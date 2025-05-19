@@ -710,9 +710,22 @@ public class GRN extends javax.swing.JPanel {
         // TODO add your handling code here:
         JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
         SupplierListDialog SL = new SupplierListDialog(parentFrame, true);
+        SL.setGrn(this);
         SL.setVisible(true);
     }//GEN-LAST:event_jButton5ActionPerformed
 
+    public void setSupplierFeilds(String mobile,String email, String name){
+        jLabel11.setText(mobile);
+        jLabel12.setText(email);
+        jLabel13.setText(name);
+    }
+    
+    public void setProductFeilds(String name, String brand, String cat){
+        jLabel16.setText(name);
+        jLabel15.setText(brand);
+        jLabel14.setText(cat);
+    }
+    
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
         reset();
@@ -734,6 +747,7 @@ public class GRN extends javax.swing.JPanel {
         // TODO add your handling code here:
       JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
         Product com = new Product(parentFrame, true);
+        com.setGrn(this);
         com.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
