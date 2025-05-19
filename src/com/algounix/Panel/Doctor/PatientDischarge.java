@@ -1,9 +1,14 @@
 package com.algounix.Panel.Doctor;
 
+import com.algounix.GUI.SignIn;
 import com.algounix.Model.MySQL;
+import com.mysql.cj.protocol.ResultStreamer;
+import java.awt.Color;
 import java.sql.ResultSet;
 import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 /**
  *
@@ -105,17 +110,17 @@ public class PatientDischarge extends javax.swing.JPanel {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Admit ID", "Patient ID", "Patient Name", "Admit Date", "Prescription ID", "Doctor "
+                "Admit ID", "Patient ID", "Patient Name", "Admit Date", "Room ID", "Prescription ID", "Doctor ID", "Doctor "
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -123,6 +128,11 @@ public class PatientDischarge extends javax.swing.JPanel {
             }
         });
         jTable1.getTableHeader().setReorderingAllowed(false);
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -369,7 +379,7 @@ public class PatientDischarge extends javax.swing.JPanel {
 
         jLabel30.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
         jLabel30.setForeground(new java.awt.Color(204, 0, 0));
-        jLabel30.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel30.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel30.setText("No Old Reports");
 
         jTextArea1.setColumns(20);
@@ -404,7 +414,7 @@ public class PatientDischarge extends javax.swing.JPanel {
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel29)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
                         .addComponent(jButton5))
                     .addComponent(jScrollPane3)
                     .addGroup(jPanel5Layout.createSequentialGroup()
@@ -412,9 +422,9 @@ public class PatientDischarge extends javax.swing.JPanel {
                             .addComponent(jLabel26, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel28, javax.swing.GroupLayout.DEFAULT_SIZE, 77, Short.MAX_VALUE))
                         .addGap(28, 28, 28)
-                        .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel30)))
+                        .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel30, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(23, 23, 23))
         );
         jPanel5Layout.setVerticalGroup(
@@ -506,36 +516,164 @@ public class PatientDischarge extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void loadAdmittedPatients() {
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        int clickedCount = evt.getClickCount();
 
-        String query = "SELECT * FROM `patient_admit` "
-                + "INNER JOIN `patient` ON `patient_admit`.`patient_id`=`patient`.`id` "
-                + "INNER JOIN `doctor_has_units` ON `patient_admit`.`doctor_has_units_id`=`doctor_has_units`.`id` "
-                + "INNER JOIN `doctor` ON `doctor_has_units`.`doctor_id`=`doctor`.`id` "
-                + "WHERE `appoinment_status_id`='" + ADMITTED_STATUS_ID + "'";
-        
+        if (clickedCount == 2) {
+            int selectedRow = jTable1.getSelectedRow();
+            String room_id = String.valueOf(jTable1.getValueAt(selectedRow, 4));
+            String patient_id = String.valueOf(jTable1.getValueAt(selectedRow, 1));
+            String addmitted_date = String.valueOf(jTable1.getValueAt(selectedRow, 3));
+            String doctor_id = String.valueOf(jTable1.getValueAt(selectedRow, 6));
+
+            loadRoomDetails(room_id);
+            loadPatientDetails(patient_id);
+            loadPatientReportDetails(patient_id, doctor_id, addmitted_date);
+        }
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    //load room details
+    private void loadRoomDetails(String roomId) {
+
         try {
+
+            String query = "SELECT * FROM `room` INNER JOIN `room_type` ON "
+                    + "`room`.`room_type_id`=`room_type`.`id` INNER JOIN `doctor_has_units` "
+                    + "ON `room`.`id`=`doctor_has_units`.`room_id` INNER JOIN `doctor` ON "
+                    + "`doctor_has_units`.`doctor_id`=`doctor`.`id` INNER JOIN `room_chargers` ON "
+                    + "`room_type`.`room_chargers_id`=`room_chargers`.`id` "
+                    + " WHERE `room`.`id`='" + roomId + "'";
+
             ResultSet resultSet = MySQL.executeSearch(query);
-            
-            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-            model.setRowCount(0);
-            while(resultSet.next()){
-                Vector<String> vector = new Vector();
-                vector.add(resultSet.getString("id"));
-                vector.add(resultSet.getString("patient_id"));
-                vector.add(resultSet.getString("patient.first_name")+" "+resultSet.getString("patient.last_name"));
-                vector.add(resultSet.getString("admit_date"));
-                vector.add(resultSet.getString("prescription_id"));
-                vector.add(resultSet.getString("doctor.first_name") + " " + resultSet.getString("doctor.last_name"));
-                
-                model.addRow(vector);
+
+            if (resultSet.next()) {
+                String roomTypeName = resultSet.getString("room_type.name");
+                String doctorName = resultSet.getString("doctor.first_name") + " " + resultSet.getString("doctor.last_name");
+                String chargeForDay = resultSet.getString("room_chargers.total_charge");
+                String description = resultSet.getString("room.discription");
+
+                jLabel13.setText(roomId);
+                jLabel15.setText(roomTypeName);
+                jLabel17.setText(doctorName);
+                jLabel22.setText(chargeForDay);
+                jTextArea2.setText(description);
             }
-            
+
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    
+
+    //load patient details
+    private void loadPatientDetails(String patientID) {
+
+        try {
+
+            String query = "SELECT * FROM `patient` "
+                    + "INNER JOIN `blood_group` ON `patient`.`blood_group_id`=`blood_group`.`id` "
+                    + "INNER JOIN `gender` ON `patient`.`gender_id`=`gender`.`id` "
+                    + "WHERE `patient`.`id`='" + patientID + "'";
+
+            ResultSet resultSet = MySQL.executeSearch(query);
+
+            if (resultSet.next()) {
+                String patientId = resultSet.getString("patient.id");
+                String patientName = resultSet.getString("patient.first_name") + " " + resultSet.getString("patient.last_name");
+                String bloodGroup = resultSet.getString("blood_group.name");
+                String age = calculateAge(resultSet.getString("patient.birthday"));
+                String nic = resultSet.getString("patient.nic");
+                String gender = resultSet.getString("gender.name");
+
+                jTextField1.setText(patientId);
+                jLabel10.setText(patientName);
+                jLabel11.setText(bloodGroup);
+                jLabel12.setText(age);
+                jLabel19.setText(nic);
+                jLabel20.setText(gender);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    //calculate age
+    private String calculateAge(String birthDay) {
+        LocalDate today = LocalDate.now();
+        LocalDate birthDate = LocalDate.parse(birthDay);
+
+        return String.valueOf(ChronoUnit.YEARS.between(birthDate, today));
+    }
+
+    //load patient details
+    private void loadAdmittedPatients() {
+
+        String query1 = "SELECT * FROM `patient_admit` "
+                + "INNER JOIN `patient` ON `patient_admit`.`patient_id`=`patient`.`id` "
+                + "INNER JOIN `patient_report` ON `patient_admit`.`patient_report_id`=`patient_report`.`id` "
+                + "INNER JOIN `doctor` ON `patient_report`.`doctor_id`=`doctor`.`id` "
+                + "WHERE `appoinment_status_id`='" + ADMITTED_STATUS_ID + "' AND "
+                + "`patient_report`.`doctor_id`='"+SignIn.docID+"'";
+
+        String query2 = "SELECT `first_name`,`last_name` FROM `doctor` WHERE `doctor`.`id`='" + SignIn.docID + "'";
+
+        try {
+
+            ResultSet resultSet1 = MySQL.executeSearch(query1);
+
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+            model.setRowCount(0);
+
+            while (resultSet1.next()) {
+                Vector<String> vector = new Vector();
+                vector.add(resultSet1.getString("id"));
+                vector.add(resultSet1.getString("patient_id"));
+                vector.add(resultSet1.getString("patient.first_name") + " " + resultSet1.getString("patient.last_name"));
+                vector.add(resultSet1.getString("admit_date"));
+                vector.add(resultSet1.getString("room_id"));
+                vector.add(resultSet1.getString("prescription_id"));
+                vector.add(SignIn.docID);
+                vector.add(resultSet1.getString("doctor.first_name") + " " + resultSet1.getString("doctor.last_name"));
+
+                model.addRow(vector);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    //load patient report details
+    private void loadPatientReportDetails(String patientId, String doctorID, String addmittedDate) {
+
+        try {
+
+            String query = "SELECT * FROM `patient_report` WHERE `patient_id`='" + patientId + "' "
+                    + "AND `doctor_id`='" + doctorID + "' AND `date`='" + addmittedDate + "'";
+
+            ResultSet resultSet = MySQL.executeSearch(query);
+
+            if (resultSet.next()) {
+                //load report details.
+                jLabel30.setText("Have Old Reports");
+                jLabel30.setForeground(Color.green);
+
+                jLabel27.setText(resultSet.getString("patient_report.id"));
+                jTextArea1.setText(resultSet.getString("patient_report.description"));
+
+            } else {
+                //No old reports
+                jLabel30.setText("No Old Reports");
+                jLabel30.setForeground(Color.red);
+                jLabel2.setText("ID Here");
+                jTextArea1.setText("");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton3;
