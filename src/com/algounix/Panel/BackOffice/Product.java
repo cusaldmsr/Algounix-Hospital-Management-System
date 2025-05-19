@@ -748,11 +748,12 @@ public class Product extends javax.swing.JDialog {
             }
             
             if(grn != null){
+                String id = String.valueOf(jTable1.getValueAt(row, 0));
                 String name = String.valueOf(jTable1.getValueAt(row, 1));
                 String brand = String.valueOf(jTable1.getValueAt(row, 2));
                 String category = String.valueOf(jTable1.getValueAt(row, 3));
                 
-                grn.setProductFeilds(name, brand, category);
+                grn.setProductFeilds(id, name, brand, category);
                 this.dispose();
             }
 
