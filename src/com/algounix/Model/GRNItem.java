@@ -1,6 +1,8 @@
 
 package com.algounix.Model;
 
+import java.util.Date;
+
 public class GRNItem {
 
     private String productId;
@@ -9,6 +11,8 @@ public class GRNItem {
     private double qty;
     private double buyingPrice;
     private double sellingPrice;
+    private Date mfd;
+    private Date exp;
 
 
     public String getProductId() {
@@ -58,6 +62,22 @@ public class GRNItem {
 
     public void setSellingPrice(double sellingPrice) {
         this.sellingPrice = sellingPrice;
+    }
+
+    public Date getMfd() {
+        return mfd;
+    }
+
+    public void setMfd(Date mfd) {
+        this.mfd = mfd;
+    }
+
+    public Date getExp() {
+        return exp;
+    }
+
+    public void setExp(Date exp) {
+        this.exp = exp;
     }
 
 }
