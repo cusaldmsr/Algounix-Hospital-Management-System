@@ -7,7 +7,6 @@ package com.algounix.Panel.Doctor;
 import com.algounix.Components.ScrollBar;
 import com.algounix.Model.MySQL;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
-import java.awt.Color;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import javax.swing.DefaultListModel;
@@ -23,12 +22,6 @@ import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.data.JRTableModelDataSource;
 import net.sf.jasperreports.view.JasperViewer;
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.PiePlot;
-import org.jfree.data.general.DefaultPieDataset;
-import org.jfree.data.general.PieDataset;
 
 /**
  *
@@ -42,10 +35,11 @@ public class DoctorAttendunce extends javax.swing.JPanel {
     public DoctorAttendunce() {
         initComponents();
         jScrollPane1.setVerticalScrollBar(new ScrollBar());
+        FlatSVGIcon iconLogo = new FlatSVGIcon("com//algounix//Resources//Atendence.svg", jLabel2.getWidth(), jLabel2.getHeight());
+        jLabel2.setIcon(iconLogo);
         loadSuggestion();
         updateAttendanceFor30Days();
         loadDoctorAttendance();
-        displayChart();
     }
 
     private void loadSuggestion() {
@@ -100,51 +94,6 @@ public class DoctorAttendunce extends javax.swing.JPanel {
         }
     }
 
-    private void displayChart() {
-        chartpanel.add(createPieChartPanel(createDoctorDistributionDataset(), "Doctor Distribution by Specialization"));
-
-        chartpanel.revalidate();
-        chartpanel.repaint();
-
-        chartpanel.setLayout(new java.awt.GridLayout(1, 2));
-    }
-
-    //    Pie Chart Panel
-    private ChartPanel createPieChartPanel(PieDataset dataset, String chartTitle) {
-        JFreeChart pieChart = ChartFactory.createPieChart(
-                chartTitle, // chart title
-                dataset, // data
-                false, // include legend
-                true,
-                false
-        );
-        PiePlot plot = (PiePlot) pieChart.getPlot();
-        plot.setBackgroundPaint(Color.WHITE);
-        return new ChartPanel(pieChart);
-    }
-
-    //piechart 1 Dataset
-    private DefaultPieDataset createDoctorDistributionDataset() {
-        DefaultPieDataset dataset = new DefaultPieDataset();
-        try {
-            ResultSet rs = MySQL.executeSearch("SELECT ds.name AS specialization, COUNT(*) AS doctor_count\n"
-                    + "FROM doctor d\n"
-                    + "INNER JOIN doctor_type ds ON d.doctor_type_id = ds.id\n"
-                    + "GROUP BY ds.name");
-
-            while (rs.next()) {
-                String company = rs.getString("specialization");
-                int count = rs.getInt("doctor_count");
-                dataset.setValue(company, count);
-            }
-
-            rs.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return dataset;
-    }
-
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -159,7 +108,8 @@ public class DoctorAttendunce extends javax.swing.JPanel {
         jPopupMenu2 = new javax.swing.JPopupMenu();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        chartpanel = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
@@ -265,17 +215,25 @@ public class DoctorAttendunce extends javax.swing.JPanel {
                 .addGap(20, 20, 20))
         );
 
-        chartpanel.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
-        javax.swing.GroupLayout chartpanelLayout = new javax.swing.GroupLayout(chartpanel);
-        chartpanel.setLayout(chartpanelLayout);
-        chartpanelLayout.setHorizontalGroup(
-            chartpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 560, Short.MAX_VALUE)
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
-        chartpanelLayout.setVerticalGroup(
-            chartpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 225, Short.MAX_VALUE)
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
@@ -668,20 +626,19 @@ public class DoctorAttendunce extends javax.swing.JPanel {
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(13, 13, 13)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(13, 13, 13)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 534, Short.MAX_VALUE))))
+                        .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 534, Short.MAX_VALUE))
                 .addGap(13, 13, 13))
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(296, 296, 296)
+                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -691,10 +648,10 @@ public class DoctorAttendunce extends javax.swing.JPanel {
                     .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10))
                 .addGap(15, 15, 15)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -704,7 +661,7 @@ public class DoctorAttendunce extends javax.swing.JPanel {
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(chartpanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -716,7 +673,7 @@ public class DoctorAttendunce extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(chartpanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -1053,7 +1010,7 @@ public class DoctorAttendunce extends javax.swing.JPanel {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        } else {
+        }else{
             loadDoctorAttendance();
         }
 
@@ -1061,7 +1018,7 @@ public class DoctorAttendunce extends javax.swing.JPanel {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
-        try (InputStream path = this.getClass().getResourceAsStream("/com/algounix/Reports/Doctor_Attendance_List_HMS2.jasper")) {
+         try (InputStream path = this.getClass().getResourceAsStream("/com/algounix/Reports/Doctor_Attendance_List_HMS2.jasper")) {
 
             if (path == null) {
                 throw new FileNotFoundException("Report file not found in the specified path.");
@@ -1271,7 +1228,6 @@ public class DoctorAttendunce extends javax.swing.JPanel {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel chartpanel;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -1294,6 +1250,7 @@ public class DoctorAttendunce extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1304,6 +1261,7 @@ public class DoctorAttendunce extends javax.swing.JPanel {
     private javax.swing.JList<String> jList1;
     private javax.swing.JList<String> jList2;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;

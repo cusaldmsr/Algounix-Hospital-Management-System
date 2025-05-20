@@ -7,7 +7,6 @@ package com.algounix.Panel.Pharmacy;
 import com.algounix.Panel.Reception.*;
 import com.algounix.Model.MySQL;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
-import java.awt.Color;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.sql.ResultSet;
@@ -22,12 +21,6 @@ import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.data.JRTableModelDataSource;
 import net.sf.jasperreports.view.JasperViewer;
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.PiePlot;
-import org.jfree.data.general.DefaultPieDataset;
-import org.jfree.data.general.PieDataset;
 
 /**
  *
@@ -35,39 +28,47 @@ import org.jfree.data.general.PieDataset;
  */
 public class PaymentHistory extends javax.swing.JPanel {
 
-    private static HashMap<String, String> PaymentMethodMap = new HashMap<>();
-
+    private static HashMap <String,String> PaymentMethodMap = new HashMap<>();
+    
+    
     public PaymentHistory() {
         initComponents();
         FlatSVGIcon iconLogo = new FlatSVGIcon("com//algounix//Resources//PaymentHistory.svg", jLabel2.getWidth(), jLabel2.getHeight());
         jLabel2.setIcon(iconLogo);
-
-        loadhospitleinvoice();
-        loadpaymentMethod();
-        displayChart();
+        
+        loadhospitleinvoice ();
+        loadpaymentMethod ();
+        
     }
 
-    private void loadhospitleinvoice() {
-
+    
+        private void loadhospitleinvoice (){
+        
         try {
-
+            
+            
+            
+            
             String query = "SELECT * FROM `hospital_invoice` "
-                    + "INNER JOIN `payment_method` ON `hospital_invoice`.`payment_method_id` = `payment_method`.`id`";
-
+            + "INNER JOIN `payment_method` ON `hospital_invoice`.`payment_method_id` = `payment_method`.`id`";
+            
+            
             String id = jTextField2.getText();
             query += " WHERE `hospital_invoice`.`id` LIKE '" + id + "%'";
-
+            
+            
             String paymentmethod = String.valueOf(jComboBox1.getSelectedIndex());
 //            if (!paymentmethod.equals("0")) {
 //                query += " WHERE `hospital_invoice`.`payment_method_id` = '" + paymentmethod + "'";
 //            }
 
             if (query.contains("WHERE") && !paymentmethod.equals("0")) {
-                query += " AND `hospital_invoice`.`payment_method_id`='" + paymentmethod + "'";
-            } else if (!paymentmethod.equals("0")) {
-                query += " WHERE `hospital_invoice`.`payment_method_id`='" + paymentmethod + "'";
+                query+=" AND `hospital_invoice`.`payment_method_id`='"+paymentmethod+"'";
+            }else if (!paymentmethod.equals("0")) {
+                query+=" WHERE `hospital_invoice`.`payment_method_id`='"+paymentmethod+"'";
             }
-
+            
+            
             Date Date = null;
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -76,16 +77,18 @@ public class PaymentHistory extends javax.swing.JPanel {
 
                 query += " AND `hospital_invoice`.`date` LIKE '" + sdf.format(Date) + "%'";
             }
-
+            
+            
             ResultSet resultSet = MySQL.executeSearch(query);
-
-            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+            
+            DefaultTableModel model = (DefaultTableModel)jTable1.getModel();
             model.setRowCount(0);
-
-            while (resultSet.next()) {
-
-                Vector<String> vector = new Vector<>();
-
+            
+            
+            while (resultSet.next()){
+                
+                Vector <String> vector = new Vector<>();
+                
                 vector.add(resultSet.getString("id"));
                 vector.add(resultSet.getString("total_amount"));
                 vector.add(resultSet.getString("payment"));
@@ -93,90 +96,43 @@ public class PaymentHistory extends javax.swing.JPanel {
                 vector.add(resultSet.getString("payment_method.name"));
                 vector.add(resultSet.getString("payer_nic"));
                 vector.add(resultSet.getString("date"));
-
+                
+                
                 model.addRow(vector);
             }
-
-        } catch (Exception e) {
+            
+            
+        }catch (Exception e){
             e.printStackTrace();
         }
-
+                
     }
-
-    private void loadpaymentMethod() {
-
-        try {
-
+    
+    private void loadpaymentMethod (){ 
+        
+        try{
+            
             ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `payment_method`");
-
+            
             Vector<String> vector = new Vector<>();
             vector.add("Select");
-
+            
             while (resultSet.next()) {
                 vector.add(resultSet.getString("name"));
                 PaymentMethodMap.put(resultSet.getString("name"), resultSet.getString("id"));
             }
-
+            
             DefaultComboBoxModel model = new DefaultComboBoxModel(vector);
             jComboBox1.setModel(model);
-
-        } catch (Exception e) {
+            
+            
+            
+        }catch (Exception e){
             e.printStackTrace();
         }
-
+            
     }
-
-    private void displayChart() {
-
-        chartpanel.add(createPieChartPanel(createMostSoldDistributionDataset(), "Top Most Sold Pharmacy Products"));
-
-        chartpanel.revalidate();
-        chartpanel.repaint();
-
-        chartpanel.setLayout(new java.awt.GridLayout(1, 2));
-
-    }
-
-    //    Pie Chart Panel
-    private ChartPanel createPieChartPanel(PieDataset dataset, String chartTitle) {
-        JFreeChart pieChart = ChartFactory.createPieChart(
-                chartTitle, // chart title
-                dataset, // data
-                false, // include legend
-                true,
-                false
-        );
-        PiePlot plot = (PiePlot) pieChart.getPlot();
-        plot.setBackgroundPaint(Color.WHITE);
-        return new ChartPanel(pieChart);
-    }
-
-    //piechart 1 Dataset
-    private DefaultPieDataset createMostSoldDistributionDataset() {
-        DefaultPieDataset dataset = new DefaultPieDataset();
-        try {
-            ResultSet rs = MySQL.executeSearch("SELECT m.name AS product_name, SUM(pii.qty) AS total_sold\n"
-                    + "FROM pharmacy_invoice_item pii\n"
-                    + "JOIN pharmacy_stock ps ON pii.parmacy_stock_id = ps.id\n"
-                    + "JOIN main_stock ms ON ps.main_stock_id = ms.id\n"
-                    + "JOIN medicine m ON ms.medicine_id = m.id\n"
-                    + "GROUP BY m.name\n"
-                    + "ORDER BY total_sold DESC\n"
-                    + "LIMIT 10");
-
-            while (rs.next()) {
-                String company = rs.getString("product_name");
-                int count = rs.getInt("total_sold");
-                dataset.setValue(company, count);
-            }
-
-            rs.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return dataset;
-    }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -199,7 +155,8 @@ public class PaymentHistory extends javax.swing.JPanel {
         jButton1 = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
-        chartpanel = new javax.swing.JPanel();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(205, 245, 253));
 
@@ -401,17 +358,26 @@ public class PaymentHistory extends javax.swing.JPanel {
                 .addContainerGap(118, Short.MAX_VALUE))
         );
 
-        chartpanel.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
 
-        javax.swing.GroupLayout chartpanelLayout = new javax.swing.GroupLayout(chartpanel);
-        chartpanel.setLayout(chartpanelLayout);
-        chartpanelLayout.setHorizontalGroup(
-            chartpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+        jLabel7.setFont(new java.awt.Font("Poppins Light", 3, 24)); // NOI18N
+        jLabel7.setText("Pie Chart");
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(131, 131, 131)
+                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        chartpanelLayout.setVerticalGroup(
-            chartpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 497, Short.MAX_VALUE)
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(177, 177, 177)
+                .addComponent(jLabel7)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -423,7 +389,7 @@ public class PaymentHistory extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(chartpanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -436,7 +402,7 @@ public class PaymentHistory extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(chartpanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -445,12 +411,12 @@ public class PaymentHistory extends javax.swing.JPanel {
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         // TODO add your handling code here:
-
-        if (evt.getClickCount() == 2) {
-
+        
+        if (evt.getClickCount() == 2){
+             
             int row = jTable1.getSelectedRow();
-
-            String invoiceid = String.valueOf(jTable1.getValueAt(row, 0));
+                 
+            String invoiceid  = String.valueOf(jTable1.getValueAt(row, 0));
             jTextField2.setText(invoiceid);
 
             String paymentmethod = String.valueOf(jTable1.getValueAt(row, 4));
@@ -461,12 +427,12 @@ public class PaymentHistory extends javax.swing.JPanel {
 
     private void jComboBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox1ItemStateChanged
         // TODO add your handling code here:
-        loadhospitleinvoice();
+        loadhospitleinvoice ();
     }//GEN-LAST:event_jComboBox1ItemStateChanged
 
     private void jTextField2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField2KeyReleased
         // TODO add your handling code here:
-        loadhospitleinvoice();
+        loadhospitleinvoice ();
     }//GEN-LAST:event_jTextField2KeyReleased
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -476,12 +442,12 @@ public class PaymentHistory extends javax.swing.JPanel {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        loadhospitleinvoice();
+        loadhospitleinvoice ();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        try (InputStream path = this.getClass().getResourceAsStream("/com/algounix/Reports/Pharmacy _Invoice_Report_HMS.jasper")) {
+               try (InputStream path = this.getClass().getResourceAsStream("/com/algounix/Reports/Pharmacy _Invoice_Report_HMS.jasper")) {
 
             if (path == null) {
                 throw new FileNotFoundException("Report file not found in the specified path.");
@@ -510,7 +476,6 @@ public class PaymentHistory extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel chartpanel;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -520,27 +485,33 @@ public class PaymentHistory extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
 
-    private void resetUI() {
+private void resetUI() {
 
         jTextField2.setText("");
-
+        
         jComboBox1.setSelectedIndex(0);
-
+        
         jDateChooser1.setDate(null);
-
+        
         jTable1.clearSelection();
-        loadhospitleinvoice();
+        loadhospitleinvoice ();
     }
+
+
+
+
 
 }
