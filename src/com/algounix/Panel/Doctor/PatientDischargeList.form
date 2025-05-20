@@ -116,7 +116,7 @@
               <Font name="Poppins" size="18" style="1"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="Patient Discharge"/>
+            <Property name="text" type="java.lang.String" value="Patient Discharge List"/>
           </Properties>
         </Component>
       </SubComponents>
