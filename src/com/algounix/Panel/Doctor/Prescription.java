@@ -34,6 +34,7 @@ public class Prescription extends javax.swing.JFrame {
     private DoctorChanelling docChanelling;
     private PatientAdmit patientAdmit;
     private PatientDischarge patientDischarge;
+    private OpdList opdList;
 
     private boolean isDischarge = false;
 
@@ -74,6 +75,19 @@ public class Prescription extends javax.swing.JFrame {
         this.isDischarge = true;
         this.presDetails = presDetails;
         this.patientDischarge = discharge;
+        setPrescriptionDetails();
+        jTextField1.setText(generatePrescriptionID());
+        validateSpinner1();
+        validateSpinner2();
+        clearAll();      
+    }
+    
+    public Prescription(HashMap<String, String> presDetails, OpdList opdList) {
+        initComponents();
+        loadUI();
+        this.isDischarge = false;
+        this.presDetails = presDetails;
+        this.opdList = opdList;
         setPrescriptionDetails();
         jTextField1.setText(generatePrescriptionID());
         validateSpinner1();
@@ -830,6 +844,15 @@ public class Prescription extends javax.swing.JFrame {
                 patientAdmit.getPrescriptionStatusLabel().setForeground(Color.GREEN);
                 patientAdmit = null;
             }
+          
+            if(opdList != null){
+                opdList.getPrescriptionStatusLabel().setText("Added");
+                opdList.getPrescriptionStatusLabel().setForeground(Color.GREEN);
+                opdList.isPrescriptionAdded = true;
+                opdList = null;
+            }
+            
+            JOptionPane.showMessageDialog(this, "Prescription added successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
             this.dispose();
             
             this.isDischarge = false;
