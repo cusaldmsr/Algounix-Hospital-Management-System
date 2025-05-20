@@ -193,7 +193,7 @@
                   <Table columnCount="4" rowCount="0">
                     <Column editable="false" title="Patient ID" type="java.lang.Object"/>
                     <Column editable="false" title="Patient Name" type="java.lang.Object"/>
-                    <Column editable="true" title="Appoinment Number" type="java.lang.Object"/>
+                    <Column editable="true" title="OPD Number" type="java.lang.Object"/>
                     <Column editable="true" title="Status" type="java.lang.Object"/>
                   </Table>
                 </Property>
@@ -351,6 +351,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Next Paitent"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
