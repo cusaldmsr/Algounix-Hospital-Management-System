@@ -29,7 +29,7 @@ public class PatientReportAndPrescription extends javax.swing.JPanel {
      */
     public PatientReportAndPrescription() {
         initComponents();
-        loadDeatails();
+       // loadDeatails();
         loadPrescriptionDeatails();
     }
 
@@ -71,21 +71,15 @@ public class PatientReportAndPrescription extends javax.swing.JPanel {
         } catch (Exception e) {
         }
 
+        loadDeatails();
     }
 
     public void loadDeatails() {
+        String id = jTextField1.getText();
         try {
-            ResultSet rs = MySQL.executeSearch("SELECT \n"
-                    + "    pr.id AS report_id,\n"
-                    + "    pr.`date` AS report_date,\n"
-                    + "    CONCAT(d.first_name, ' ', d.last_name) AS doctor_name,\n"
-                    + "    pr.patient_id AS patient_id\n"
-                    + "FROM \n"
-                    + "    patient_report pr\n"
-                    + "INNER JOIN \n"
-                    + "    patient p ON pr.patient_id = p.id\n"
-                    + "INNER JOIN \n"
-                    + "    doctor d ON pr.doctor_id = d.id");
+            ResultSet rs = MySQL.executeSearch(" SELECT * FROM `patient_report` "
+                    + "INNER JOIN `patient` ON `patient` . `id` = `patient_report` . `patient_id` "
+                    + "INNER JOIN `doctor` ON `doctor` .`id` = `patient_report` . `doctor_id` WHERE `patient` . `id` = '"+id+"' ");
 
             DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
             model.setRowCount(0);
@@ -93,10 +87,10 @@ public class PatientReportAndPrescription extends javax.swing.JPanel {
             while (rs.next()) {
 
                 Vector<String> v = new Vector<>();
-                v.add(rs.getString("report_id"));
-                v.add(rs.getString("report_date"));
-                v.add(rs.getString("doctor_name"));
-                v.add(rs.getString("patient_id"));
+                v.add(rs.getString("patient_report.id"));
+                v.add(rs.getString("date"));
+                v.add(rs.getString("doctor.first_name"));
+                v.add(rs.getString("patient.id"));
 
                 model.addRow(v);
             }
