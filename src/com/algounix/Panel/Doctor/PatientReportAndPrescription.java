@@ -8,6 +8,8 @@ import com.algounix.Model.MySQL;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.sql.ResultSet;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
 import net.sf.jasperreports.engine.JRException;
@@ -31,7 +33,47 @@ public class PatientReportAndPrescription extends javax.swing.JPanel {
         loadPrescriptionDeatails();
     }
 
-     public void loadDeatails() {
+    private void loadPatien() {
+
+        String id = jTextField1.getText();
+        try {
+
+            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `patient` "
+                    + "INNER JOIN `blood_group` ON `blood_group` . `id` = `patient` . `blood_group_id` "
+                    + "INNER JOIN `nationality` ON `nationality` . `id` = `patient` . `nationality_id`"
+                    + "INNER JOIN `gender` ON `gender` . `id` = `patient` . `gender_id` "
+                    + "INNER JOIN `patient_status` ON `patient_status` . `id` = `patient` . `patient_status_id`  "
+                    + "WHERE `patient` . `id` = '" + id + "' ");
+
+            if (resultSet.next()) {
+
+                jLabel10.setText(resultSet.getString("first_name"));
+                jLabel11.setText(resultSet.getString("blood_group.name"));
+                
+                String bd = resultSet.getString("birthday");
+                LocalDate dob = LocalDate.parse(bd);
+                LocalDate today = LocalDate.now();
+                Period age = Period.between(dob, today);
+                //System.out.println(age.getYears());
+                jLabel12.setText(String.valueOf(age.getYears()));
+                jLabel19.setText(resultSet.getString("nic"));
+                jLabel20.setText(resultSet.getString("gender.name"));
+                
+                
+
+            }else{
+               jLabel10.setText("Patient Name Here");
+               jLabel11.setText("Patient Blood Group Here");
+               jLabel12.setText("Patient Age Here");
+               jLabel19.setText("Patient NIC Here");
+               jLabel20.setText("Gender Here");
+            }
+        } catch (Exception e) {
+        }
+
+    }
+
+    public void loadDeatails() {
         try {
             ResultSet rs = MySQL.executeSearch("SELECT \n"
                     + "    pr.id AS report_id,\n"
@@ -63,7 +105,8 @@ public class PatientReportAndPrescription extends javax.swing.JPanel {
             e.printStackTrace();
         }
     }
-      public void loadPrescriptionDeatails() {
+
+    public void loadPrescriptionDeatails() {
         try {
             ResultSet rs = MySQL.executeSearch("SELECT \n"
                     + "    pres.id AS prescription_id,\n"
@@ -90,7 +133,6 @@ public class PatientReportAndPrescription extends javax.swing.JPanel {
                 v.add(rs.getString("patient_name"));
                 v.add(rs.getString("pres.duration_from_days"));
 
-
                 model.addRow(v);
             }
 
@@ -98,6 +140,7 @@ public class PatientReportAndPrescription extends javax.swing.JPanel {
             e.printStackTrace();
         }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -216,6 +259,11 @@ public class PatientReportAndPrescription extends javax.swing.JPanel {
 
         jTextField1.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
         jTextField1.setText("327326");
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField1KeyReleased(evt);
+            }
+        });
 
         jLabel18.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
         jLabel18.setText("Patient NIC");
@@ -256,7 +304,7 @@ public class PatientReportAndPrescription extends javax.swing.JPanel {
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addContainerGap(24, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel14)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -655,7 +703,7 @@ public class PatientReportAndPrescription extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-         try (InputStream path = this.getClass().getResourceAsStream("/com/algounix/Reports/Patient_Reports_and_Prescriptions_HMS.jasper")) {
+        try (InputStream path = this.getClass().getResourceAsStream("/com/algounix/Reports/Patient_Reports_and_Prescriptions_HMS.jasper")) {
 
             if (path == null) {
                 throw new FileNotFoundException("Report file not found in the specified path.");
@@ -710,6 +758,11 @@ public class PatientReportAndPrescription extends javax.swing.JPanel {
             e.printStackTrace();
         }
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
+        // TODO add your handling code here:
+        loadPatien();
+    }//GEN-LAST:event_jTextField1KeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
