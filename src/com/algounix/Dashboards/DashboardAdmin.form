@@ -119,55 +119,52 @@
                               <Component id="jLabel12" max="32767" attributes="0"/>
                               <Component id="jLabel41" alignment="1" max="32767" attributes="0"/>
                               <Component id="AppointmentListbtn1" alignment="1" min="-2" pref="227" max="-2" attributes="0"/>
-                              <Component id="jLabel40" alignment="1" min="-2" pref="228" max="-2" attributes="0"/>
-                              <Component id="jLabel42" alignment="1" min="-2" pref="228" max="-2" attributes="0"/>
                               <Component id="DoctorRegbtn" alignment="1" min="-2" pref="228" max="-2" attributes="0"/>
                               <Component id="jLabel43" alignment="1" max="32767" attributes="0"/>
                               <Component id="AppointmentListbtn2" alignment="1" min="-2" pref="227" max="-2" attributes="0"/>
                               <Component id="AppointmentListbtn3" alignment="1" min="-2" pref="227" max="-2" attributes="0"/>
                               <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="Appointmentbtn" alignment="1" pref="228" max="32767" attributes="0"/>
-                                  <Component id="AppointmentListbtn" alignment="1" max="32767" attributes="0"/>
-                              </Group>
-                              <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="SupplierRegbtn" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="SupplierListbtn" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="CompanyRegbtn" alignment="1" pref="228" max="32767" attributes="0"/>
-                                  <Component id="BrandRegbtn" alignment="1" max="32767" attributes="0"/>
-                              </Group>
-                              <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="GRNbtn" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="GRNbtn1" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="Stockbtn" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="StockTransferbtn" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="StockTransferbtn1" alignment="1" pref="228" max="32767" attributes="0"/>
-                                  <Component id="AddProductbtn" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="StockListbtn" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="StockListbtn1" alignment="1" max="32767" attributes="0"/>
-                              </Group>
-                              <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="RoomPapbtn" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="RoomsReservationbtn" alignment="1" pref="228" max="32767" attributes="0"/>
-                              </Group>
-                              <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="PatientRegbtn" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="PatientListbtn" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="PatientAdmitbtn" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="PatientAdmitbtn1" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="PatientAdmitbtn3" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="PatientAdmitbtn2" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="PatientReportbtn" alignment="1" pref="228" max="32767" attributes="0"/>
-                              </Group>
-                              <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="EmployeeRegbtn" alignment="1" pref="228" max="32767" attributes="0"/>
                                   <Component id="EmployeeListbtn" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="EmployeeRegbtn" alignment="1" pref="228" max="32767" attributes="0"/>
                               </Group>
+                              <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="PatientReportbtn" alignment="1" pref="228" max="32767" attributes="0"/>
+                                  <Component id="PatientAdmitbtn2" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="PatientAdmitbtn3" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="PatientListbtn" alignment="1" max="32767" attributes="0"/>
+                              </Group>
+                              <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="RoomsReservationbtn" alignment="1" pref="228" max="32767" attributes="0"/>
+                                  <Component id="RoomPapbtn" alignment="1" max="32767" attributes="0"/>
+                              </Group>
+                              <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="StockListbtn1" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="StockListbtn" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="AddProductbtn" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="StockTransferbtn" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="Stockbtn" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="GRNbtn1" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="GRNbtn" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="StockTransferbtn1" alignment="1" pref="228" max="32767" attributes="0"/>
+                              </Group>
+                              <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="BrandRegbtn" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="CompanyRegbtn" alignment="1" pref="228" max="32767" attributes="0"/>
+                                  <Component id="SupplierListbtn" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="SupplierRegbtn" alignment="1" max="32767" attributes="0"/>
+                              </Group>
+                              <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="AppointmentListbtn" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="Appointmentbtn" alignment="1" pref="228" max="32767" attributes="0"/>
+                              </Group>
+                              <Component id="jLabel40" alignment="1" min="-2" pref="228" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
                           <Component id="DoctorListbtn" max="32767" attributes="0"/>
                           <Component id="DoctorReportbtn" pref="228" max="32767" attributes="0"/>
                           <Component id="DoctorListbtn1" max="32767" attributes="0"/>
+                          <Component id="DoctorReportbtn1" pref="228" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -185,14 +182,8 @@
                           <Component id="EmployeeListbtn" min="-2" pref="44" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
                           <Component id="jLabel4" min="-2" pref="44" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="PatientRegbtn" min="-2" pref="44" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="PatientListbtn" min="-2" pref="44" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="PatientAdmitbtn" min="-2" pref="44" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="PatientAdmitbtn1" min="-2" pref="44" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="PatientAdmitbtn3" min="-2" pref="44" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
@@ -201,7 +192,7 @@
                           <Component id="PatientReportbtn" min="-2" pref="44" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jLabel6" min="-2" pref="44" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="DoctorRegbtn" min="-2" pref="44" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="DoctorListbtn" min="-2" pref="44" max="-2" attributes="0"/>
@@ -210,14 +201,16 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="DoctorReportbtn" min="-2" pref="44" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jLabel8" min="-2" pref="44" max="-2" attributes="0"/>
+                          <Component id="DoctorReportbtn1" min="-2" pref="44" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jLabel8" min="-2" pref="44" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="RoomPapbtn" min="-2" pref="44" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="RoomsReservationbtn" min="-2" pref="44" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="jLabel25" min="-2" pref="44" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="GRNbtn" min="-2" pref="44" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="GRNbtn1" min="-2" pref="44" max="-2" attributes="0"/>
@@ -235,7 +228,7 @@
                           <Component id="StockListbtn1" min="-2" pref="44" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="jLabel26" min="-2" pref="44" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="SupplierRegbtn" min="-2" pref="44" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="SupplierListbtn" min="-2" pref="44" max="-2" attributes="0"/>
@@ -243,31 +236,29 @@
                           <Component id="CompanyRegbtn" min="-2" pref="44" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="BrandRegbtn" min="-2" pref="44" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="jLabel12" min="-2" pref="44" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="Appointmentbtn" min="-2" pref="44" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="AppointmentListbtn" min="-2" pref="44" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                           <Component id="jLabel38" min="-2" pref="44" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="AppointmentListbtn1" min="-2" pref="44" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                           <Component id="jLabel43" min="-2" pref="44" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="AppointmentListbtn2" min="-2" pref="44" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="AppointmentListbtn3" min="-2" pref="44" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="jLabel41" min="-2" pref="44" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="jLabel39" min="-2" pref="44" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="jLabel40" min="-2" pref="44" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jLabel42" min="-2" pref="44" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -372,17 +363,6 @@
                     <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="EmployeeListbtnMouseClicked"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JLabel" name="PatientRegbtn">
-                  <Properties>
-                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Poppins" size="13" style="0"/>
-                    </Property>
-                    <Property name="text" type="java.lang.String" value="Patient Registration"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="PatientRegbtnMouseClicked"/>
-                  </Events>
-                </Component>
                 <Component class="javax.swing.JLabel" name="PatientListbtn">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -392,17 +372,6 @@
                   </Properties>
                   <Events>
                     <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="PatientListbtnMouseClicked"/>
-                  </Events>
-                </Component>
-                <Component class="javax.swing.JLabel" name="PatientAdmitbtn">
-                  <Properties>
-                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Poppins" size="13" style="0"/>
-                    </Property>
-                    <Property name="text" type="java.lang.String" value="Patient Admit"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="PatientAdmitbtnMouseClicked"/>
                   </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="DoctorRegbtn">
@@ -658,39 +627,6 @@
                     <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="AppointmentListbtn1MouseClicked"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JLabel" name="PatientAdmitbtn1">
-                  <Properties>
-                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Poppins" size="13" style="0"/>
-                    </Property>
-                    <Property name="text" type="java.lang.String" value="Patient Discharge"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="PatientAdmitbtn1MouseClicked"/>
-                  </Events>
-                </Component>
-                <Component class="javax.swing.JLabel" name="jLabel40">
-                  <Properties>
-                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Poppins" size="13" style="0"/>
-                    </Property>
-                    <Property name="text" type="java.lang.String" value="Doctor Attendence"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabel40MouseClicked"/>
-                  </Events>
-                </Component>
-                <Component class="javax.swing.JLabel" name="jLabel42">
-                  <Properties>
-                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Poppins" size="13" style="0"/>
-                    </Property>
-                    <Property name="text" type="java.lang.String" value="Doctor Fees"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabel42MouseClicked"/>
-                  </Events>
-                </Component>
                 <Component class="javax.swing.JLabel" name="jLabel43">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -788,6 +724,28 @@
                   </Properties>
                   <Events>
                     <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="AppointmentListbtn3MouseClicked"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JLabel" name="DoctorReportbtn1">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Poppins" size="13" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Doctor Fees"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="DoctorReportbtn1MouseClicked"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel40">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Poppins" size="13" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Back-up Data"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabel40MouseClicked"/>
                   </Events>
                 </Component>
               </SubComponents>
@@ -924,7 +882,7 @@
             <Component class="com.algounix.Panel.Dashboard" name="dashboard1">
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
-                  <CardConstraints cardName="card2"/>
+                  <CardConstraints cardName="card32"/>
                 </Constraint>
               </Constraints>
             </Component>
@@ -988,13 +946,6 @@
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
                   <CardConstraints cardName="card17"/>
-                </Constraint>
-              </Constraints>
-            </Component>
-            <Component class="com.algounix.Panel.Doctor.PatientAdmit" name="patientAdmit1">
-              <Constraints>
-                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
-                  <CardConstraints cardName="card18"/>
                 </Constraint>
               </Constraints>
             </Component>
@@ -1075,24 +1026,10 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="com.algounix.Panel.PatientRegNew" name="patientRegNew1">
-              <Constraints>
-                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
-                  <CardConstraints cardName="card28"/>
-                </Constraint>
-              </Constraints>
-            </Component>
             <Component class="com.algounix.Panel.Doctor.PatientReportAndPrescription" name="patientReportAndPrescription1">
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
                   <CardConstraints cardName="card29"/>
-                </Constraint>
-              </Constraints>
-            </Component>
-            <Component class="com.algounix.Panel.Doctor.PatientDischarge" name="patientDischarge1">
-              <Constraints>
-                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
-                  <CardConstraints cardName="card31"/>
                 </Constraint>
               </Constraints>
             </Component>

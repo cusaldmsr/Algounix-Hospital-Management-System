@@ -30,123 +30,123 @@ public class PatientList extends javax.swing.JPanel {
         initComponents();
         loadPatient();
     }
-    
-    private void loadPatient(){
-    
-       
+
+    private void loadPatient() {
+
         try {
-            
+
             String query = "SELECT * FROM `patient` "
                     + " INNER JOIN `blood_group` ON `blood_group` . `id` = `patient` . `blood_group_id` "
                     + " INNER JOIN `nationality` ON `nationality` . `id` = `patient` . `nationality_id` "
                     + " INNER JOIN  `gender` ON `gender` . `id` = `patient` . `gender_id` "
                     + " INNER JOIN `patient_status` ON `patient_status` . `id` = `patient` . `patient_status_id`  ";
-            
-            
-            String fname = jTextField1.getText();
-                   if(fname.isEmpty()){
-                          query += "";
-                   }else{
-                         query += " WHERE `patient` . `first_name` = '"+fname+"' " ;
-                   }
-            String nic =jTextField2.getText();
-                 if(nic.isEmpty()){
-                      query += "";
-                 }else {
-                         query += " WHERE `patient` . `nic` = '"+nic+"' " ;
-                 }
-            String mobile =jTextField3.getText();
-                 if(mobile.isEmpty()) {
-                        query += "";
-                 }else {
-                        query += " WHERE `patient` . `mobile` = '"+mobile+"' " ;
-                 }
-                 
-                 //blood Group Search Start
-                 
-                 String bGroup = String.valueOf(jComboBox1.getSelectedItem());
-            
-                       if(bGroup.equals("Select")){
-                              query += "";
-                       }else {
-                        
-                           query += " WHERE ";
-                           
-                           if(bGroup.equals("A Positive")){
-                                  query += " `blood_group` . `name` = 'A Positive' ";
-                           }else if(bGroup.equals("A Negative")){
-                                   query += " `blood_group` . `name` = 'A Negative' ";
-                           }else if(bGroup.equals("B Positive")){
-                                   query += " `blood_group` . `name` = 'B Positive' ";
-                           }else if(bGroup.equals("B Negative")){
-                                   query += " `blood_group` . `name` = 'B Negative' ";
-                           }else if(bGroup.equals("O Positive")){
-                                   query += " `blood_group` . `name` = 'O Positive' ";
-                           }else if(bGroup.equals("O Negative")){
-                                   query += " `blood_group` . `name` = 'O Negative' ";
-                           }else if(bGroup.equals("AB Positive")){
-                                   query += " `blood_group` . `name` = 'AB Positive' ";
-                           }else if(bGroup.equals("AB Negative")){
-                                   query += " `blood_group` . `name` = 'AB Negative' ";
-                           }
-                       
-                       }
-                       
-                       //blood Group Search End
-                       
-                       //sort process start
-                       
-                       String sort =String.valueOf(jComboBox2.getSelectedItem());
-                       
-                              if(sort.equals("Select")) {
-                                        query += "";
 
-                              }else{
-                                      
-                                     query += "ORDER BY  ";
-                                     
-                                     if(sort.equals("Patient ID ASC")) {
-                                            query += " `patient` . `id` ASC " ;
-                                     }if(sort.equals("Patient ID DESC")) {
-                                            query += " `patient` . `id` DESC " ;
-                                     }if(sort.equals("First Name ASC")) {
-                                            query += " `patient` . `first_name` ASC " ;
-                                     }if(sort.equals("First Name DESC")) {
-                                            query += " `patient` . `first_name` DESC " ;
-                                     }if(sort.equals("Last Name ASC")) {
-                                            query += " `patient` . `last_name` ASC " ;
-                                     }if(sort.equals("Last NAme DESC")) {
-                                            query += " `patient` . `last_name` DESC " ;
-                                     }if(sort.equals("Mobile ASC")) {
-                                            query += " `patient` . `mobile` ASC " ;
-                                     }if(sort.equals("Mobile DESC")) {
-                                            query += " `patient` . `mobile` DESC " ;
-                                     }if(sort.equals("Blood Group ASC")) {
-                                            query += " `patient` . `blood_group_id` ASC " ;
-                                     }if(sort.equals("Blood Group DESC")) {
-                                            query += " `patient` . `blood_group_id` DESC " ;
-                                     }if(sort.equals("Registered Date ASC")) {
-                                            query += " `patient` . `register_date` ASC " ;
-                                     }if(sort.equals("Registered Date DESC")) {
-                                            query += " `patient` . `register_date` DESC " ;
-                                     }
-                                    
-                              }
-                              
-                              //sort process end
-                              
-                       
-            
-           
-            
-            
+            String fname = jTextField1.getText();
+            if (fname.isEmpty()) {
+                query += "";
+            } else {
+                query += " WHERE `patient` . `first_name` = '" + fname + "' ";
+            }
+            String nic = jTextField2.getText();
+            if (nic.isEmpty()) {
+                query += "";
+            } else {
+                query += " WHERE `patient` . `nic` = '" + nic + "' ";
+            }
+            String mobile = jTextField3.getText();
+            if (mobile.isEmpty()) {
+                query += "";
+            } else {
+                query += " WHERE `patient` . `mobile` = '" + mobile + "' ";
+            }
+
+            //blood Group Search Start
+            String bGroup = String.valueOf(jComboBox1.getSelectedItem());
+
+            if (bGroup.equals("Select")) {
+                query += "";
+            } else {
+
+                query += " WHERE ";
+
+                if (bGroup.equals("A Positive")) {
+                    query += " `blood_group` . `name` = 'A Positive' ";
+                } else if (bGroup.equals("A Negative")) {
+                    query += " `blood_group` . `name` = 'A Negative' ";
+                } else if (bGroup.equals("B Positive")) {
+                    query += " `blood_group` . `name` = 'B Positive' ";
+                } else if (bGroup.equals("B Negative")) {
+                    query += " `blood_group` . `name` = 'B Negative' ";
+                } else if (bGroup.equals("O Positive")) {
+                    query += " `blood_group` . `name` = 'O Positive' ";
+                } else if (bGroup.equals("O Negative")) {
+                    query += " `blood_group` . `name` = 'O Negative' ";
+                } else if (bGroup.equals("AB Positive")) {
+                    query += " `blood_group` . `name` = 'AB Positive' ";
+                } else if (bGroup.equals("AB Negative")) {
+                    query += " `blood_group` . `name` = 'AB Negative' ";
+                }
+
+            }
+
+            //blood Group Search End
+            //sort process start
+            String sort = String.valueOf(jComboBox2.getSelectedItem());
+
+            if (sort.equals("Select")) {
+                query += "";
+
+            } else {
+
+                query += "ORDER BY  ";
+
+                if (sort.equals("Patient ID ASC")) {
+                    query += " `patient` . `id` ASC ";
+                }
+                if (sort.equals("Patient ID DESC")) {
+                    query += " `patient` . `id` DESC ";
+                }
+                if (sort.equals("First Name ASC")) {
+                    query += " `patient` . `first_name` ASC ";
+                }
+                if (sort.equals("First Name DESC")) {
+                    query += " `patient` . `first_name` DESC ";
+                }
+                if (sort.equals("Last Name ASC")) {
+                    query += " `patient` . `last_name` ASC ";
+                }
+                if (sort.equals("Last NAme DESC")) {
+                    query += " `patient` . `last_name` DESC ";
+                }
+                if (sort.equals("Mobile ASC")) {
+                    query += " `patient` . `mobile` ASC ";
+                }
+                if (sort.equals("Mobile DESC")) {
+                    query += " `patient` . `mobile` DESC ";
+                }
+                if (sort.equals("Blood Group ASC")) {
+                    query += " `patient` . `blood_group_id` ASC ";
+                }
+                if (sort.equals("Blood Group DESC")) {
+                    query += " `patient` . `blood_group_id` DESC ";
+                }
+                if (sort.equals("Registered Date ASC")) {
+                    query += " `patient` . `register_date` ASC ";
+                }
+                if (sort.equals("Registered Date DESC")) {
+                    query += " `patient` . `register_date` DESC ";
+                }
+
+            }
+
+            //sort process end
             ResultSet resultSet = MySQL.executeSearch(query);
-            
-            DefaultTableModel model = (DefaultTableModel)jTable1.getModel();
+
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
             model.setRowCount(0);
-            
-            while(resultSet.next()){
-                
+
+            while (resultSet.next()) {
+
                 Vector<String> vector = new Vector<>();
                 vector.add(resultSet.getString("id"));
                 vector.add(resultSet.getString("first_name"));
@@ -157,19 +157,15 @@ public class PatientList extends javax.swing.JPanel {
                 vector.add(resultSet.getString("gender.name"));
                 vector.add(resultSet.getString("register_date"));
                 vector.add(resultSet.getString("patient_status.name"));
-               
+
                 model.addRow(vector);
-                
-            
-            
+
             }
-            
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-    
-    
-    
+
     }
 
     /**
@@ -665,70 +661,64 @@ public class PatientList extends javax.swing.JPanel {
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         // TODO add your handling code here:
-        
+
         int row = jTable1.getSelectedRow();
-        
-        
+
         String id = String.valueOf(jTable1.getValueAt(row, 0));
-        
+
         try {
-            
-               ResultSet resultSet =  MySQL.executeSearch(" SELECT * FROM `patient`  "
-                       + " INNER JOIN `patient_has_guardian` ON `patient_has_guardian` . `patient_id` = `patient` . `id` "
-                       + " INNER JOIN `guardian` ON `guardian` . `id` = `patient_has_guardian` . `guardian_id`"
-                       + " INNER JOIN `patient_address` ON `patient` . `id` = `patient_address` . `patient_id` "
-                       + " INNER JOIN `city` ON `city` . `id` = `patient_address` . `city_id` "
-                       + " INNER JOIN `district` ON `district` . `id` = `patient_address` . `district_id` "
-                       + " WHERE `patient` . `id` = '"+id+"'");
-               
-               if(resultSet.next()) {
-                    
-                    jLabel13.setText(resultSet.getString("patient_address.id"));
-                    jLabel10.setText(resultSet.getString("patient_address.line1"));
-                    jLabel12.setText(resultSet.getString("patient_address.line2"));
-                    jLabel14.setText(resultSet.getString("city.name"));
-                    jLabel15.setText(resultSet.getString("district.name"));
-                    
-                    jLabel16.setText(resultSet.getString("guardian.first_name"));
-                    jLabel19.setText(resultSet.getString("guardian.last_name"));
-                    jLabel21.setText(resultSet.getString("guardian.email"));
-                    jLabel23.setText(resultSet.getString("guardian.mobile"));
-                    jLabel25.setText(resultSet.getString("guardian.nic"));
-                   
-                    
 
-               }else {
-              
-                    JOptionPane.showMessageDialog(this, "The Patient's Address OR Guardian Are Not Registered.", "Warning" , JOptionPane.WARNING_MESSAGE);
-               
-               }
-             
+            ResultSet resultSet = MySQL.executeSearch(" SELECT * FROM `patient`  "
+                    + " INNER JOIN `patient_has_guardian` ON `patient_has_guardian` . `patient_id` = `patient` . `id` "
+                    + " INNER JOIN `guardian` ON `guardian` . `id` = `patient_has_guardian` . `guardian_id`"
+                    + " INNER JOIN `patient_address` ON `patient` . `id` = `patient_address` . `patient_id` "
+                    + " INNER JOIN `city` ON `city` . `id` = `patient_address` . `city_id` "
+                    + " INNER JOIN `district` ON `district` . `id` = `patient_address` . `district_id` "
+                    + " WHERE `patient` . `id` = '" + id + "'");
 
-            
-            
+            if (resultSet.next()) {
+
+                jLabel13.setText(resultSet.getString("patient_address.id"));
+                jLabel10.setText(resultSet.getString("patient_address.line1"));
+                jLabel12.setText(resultSet.getString("patient_address.line2"));
+                jLabel14.setText(resultSet.getString("city.name"));
+                jLabel15.setText(resultSet.getString("district.name"));
+
+                jLabel16.setText(resultSet.getString("guardian.first_name"));
+                jLabel19.setText(resultSet.getString("guardian.last_name"));
+                jLabel21.setText(resultSet.getString("guardian.email"));
+                jLabel23.setText(resultSet.getString("guardian.mobile"));
+                jLabel25.setText(resultSet.getString("guardian.nic"));
+
+            } else {
+
+                JOptionPane.showMessageDialog(this, "The Patient's Address OR Guardian Are Not Registered.", "Warning", JOptionPane.WARNING_MESSAGE);
+
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        
+
         jTable1.clearSelection();
-        
-                    jLabel13.setText("Address ID Here");
-                    jLabel10.setText("Address Line 01 Here");
-                    jLabel12.setText("Address Line 02 Here");
-                    jLabel14.setText("City Here");
-                    jLabel15.setText("District Here");
-                    
-                     jLabel16.setText("First Name Here");
-                    jLabel19.setText("Last Name Here");
-                    jLabel21.setText("Email Address Here");
-                    jLabel23.setText("Mobile Number Here");
-                    jLabel25.setText("NIC Here");
-                    
+
+        jLabel13.setText("Address ID Here");
+        jLabel10.setText("Address Line 01 Here");
+        jLabel12.setText("Address Line 02 Here");
+        jLabel14.setText("City Here");
+        jLabel15.setText("District Here");
+
+        jLabel16.setText("First Name Here");
+        jLabel19.setText("Last Name Here");
+        jLabel21.setText("Email Address Here");
+        jLabel23.setText("Mobile Number Here");
+        jLabel25.setText("NIC Here");
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

@@ -5,6 +5,7 @@
 package com.algounix.Panel.BackOffice;
 
 import com.algounix.Model.MySQL;
+import com.algounix.Panel.GRN;
 import com.sun.jdi.connect.spi.Connection;
 import java.sql.ResultSet;
 import java.util.HashMap;
@@ -22,7 +23,7 @@ public class SupplierListDialog extends javax.swing.JDialog {
     private static HashMap <String,String> statusMap = new HashMap<>();
     private static HashMap <String,String> companyMap = new HashMap<>();
     
-    
+    private GRN grn;
     
     public SupplierListDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -32,6 +33,9 @@ public class SupplierListDialog extends javax.swing.JDialog {
         loadSupplier ();
     }
 
+    public void setGrn(GRN grn){
+        this.grn = grn;
+    }
     
     private void lodeStatus (){
         
@@ -296,6 +300,11 @@ public class SupplierListDialog extends javax.swing.JDialog {
             }
         });
         jTable1.getTableHeader().setReorderingAllowed(false);
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -383,6 +392,21 @@ public class SupplierListDialog extends javax.swing.JDialog {
         // TODO add your handling code here:
         loadSupplier();
     }//GEN-LAST:event_jComboBox2ItemStateChanged
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        int row = jTable1.getSelectedRow();
+        if(evt.getClickCount() == 2){
+            if(grn != null){
+                String id = String.valueOf(jTable1.getValueAt(row, 0));
+                String mobile = String.valueOf(jTable1.getValueAt(row, 3));
+                String email = String.valueOf(jTable1.getValueAt(row, 4));
+                String name = String.valueOf(jTable1.getValueAt(row, 1)+" "+String.valueOf(jTable1.getValueAt(row, 2)));
+                
+                grn.setSupplierFeilds(id, mobile, email, name);
+                this.dispose();
+            }
+        }
+    }//GEN-LAST:event_jTable1MouseClicked
 
     
     

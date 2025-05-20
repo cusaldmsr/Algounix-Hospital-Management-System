@@ -4,25 +4,57 @@
  */
 package com.algounix.Panel;
 
+import com.algounix.Model.MySQL;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
+import java.sql.ResultSet;
+import java.util.HashMap;
+import java.util.Vector;
+import javax.swing.DefaultComboBoxModel;
 
 /**
  *
  * @author Kusal And Sadeesha
  */
 public class UpdateRoom extends javax.swing.JPanel {
+    
+    private HashMap<String, String> typeMap = new HashMap<>();
 
     /**
      * Creates new form UpdateRoom
      */
     public UpdateRoom() {
         initComponents();
+        loadType();
          FlatSVGIcon iconLogo = new FlatSVGIcon("com//algounix//Resources//UpdateRoom.svg", jLabel10.getWidth(), jLabel10.getHeight());
         jLabel10.setIcon(iconLogo);
+        
 //          FlatSVGIcon icon1Logo = new FlatSVGIcon("com//algounix//Resources//InchargeUpdateRoom.svg", jLabel12.getWidth(), jLabel12.getHeight());
 //        jLabel12.setIcon(icon1Logo);
     }
+    
+    private void loadType(){
+        
 
+        try {
+
+            Vector<String> vector = new Vector<>();
+            vector.add("Select");
+
+            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM room_type");
+
+            while (resultSet.next()) {
+                vector.add(resultSet.getString("name"));
+                typeMap.put(resultSet.getString("name"), resultSet.getString("id"));
+            }
+
+            jComboBox1.setModel(new DefaultComboBoxModel<>(vector));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -130,11 +162,11 @@ public class UpdateRoom extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel4))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)

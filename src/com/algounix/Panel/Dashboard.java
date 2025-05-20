@@ -1,37 +1,27 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package com.algounix.Panel;
 
-import com.algounix.GUI.SignOut;
-import com.algounix.Model.MySQL;
-import com.algounix.Panel.*;
-import com.mysql.cj.xdevapi.Result;
-import java.awt.BorderLayout;
-import java.awt.Color;
+//Other
 import java.awt.Font;
-import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+// JFreeChart
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.CategoryPlot;
-import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
+import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PiePlot;
 
-/**
- *
- * @author MSI BRAVO 15
- */
+// JDBC
+import com.algounix.Model.MySQL;
+import java.awt.Color;
+import java.sql.ResultSet;
+
+
 public class Dashboard extends javax.swing.JPanel {
 
-    /**
-     * Creates new form Dashboard
-     */
     public Dashboard() {
         initComponents();
         loadInpatientCount();
@@ -40,7 +30,7 @@ public class Dashboard extends javax.swing.JPanel {
         loadEmployeeCount();
         loadRoomCount();
         loadAppointmentCount();
-        loadCharts();
+        displayCharts();
     }
 
     private void loadInpatientCount() {
@@ -119,92 +109,143 @@ public class Dashboard extends javax.swing.JPanel {
         }
     }
 
-    private void loadCharts() {
-        // Create a dataset for the chart
-        DefaultPieDataset dataset = new DefaultPieDataset();
+    private void displayCharts() {
 
-        try {
-            // Query to fetch gender and their patient count
-            ResultSet rs = MySQL.executeSearch(
-                    "SELECT `gender`.`id`, `gender`.`name` AS `gender_name`, COUNT(`patient`.`id`) AS `total` "
-                    + "FROM `gender` "
-                    + "LEFT JOIN `patient` ON `gender`.`id` = `patient`.`gender_id` "
-                    + "GROUP BY `gender`.`id`, `gender`.`name`"
-            );
+        chart2.add(createPieChartPanel(createPatientGenderDataset(), "Patient Gender Distribution"));
+        chart3.add(createLineChartPanel(createIncomeDataset(), "Daily Income Chart"));
+        chart4.add(createPieChartPanel(createPieChartPaymentMethodDataset(), "Payment Method Distribution"));
 
-            // Add the results to the dataset
-            while (rs.next()) {
-                String genderName = rs.getString("gender_name");
-                int total = rs.getInt("total");
-                dataset.setValue(genderName, total);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        chart2.revalidate();
+        chart2.repaint();
+        chart3.revalidate();
+        chart3.repaint();
+        chart4.revalidate();
+        chart4.repaint();
 
-        // Create the pie chart
-        JFreeChart chart = ChartFactory.createPieChart(
-                "Gender Distribution", // Chart title
-                dataset, // Dataset
-                true, // Include legend
-                true, // Tooltips
-                false // URLs
+        chart2.setLayout(new java.awt.GridLayout(1, 3));
+        chart3.setLayout(new java.awt.GridLayout(1, 3));
+        chart4.setLayout(new java.awt.GridLayout(1, 3));
+    }
+
+    //chart panels
+    //barchart panel
+    private ChartPanel createBarChartPanel(DefaultCategoryDataset dataset, String chartTitle) {
+        JFreeChart barChart = ChartFactory.createBarChart(
+                chartTitle,
+                "Item",
+                "Quantity",
+                dataset
         );
 
-        // Customize to look like a ring chart
-        PiePlot plot = (PiePlot) chart.getPlot();
+        CategoryPlot plot = barChart.getCategoryPlot();
+        plot.getDomainAxis().setTickLabelFont(new Font("SansSerif", Font.PLAIN, 10));
+        plot.getRangeAxis().setTickLabelFont(new Font("SansSerif", Font.PLAIN, 10));
         plot.setBackgroundPaint(Color.WHITE);
-        plot.setLabelFont(new Font("SansSerif", Font.BOLD, 14));
-        plot.setCircular(true);            // Make it circular
-        plot.setInteriorGap(0.1);          // Create a ring-like effect
-        plot.setSectionPaint("Male", Color.BLUE); // Example: Customize section colors
-        plot.setSectionPaint("Female", Color.PINK);
+        barChart.getTitle().setFont(new Font("SansSerif", Font.BOLD, 12));
+        barChart.getLegend().setItemFont(new Font("SansSerif", Font.PLAIN, 10));
 
-        // Display the chart in a JPanel
-        ChartPanel chartPanel = new ChartPanel(chart);
-        pieChart.removeAll();
-        pieChart.setLayout(new BorderLayout());
-        pieChart.add(chartPanel, BorderLayout.CENTER);
-        pieChart.validate();
-        pieChart.repaint();
+        return new ChartPanel(barChart);
     }
 
-    private void patientChart() {
-        DefaultCategoryDataset dcd = new DefaultCategoryDataset();
-        try {
-            ResultSet rs = MySQL.executeSearch("SELECT * FROM `blood_group`");
-            while (rs.next()) {
-                String bloodGroupID = rs.getString("id");
-                String bloodGroupName = rs.getString("blood_group.name");
+    // pie chart panel
+    private ChartPanel createPieChartPanel(DefaultPieDataset dataset, String chartTitle) {
+        JFreeChart pieChart = ChartFactory.createPieChart(
+                chartTitle,
+                dataset,
+                true,
+                true,
+                false
+        );
 
-                ResultSet rs1 = MySQL.executeSearch("SELECT COUNT(`patient`.`id`) AS `total` FROM `patient` WHERE `blood_group_id` = '" + bloodGroupID + "'");
-                if (rs1.next()) {
-                    int total = rs1.getInt("total"); // Fetch count
-                    dcd.setValue(total, "Patients", bloodGroupName); // Add data to dataset
-                }
+        PiePlot plot = (PiePlot) pieChart.getPlot();
+        plot.setBackgroundPaint(Color.WHITE);
+        plot.setLabelFont(new Font("SansSerif", Font.PLAIN, 10));
+        pieChart.getTitle().setFont(new Font("SansSerif", Font.BOLD, 12));
+        pieChart.getLegend().setItemFont(new Font("SansSerif", Font.PLAIN, 10));
+        return new ChartPanel(pieChart);
+    }
+
+    //linechart panel
+    private ChartPanel createLineChartPanel(DefaultCategoryDataset dataset, String chartTitle) {
+        JFreeChart lineChart = ChartFactory.createLineChart(
+                chartTitle,
+                "Date",
+                "Income",
+                dataset
+        );
+
+        CategoryPlot plot = lineChart.getCategoryPlot();
+        plot.setBackgroundPaint(Color.WHITE);
+        plot.getDomainAxis().setTickLabelFont(new Font("SansSerif", Font.PLAIN, 10));
+        plot.getRangeAxis().setTickLabelFont(new Font("SansSerif", Font.PLAIN, 10));
+        lineChart.getTitle().setFont(new Font("SansSerif", Font.BOLD, 12));
+        lineChart.getLegend().setItemFont(new Font("SansSerif", Font.PLAIN, 10));
+        return new ChartPanel(lineChart);
+    }
+
+    //income chart
+    private DefaultCategoryDataset createIncomeDataset() {
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+        try {
+            ResultSet rs = MySQL.executeSearch("SELECT DATE(invoice.date) AS invoice_date, SUM(payment) AS total_income\n"
+                    + "FROM hospital_invoice AS invoice\n"
+                    + "GROUP BY DATE(invoice.date)\n"
+                    + "ORDER BY DATE(invoice.date) DESC\n"
+                    + "LIMIT 10");
+
+            while (rs.next()) {
+                String date = rs.getString("invoice_date");
+                double income = rs.getDouble("total_income");
+                dataset.addValue(income, "Income", date);
             }
+
+            rs.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        JFreeChart jchart = ChartFactory.createBarChart("Blood Group Distribution", "Blood Group", "Number of Patients", dcd, PlotOrientation.VERTICAL, true, true, false);
-
-        CategoryPlot plot = jchart.getCategoryPlot();
-        plot.setRangeGridlinePaint(Color.RED);
-
-        ChartPanel chartPanel = new ChartPanel(jchart);
-        patientChart.removeAll(); // Clear previous charts
-        patientChart.setLayout(new BorderLayout()); // Set layout for dynamic components
-        patientChart.add(chartPanel, BorderLayout.CENTER); // Add new chart
-        patientChart.validate(); // Revalidate the panel
-        patientChart.repaint(); // Repaint to reflect changes
+        return dataset;
     }
 
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
+    //gender chart
+    private DefaultPieDataset createPatientGenderDataset() {
+        DefaultPieDataset dataset = new DefaultPieDataset();
+        try {
+            ResultSet rs = MySQL.executeSearch("SELECT g.name AS gender, COUNT(*) AS total\n"
+                    + "FROM gender AS g\n"
+                    + "INNER JOIN patient AS p ON p.gender_id = g.id\n"
+                    + "GROUP BY g.name");
+            while (rs.next()) {
+                String gender = rs.getString("gender");
+                int count = rs.getInt("total");
+                dataset.setValue(gender, count);
+            }
+            rs.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return dataset;
+    }
+    //payment Chart
+    private DefaultPieDataset createPieChartPaymentMethodDataset() {
+        DefaultPieDataset dataset = new DefaultPieDataset();
+        try {
+            ResultSet rs = MySQL.executeSearch("SELECT pm.name AS method, COUNT(*) AS total\n"
+                    + "FROM hospital_invoice AS hi\n"
+                    + "JOIN payment_method AS pm ON hi.payment_method_id = pm.id\n"
+                    + "GROUP BY pm.name");
+
+            while (rs.next()) {
+                String method = rs.getString("method");
+                int count = rs.getInt("total");
+                dataset.setValue(method, count);
+            }
+            rs.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return dataset;
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -237,8 +278,6 @@ public class Dashboard extends javax.swing.JPanel {
         jLabel28 = new javax.swing.JLabel();
         jPanel16 = new javax.swing.JPanel();
         jCalendar1 = new com.toedter.calendar.JCalendar();
-        patientChart = new javax.swing.JPanel();
-        jPanel20 = new javax.swing.JPanel();
         jPanel22 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
@@ -255,7 +294,9 @@ public class Dashboard extends javax.swing.JPanel {
         jSeparator2 = new javax.swing.JSeparator();
         jLabel20 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
-        pieChart = new javax.swing.JPanel();
+        chart3 = new javax.swing.JPanel();
+        chart4 = new javax.swing.JPanel();
+        chart2 = new javax.swing.JPanel();
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -499,7 +540,7 @@ public class Dashboard extends javax.swing.JPanel {
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel16Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jCalendar1, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
+                .addComponent(jCalendar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel16Layout.setVerticalGroup(
@@ -508,32 +549,6 @@ public class Dashboard extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(jCalendar1, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
                 .addContainerGap())
-        );
-
-        patientChart.setBackground(new java.awt.Color(255, 255, 255));
-
-        javax.swing.GroupLayout patientChartLayout = new javax.swing.GroupLayout(patientChart);
-        patientChart.setLayout(patientChartLayout);
-        patientChartLayout.setHorizontalGroup(
-            patientChartLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        patientChartLayout.setVerticalGroup(
-            patientChartLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 188, Short.MAX_VALUE)
-        );
-
-        jPanel20.setBackground(new java.awt.Color(255, 255, 255));
-
-        javax.swing.GroupLayout jPanel20Layout = new javax.swing.GroupLayout(jPanel20);
-        jPanel20.setLayout(jPanel20Layout);
-        jPanel20Layout.setHorizontalGroup(
-            jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 591, Short.MAX_VALUE)
-        );
-        jPanel20Layout.setVerticalGroup(
-            jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 176, Short.MAX_VALUE)
         );
 
         jPanel22.setBackground(new java.awt.Color(255, 255, 255));
@@ -629,10 +644,25 @@ public class Dashboard extends javax.swing.JPanel {
                 .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel20)
                     .addComponent(jLabel21))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(115, Short.MAX_VALUE))
         );
 
-        pieChart.setLayout(new javax.swing.BoxLayout(pieChart, javax.swing.BoxLayout.LINE_AXIS));
+        chart3.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout chart3Layout = new javax.swing.GroupLayout(chart3);
+        chart3.setLayout(chart3Layout);
+        chart3Layout.setHorizontalGroup(
+            chart3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        chart3Layout.setVerticalGroup(
+            chart3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        chart4.setLayout(new javax.swing.BoxLayout(chart4, javax.swing.BoxLayout.LINE_AXIS));
+
+        chart2.setLayout(new javax.swing.BoxLayout(chart2, javax.swing.BoxLayout.LINE_AXIS));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -641,16 +671,17 @@ public class Dashboard extends javax.swing.JPanel {
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, 820, Short.MAX_VALUE)
-                    .addComponent(patientChart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, 813, Short.MAX_VALUE)
+                    .addComponent(chart3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
+                        .addComponent(chart4, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(pieChart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(chart2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel22, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel16, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jPanel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel22, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -659,23 +690,26 @@ public class Dashboard extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel22, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(patientChart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(chart2, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(chart4, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jPanel20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(pieChart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(chart3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel22, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel chart2;
+    private javax.swing.JPanel chart3;
+    private javax.swing.JPanel chart4;
     private com.toedter.calendar.JCalendar jCalendar1;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
@@ -711,7 +745,6 @@ public class Dashboard extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel16;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel20;
     private javax.swing.JPanel jPanel22;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -721,7 +754,5 @@ public class Dashboard extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTable jTable2;
-    private javax.swing.JPanel patientChart;
-    private javax.swing.JPanel pieChart;
     // End of variables declaration//GEN-END:variables
 }
