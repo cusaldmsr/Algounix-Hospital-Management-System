@@ -351,6 +351,11 @@ public class PatientReportAndPrescription extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         jButton1.setBackground(new java.awt.Color(205, 245, 253));
@@ -757,6 +762,33 @@ public class PatientReportAndPrescription extends javax.swing.JPanel {
         // TODO add your handling code here:
         loadPatien();
     }//GEN-LAST:event_jTextField1KeyReleased
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+        
+         int row = jTable1.getSelectedRow();
+         
+         String id = String.valueOf(jTable1.getValueAt(row, 0));
+         
+        try {
+            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `patient_report` "
+                    + "INNER JOIN `patient` ON `patient` . `id` = `patient_report` . `patient_id` "
+                    + "INNER JOIN `doctor` ON `doctor` . `id` = `patient_report` . `doctor_id` "
+                    + "WHERE `patient_report` . `id` = '"+id+"' ");
+            
+            if (resultSet.next()) {
+                jLabel33.setText(resultSet.getString("doctor.id"));
+                jLabel32.setText(resultSet.getString("doctor.first_name") + " " + resultSet.getString("doctor.last_name"));
+                jLabel27.setText("patient_report.id");
+                jLabel45.setText(resultSet.getString("patient_report.date"));
+                jTextArea1.setText(resultSet.getString("patient_report.description"));
+                
+            }
+        } catch (Exception e) {
+        }
+         
+     
+    }//GEN-LAST:event_jTable1MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
