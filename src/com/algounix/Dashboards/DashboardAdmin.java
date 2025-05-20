@@ -89,9 +89,7 @@ public class DashboardAdmin extends javax.swing.JFrame {
         AdminDashboardbtn = new javax.swing.JLabel();
         EmployeeRegbtn = new javax.swing.JLabel();
         EmployeeListbtn = new javax.swing.JLabel();
-        PatientRegbtn = new javax.swing.JLabel();
         PatientListbtn = new javax.swing.JLabel();
-        PatientAdmitbtn = new javax.swing.JLabel();
         DoctorRegbtn = new javax.swing.JLabel();
         DoctorListbtn = new javax.swing.JLabel();
         DoctorReportbtn = new javax.swing.JLabel();
@@ -115,9 +113,6 @@ public class DashboardAdmin extends javax.swing.JFrame {
         BrandRegbtn = new javax.swing.JLabel();
         jLabel41 = new javax.swing.JLabel();
         AppointmentListbtn1 = new javax.swing.JLabel();
-        PatientAdmitbtn1 = new javax.swing.JLabel();
-        jLabel40 = new javax.swing.JLabel();
-        jLabel42 = new javax.swing.JLabel();
         jLabel43 = new javax.swing.JLabel();
         AppointmentListbtn2 = new javax.swing.JLabel();
         StockListbtn1 = new javax.swing.JLabel();
@@ -127,6 +122,7 @@ public class DashboardAdmin extends javax.swing.JFrame {
         PatientAdmitbtn2 = new javax.swing.JLabel();
         PatientAdmitbtn3 = new javax.swing.JLabel();
         AppointmentListbtn3 = new javax.swing.JLabel();
+        DoctorReportbtn1 = new javax.swing.JLabel();
         MenuLogo = new javax.swing.JLabel();
         AdminDashboardSignOutbtn = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -147,7 +143,6 @@ public class DashboardAdmin extends javax.swing.JFrame {
         stock1 = new com.algounix.Panel.BackOffice.Stock();
         supplierList1 = new com.algounix.Panel.SupplierList();
         reports2 = new com.algounix.Panel.Reports();
-        patientAdmit1 = new com.algounix.Panel.Doctor.PatientAdmit();
         updateRoom1 = new com.algounix.Panel.UpdateRoom();
         appointmentList1 = new com.algounix.Panel.Doctor.AppointmentList();
         changePasswords1 = new com.algounix.Panel.ChangePasswords();
@@ -159,9 +154,7 @@ public class DashboardAdmin extends javax.swing.JFrame {
         hospitalStockTransfer1 = new com.algounix.Panel.BackOffice.HospitalStockTransfer();
         doctorCharges1 = new com.algounix.Panel.DoctorCharges();
         pharmacyStockTransfer1 = new com.algounix.Panel.Pharmacy.PharmacyStockTransfer();
-        patientRegNew1 = new com.algounix.Panel.PatientRegNew();
         patientReportAndPrescription1 = new com.algounix.Panel.Doctor.PatientReportAndPrescription();
-        patientDischarge1 = new com.algounix.Panel.Doctor.PatientDischarge();
         patientDischargeList1 = new com.algounix.Panel.Doctor.PatientDischargeList();
         doctorChanellingList1 = new com.algounix.Panel.Doctor.DoctorChanellingList();
         patientAdmitList1 = new com.algounix.Panel.Doctor.PatientAdmitList();
@@ -229,27 +222,11 @@ public class DashboardAdmin extends javax.swing.JFrame {
             }
         });
 
-        PatientRegbtn.setFont(new java.awt.Font("Poppins", 0, 13)); // NOI18N
-        PatientRegbtn.setText("Patient Registration");
-        PatientRegbtn.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                PatientRegbtnMouseClicked(evt);
-            }
-        });
-
         PatientListbtn.setFont(new java.awt.Font("Poppins", 0, 13)); // NOI18N
         PatientListbtn.setText("Patient List");
         PatientListbtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 PatientListbtnMouseClicked(evt);
-            }
-        });
-
-        PatientAdmitbtn.setFont(new java.awt.Font("Poppins", 0, 13)); // NOI18N
-        PatientAdmitbtn.setText("Patient Admit");
-        PatientAdmitbtn.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                PatientAdmitbtnMouseClicked(evt);
             }
         });
 
@@ -421,30 +398,6 @@ public class DashboardAdmin extends javax.swing.JFrame {
             }
         });
 
-        PatientAdmitbtn1.setFont(new java.awt.Font("Poppins", 0, 13)); // NOI18N
-        PatientAdmitbtn1.setText("Patient Discharge");
-        PatientAdmitbtn1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                PatientAdmitbtn1MouseClicked(evt);
-            }
-        });
-
-        jLabel40.setFont(new java.awt.Font("Poppins", 0, 13)); // NOI18N
-        jLabel40.setText("Doctor Attendence");
-        jLabel40.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel40MouseClicked(evt);
-            }
-        });
-
-        jLabel42.setFont(new java.awt.Font("Poppins", 0, 13)); // NOI18N
-        jLabel42.setText("Doctor Fees");
-        jLabel42.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel42MouseClicked(evt);
-            }
-        });
-
         jLabel43.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
         jLabel43.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/algounix/MenuIcons/Report.png"))); // NOI18N
         jLabel43.setText("Salary");
@@ -513,6 +466,14 @@ public class DashboardAdmin extends javax.swing.JFrame {
             }
         });
 
+        DoctorReportbtn1.setFont(new java.awt.Font("Poppins", 0, 13)); // NOI18N
+        DoctorReportbtn1.setText("Doctor Fees");
+        DoctorReportbtn1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                DoctorReportbtn1MouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -533,8 +494,6 @@ public class DashboardAdmin extends javax.swing.JFrame {
                     .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel41, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(AppointmentListbtn1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel40, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel42, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(DoctorRegbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel43, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(AppointmentListbtn2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -546,10 +505,7 @@ public class DashboardAdmin extends javax.swing.JFrame {
                         .addComponent(PatientReportbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)
                         .addComponent(PatientAdmitbtn2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(PatientAdmitbtn3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(PatientAdmitbtn1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(PatientAdmitbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(PatientListbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(PatientRegbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(PatientListbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(RoomsReservationbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)
                         .addComponent(RoomPapbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -557,11 +513,11 @@ public class DashboardAdmin extends javax.swing.JFrame {
                         .addComponent(StockListbtn1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(StockListbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(AddProductbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(StockTransferbtn1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)
                         .addComponent(StockTransferbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(Stockbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(GRNbtn1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(GRNbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(GRNbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(StockTransferbtn1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(BrandRegbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(CompanyRegbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)
@@ -573,7 +529,8 @@ public class DashboardAdmin extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                 .addComponent(DoctorListbtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(DoctorReportbtn, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)
-                .addComponent(DoctorListbtn1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(DoctorListbtn1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(DoctorReportbtn1, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -589,14 +546,8 @@ public class DashboardAdmin extends javax.swing.JFrame {
                 .addComponent(EmployeeListbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(13, 13, 13)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(PatientRegbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(PatientListbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(PatientAdmitbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(PatientAdmitbtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(PatientAdmitbtn3, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -605,7 +556,7 @@ public class DashboardAdmin extends javax.swing.JFrame {
                 .addComponent(PatientReportbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(DoctorRegbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(DoctorListbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -614,14 +565,16 @@ public class DashboardAdmin extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(DoctorReportbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(DoctorReportbtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(RoomPapbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(RoomsReservationbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(GRNbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(GRNbtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -639,7 +592,7 @@ public class DashboardAdmin extends javax.swing.JFrame {
                 .addComponent(StockListbtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(SupplierRegbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(SupplierListbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -647,31 +600,27 @@ public class DashboardAdmin extends javax.swing.JFrame {
                 .addComponent(CompanyRegbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(BrandRegbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(Appointmentbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(AppointmentListbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12)
                 .addComponent(jLabel38, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(AppointmentListbtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12)
                 .addComponent(jLabel43, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(AppointmentListbtn2, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(AppointmentListbtn3, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel41, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel39, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel40, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel42, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(60, 60, 60))
         );
 
         jScrollPane1.setViewportView(jPanel3);
@@ -787,7 +736,6 @@ public class DashboardAdmin extends javax.swing.JFrame {
         CardLayoutPanel.add(stock1, "card14");
         CardLayoutPanel.add(supplierList1, "card15");
         CardLayoutPanel.add(reports2, "card17");
-        CardLayoutPanel.add(patientAdmit1, "card18");
         CardLayoutPanel.add(updateRoom1, "card20");
         CardLayoutPanel.add(appointmentList1, "card22");
         CardLayoutPanel.add(changePasswords1, "card23");
@@ -799,9 +747,7 @@ public class DashboardAdmin extends javax.swing.JFrame {
         CardLayoutPanel.add(hospitalStockTransfer1, "card30");
         CardLayoutPanel.add(doctorCharges1, "card29");
         CardLayoutPanel.add(pharmacyStockTransfer1, "card30");
-        CardLayoutPanel.add(patientRegNew1, "card28");
         CardLayoutPanel.add(patientReportAndPrescription1, "card29");
-        CardLayoutPanel.add(patientDischarge1, "card31");
         CardLayoutPanel.add(patientDischargeList1, "card31");
         CardLayoutPanel.add(doctorChanellingList1, "card32");
         CardLayoutPanel.add(patientAdmitList1, "card33");
@@ -869,19 +815,6 @@ public class DashboardAdmin extends javax.swing.JFrame {
         CardLayoutPanel.repaint();
         CardLayoutPanel.revalidate();
     }//GEN-LAST:event_EmployeeListbtnMouseClicked
-
-    private void PatientRegbtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PatientRegbtnMouseClicked
-        // TODO add your handling code here:
-        //Remove Panel
-        CardLayoutPanel.removeAll();
-        CardLayoutPanel.repaint();
-        CardLayoutPanel.revalidate();
-
-        //Add Panel
-        CardLayoutPanel.add(patientRegNew1);
-        CardLayoutPanel.repaint();
-        CardLayoutPanel.revalidate();
-    }//GEN-LAST:event_PatientRegbtnMouseClicked
 
     private void PatientListbtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PatientListbtnMouseClicked
         // TODO add your handling code here:
@@ -1009,18 +942,6 @@ public class DashboardAdmin extends javax.swing.JFrame {
         BR.setVisible(true);
     }//GEN-LAST:event_BrandRegbtnMouseClicked
 
-    private void PatientAdmitbtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PatientAdmitbtnMouseClicked
-        // TODO add your handling code here:
-        CardLayoutPanel.removeAll();
-        CardLayoutPanel.repaint();
-        CardLayoutPanel.revalidate();
-
-        //Add Panel
-        CardLayoutPanel.add(patientAdmit1);
-        CardLayoutPanel.repaint();
-        CardLayoutPanel.revalidate();
-    }//GEN-LAST:event_PatientAdmitbtnMouseClicked
-
     private void AppointmentListbtn1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AppointmentListbtn1MouseClicked
         // TODO add your handling code here:
         CardLayoutPanel.removeAll();
@@ -1032,19 +953,6 @@ public class DashboardAdmin extends javax.swing.JFrame {
         CardLayoutPanel.repaint();
         CardLayoutPanel.revalidate();
     }//GEN-LAST:event_AppointmentListbtn1MouseClicked
-
-    private void PatientAdmitbtn1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PatientAdmitbtn1MouseClicked
-        // TODO add your handling code here:
-        CardLayoutPanel.removeAll();
-        CardLayoutPanel.repaint();
-        CardLayoutPanel.revalidate();
-
-        //Add Panel
-        CardLayoutPanel.add(patientDischarge1);
-        CardLayoutPanel.repaint();
-        CardLayoutPanel.revalidate();
-
-    }//GEN-LAST:event_PatientAdmitbtn1MouseClicked
 
     private void StockListbtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_StockListbtnMouseClicked
         // TODO add your handling code here:
@@ -1110,32 +1018,6 @@ public class DashboardAdmin extends javax.swing.JFrame {
         CardLayoutPanel.repaint();
         CardLayoutPanel.revalidate();
     }//GEN-LAST:event_jLabel39MouseClicked
-
-    private void jLabel40MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel40MouseClicked
-        // TODO add your handling code here:
-        //Remove Panel
-        CardLayoutPanel.removeAll();
-        CardLayoutPanel.repaint();
-        CardLayoutPanel.revalidate();
-
-        //Add Panel
-        CardLayoutPanel.add(doctorAttendunce1);
-        CardLayoutPanel.repaint();
-        CardLayoutPanel.revalidate();
-    }//GEN-LAST:event_jLabel40MouseClicked
-
-    private void jLabel42MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel42MouseClicked
-        // TODO add your handling code here:
-        //Remove Panel
-        CardLayoutPanel.removeAll();
-        CardLayoutPanel.repaint();
-        CardLayoutPanel.revalidate();
-
-        //Add Panel
-        CardLayoutPanel.add(doctorCharges1);
-        CardLayoutPanel.repaint();
-        CardLayoutPanel.revalidate();
-    }//GEN-LAST:event_jLabel42MouseClicked
 
     private void DoctorRegbtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DoctorRegbtnMouseClicked
         // TODO add your handling code here:
@@ -1276,6 +1158,19 @@ public class DashboardAdmin extends javax.swing.JFrame {
         CardLayoutPanel.revalidate();
     }//GEN-LAST:event_AppointmentListbtn3MouseClicked
 
+    private void DoctorReportbtn1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DoctorReportbtn1MouseClicked
+        // TODO add your handling code here:
+          //Remove Panel
+        CardLayoutPanel.removeAll();
+        CardLayoutPanel.repaint();
+        CardLayoutPanel.revalidate();
+
+        //Add Panel
+        CardLayoutPanel.add(doctorCharges1);
+        CardLayoutPanel.repaint();
+        CardLayoutPanel.revalidate();
+    }//GEN-LAST:event_DoctorReportbtn1MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -1328,18 +1223,16 @@ public class DashboardAdmin extends javax.swing.JFrame {
     private javax.swing.JLabel DoctorListbtn1;
     private javax.swing.JLabel DoctorRegbtn;
     private javax.swing.JLabel DoctorReportbtn;
+    private javax.swing.JLabel DoctorReportbtn1;
     private javax.swing.JLabel EmployeeListbtn;
     private javax.swing.JLabel EmployeeRegbtn;
     private com.algounix.Panel.GRN GRN1;
     private javax.swing.JLabel GRNbtn;
     private javax.swing.JLabel GRNbtn1;
     private javax.swing.JLabel MenuLogo;
-    private javax.swing.JLabel PatientAdmitbtn;
-    private javax.swing.JLabel PatientAdmitbtn1;
     private javax.swing.JLabel PatientAdmitbtn2;
     private javax.swing.JLabel PatientAdmitbtn3;
     private javax.swing.JLabel PatientListbtn;
-    private javax.swing.JLabel PatientRegbtn;
     private javax.swing.JLabel PatientReportbtn;
     private javax.swing.JLabel RoomPapbtn;
     private javax.swing.JLabel RoomsReservationbtn;
@@ -1374,9 +1267,7 @@ public class DashboardAdmin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel38;
     private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel40;
     private javax.swing.JLabel jLabel41;
-    private javax.swing.JLabel jLabel42;
     private javax.swing.JLabel jLabel43;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -1388,12 +1279,9 @@ public class DashboardAdmin extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private com.algounix.Buttons.WindowButton minimizebtn;
-    private com.algounix.Panel.Doctor.PatientAdmit patientAdmit1;
     private com.algounix.Panel.Doctor.PatientAdmitList patientAdmitList1;
-    private com.algounix.Panel.Doctor.PatientDischarge patientDischarge1;
     private com.algounix.Panel.Doctor.PatientDischargeList patientDischargeList1;
     private com.algounix.Panel.Doctor.PatientList patientList1;
-    private com.algounix.Panel.PatientRegNew patientRegNew1;
     private com.algounix.Panel.Doctor.PatientReportAndPrescription patientReportAndPrescription1;
     private com.algounix.Panel.Pharmacy.PharmacyStockList pharmacyStockList1;
     private com.algounix.Panel.Pharmacy.PharmacyStockTransfer pharmacyStockTransfer1;
