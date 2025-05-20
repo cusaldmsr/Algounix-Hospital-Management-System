@@ -5,6 +5,7 @@
 package com.algounix.Dashboards;
 
 import com.algounix.Components.ScrollBar;
+import com.algounix.GUI.DataBackup;
 import com.algounix.GUI.SignOut;
 import com.algounix.Panel.BackOffice.Brand;
 import com.algounix.Panel.BackOffice.GRNList;
@@ -123,6 +124,7 @@ public class DashboardAdmin extends javax.swing.JFrame {
         PatientAdmitbtn3 = new javax.swing.JLabel();
         AppointmentListbtn3 = new javax.swing.JLabel();
         DoctorReportbtn1 = new javax.swing.JLabel();
+        jLabel40 = new javax.swing.JLabel();
         MenuLogo = new javax.swing.JLabel();
         AdminDashboardSignOutbtn = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -474,6 +476,14 @@ public class DashboardAdmin extends javax.swing.JFrame {
             }
         });
 
+        jLabel40.setFont(new java.awt.Font("Poppins", 0, 13)); // NOI18N
+        jLabel40.setText("Back-up Data");
+        jLabel40.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel40MouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -525,7 +535,8 @@ public class DashboardAdmin extends javax.swing.JFrame {
                         .addComponent(SupplierRegbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(AppointmentListbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(Appointmentbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE))))
+                        .addComponent(Appointmentbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE))
+                    .addComponent(jLabel40, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                 .addComponent(DoctorListbtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(DoctorReportbtn, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)
@@ -620,6 +631,8 @@ public class DashboardAdmin extends javax.swing.JFrame {
                 .addComponent(jLabel41, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel39, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel40, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(60, 60, 60))
         );
 
@@ -1171,6 +1184,12 @@ public class DashboardAdmin extends javax.swing.JFrame {
         CardLayoutPanel.revalidate();
     }//GEN-LAST:event_DoctorReportbtn1MouseClicked
 
+    private void jLabel40MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel40MouseClicked
+        // TODO add your handling code here:
+        DataBackup dbp = new DataBackup(this, true);
+        dbp.setVisible(true);
+    }//GEN-LAST:event_jLabel40MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -1267,6 +1286,7 @@ public class DashboardAdmin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel38;
     private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel40;
     private javax.swing.JLabel jLabel41;
     private javax.swing.JLabel jLabel43;
     private javax.swing.JLabel jLabel5;
