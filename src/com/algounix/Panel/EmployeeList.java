@@ -9,7 +9,11 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.Vector;
 import java.sql.ResultSet;
+import java.util.HashMap;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -22,46 +26,74 @@ import net.sf.jasperreports.view.JasperViewer;
  */
 public class EmployeeList extends javax.swing.JPanel {
 
-    /**
-     * Creates new form EmployeeList
-     */
+    private static HashMap<String, String> empType = new HashMap<>();
+    private static HashMap<String, String> unit = new HashMap<>();
+
     public EmployeeList() {
         initComponents();
         loadDeatails();
+        loadEmpType();
     }
-        public void loadDeatails() {
+
+    private void loadEmpType() {
+
         try {
-            ResultSet rs = MySQL.executeSearch("SELECT employee.id AS Employee_id,\n"
-                    + "employee.first_name AS First_Name,\n"
-                    + "employee.last_name AS Last_Name,\n"
-                    + "employee.nic AS `nic`,\n"
-                    + "employee.mobile AS Contact_Number,\n"
-                    + "employee.email AS Email,\n"
-                    + "gender.`name` AS `Gender`,\n"
-                    + "employee_type.`name` AS `Type`,\n"
-                    + "employee_status.`name` AS `Status`\n"
-                    + "\n"
-                    + "FROM employee\n"
-                    + "INNER JOIN gender on employee.gender_id = gender.id\n"
-                    + "INNER JOIN employee_type ON employee.employee_type_id = employee_type.id\n"
-                    + "INNER JOIN employee_status ON employee.employee_status_id = employee_status.id");
+
+            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `employee_type`");
+
+            Vector<String> vector = new Vector();
+            vector.add("Select");
+
+            while (resultSet.next()) {
+
+                vector.add(resultSet.getString("name"));
+                empType.put(resultSet.getString("name"), resultSet.getString("id"));
+
+            }
+
+            DefaultComboBoxModel model = new DefaultComboBoxModel(vector);
+            jComboBox1.setModel(model);
+
+        } catch (Exception e) {
+        }
+
+    }
+
+    public void loadDeatails() {
+        try {
+
+            // String type = String.valueOf(jComboBox1.getSelectedItem());
+            String query = "SELECT * FROM `employee` "
+                    + "INNER JOIN `gender` ON `gender` . `id` = `employee` . `gender_id` "
+                    + "INNER JOIN `employee_type` ON `employee_type` . `id` = `employee` . `employee_type_id` "
+                    + "INNER JOIN `employee_status` ON `employee_status` . `id` = `employee` . `employee_status_id`  ";
+
+            query += " WHERE `employee` . `first_name` LIKE '" + jTextField1.getText() + "%' ";
+
+            if (jComboBox1.getSelectedIndex() != 0) {
+
+                query += "AND `employee_type` . `name` = '" + jComboBox1.getSelectedItem() + "' ";
+
+            }
+
+           
+            ResultSet rs = MySQL.executeSearch(query);
 
             DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
             model.setRowCount(0);
 
-
             while (rs.next()) {
 
                 Vector<String> v = new Vector<>();
-                v.add(rs.getString("Employee_id"));
-                v.add(rs.getString("First_Name"));
-                v.add(rs.getString("Last_Name"));
-                v.add(rs.getString("Email"));
+                v.add(rs.getString("id"));
+                v.add(rs.getString("first_name"));
+                v.add(rs.getString("last_name"));
+                v.add(rs.getString("email"));
                 v.add(rs.getString("nic"));
-                v.add(rs.getString("Contact_Number"));
-                v.add(rs.getString("Gender"));
-                v.add(rs.getString("Type"));
-                v.add(rs.getString("Status"));
+                v.add(rs.getString("mobile"));
+                v.add(rs.getString("gender.name"));
+                v.add(rs.getString("employee_type.name"));
+                v.add(rs.getString("employee_status.name"));
 
                 model.addRow(v);
             }
@@ -84,10 +116,8 @@ public class EmployeeList extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
-        jComboBox2 = new javax.swing.JComboBox<>();
         jTextField1 = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -125,19 +155,23 @@ public class EmployeeList extends javax.swing.JPanel {
         jLabel2.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
         jLabel2.setText("Employee Type");
 
-        jLabel3.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
-        jLabel3.setText("Unit");
-
         jLabel4.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
         jLabel4.setText("Search Employee Name");
 
         jComboBox1.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jComboBox2.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBox1ItemStateChanged(evt);
+            }
+        });
 
         jTextField1.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField1KeyReleased(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -145,13 +179,9 @@ public class EmployeeList extends javax.swing.JPanel {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE))
-                .addGap(70, 70, 70)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jComboBox2, 0, 200, Short.MAX_VALUE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 254, Short.MAX_VALUE)
@@ -164,12 +194,10 @@ public class EmployeeList extends javax.swing.JPanel {
                 .addGap(15, 15, 15)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jLabel3)
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(15, 15, 15))
         );
@@ -178,14 +206,14 @@ public class EmployeeList extends javax.swing.JPanel {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Employee ID", "First Name", "Last Name", "Email", "NIC", "Mobile", "Birthday", "Gender", "Type", "Unit", "Status"
+                "Employee ID", "First Name", "Last Name", "Email", "NIC", "Mobile", "Gender", "Type", "Status"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -263,8 +291,8 @@ public class EmployeeList extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-                try (InputStream path = this.getClass().getResourceAsStream("/com/algounix/Reports/Employee-HMS-jasper2.jasper")) {
-           
+        try (InputStream path = this.getClass().getResourceAsStream("/com/algounix/Reports/Employee-HMS-jasper2.jasper")) {
+
             if (path == null) {
                 throw new FileNotFoundException("Report file not found in the specified path.");
             }
@@ -290,14 +318,25 @@ public class EmployeeList extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
+        // TODO add your handling code here:
+       loadDeatails();
+
+    }//GEN-LAST:event_jTextField1KeyReleased
+
+    private void jComboBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox1ItemStateChanged
+        // TODO add your handling code here:
+
+        loadDeatails();
+
+    }//GEN-LAST:event_jComboBox1ItemStateChanged
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
