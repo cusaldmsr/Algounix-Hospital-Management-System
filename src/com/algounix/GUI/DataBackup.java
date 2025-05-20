@@ -5,7 +5,9 @@ import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -27,7 +29,6 @@ public class DataBackup extends javax.swing.JDialog {
         BIL.setIcon(backUpIMG);
     }
 
-        
     private void loadDetails() {
         String id = SignIn.empID;
 
@@ -39,13 +40,14 @@ public class DataBackup extends javax.swing.JDialog {
 
             if (rs.next()) {
                 txtEmpName.setText(rs.getString("employee.first_name") + " " + rs.getString("employee.last_name"));
-   
+
             }
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -295,31 +297,35 @@ public class DataBackup extends javax.swing.JDialog {
         }
 
         try {
-            // Load DB credentials from dbinfo.ser via MySQL.java
-            MySQL mysql = new MySQL(); // Assuming this automatically loads from dbinfo.ser
-            String mysqlBinPath = mysql.dump;
-            String user = mysql.un;
-            String password = mysql.pw;
-            String database = mysql.dbname;
 
-            // Build mysqldump command using ProcessBuilder
+            FileInputStream fis = new FileInputStream("dbinfo.ser");
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            MySQL db = (MySQL) ois.readObject();
+            ois.close();
+
+            String timestamp = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss").format(new Date());
+
             List<String> command = Arrays.asList(
-                    mysqlBinPath,
-                    "-u" + user,
-                    "-p" + password,
+                    db.dump,
+                    "-u" + db.un,
+                    "-p" + db.pw,
                     "--add-drop-database",
                     "-B",
-                    database,
+                    db.dbname,
                     "-r",
                     filename
             );
 
+            for (String cmd : command) {
+                if (cmd == null) {
+                    throw new NullPointerException("Null value in command");
+                }
+            }
+
             ProcessBuilder pb = new ProcessBuilder(command);
             pb.redirectErrorStream(true);
-
             Process process = pb.start();
 
-            // Optionally read process output (helps with debugging)
             try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
                 String line;
                 while ((line = reader.readLine()) != null) {
@@ -329,9 +335,8 @@ public class DataBackup extends javax.swing.JDialog {
 
             int exitCode = process.waitFor();
             if (exitCode == 0) {
-                JOptionPane.showMessageDialog(this, "Backup Created!", "Success", JOptionPane.INFORMATION_MESSAGE);
-                String date = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss").format(new Date());
-                System.out.println("Employee Id: " + SignIn.empID + " created a database backup at: " + date);
+                JOptionPane.showMessageDialog(this, "Backup Created Successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                System.out.println("Employee Id: " + SignIn.empID + " created a database backup at: " + timestamp);
             } else {
                 JOptionPane.showMessageDialog(this, "Backup creation failed. Please check the MySQL configuration.", "Error", JOptionPane.ERROR_MESSAGE);
             }
@@ -340,6 +345,7 @@ public class DataBackup extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Error during backup: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             ex.printStackTrace();
         }
+
     }//GEN-LAST:event_btnBackupActionPerformed
 
     private void txtEmpNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmpNameActionPerformed
@@ -355,7 +361,7 @@ public class DataBackup extends javax.swing.JDialog {
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
         // TODO add your handling code here:
         txtEmpId.setText(SignIn.empID);
-        filename = null;
+        jTextField2.setText("");
 
     }//GEN-LAST:event_btnClearActionPerformed
 
