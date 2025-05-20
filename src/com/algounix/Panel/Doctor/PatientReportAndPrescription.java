@@ -30,7 +30,7 @@ public class PatientReportAndPrescription extends javax.swing.JPanel {
     public PatientReportAndPrescription() {
         initComponents();
        // loadDeatails();
-        loadPrescriptionDeatails();
+        //loadPrescriptionDeatails();
     }
 
     private void loadPatien() {
@@ -72,6 +72,7 @@ public class PatientReportAndPrescription extends javax.swing.JPanel {
         }
 
         loadDeatails();
+        loadPrescriptionDeatails();
     }
 
     public void loadDeatails() {
@@ -101,19 +102,13 @@ public class PatientReportAndPrescription extends javax.swing.JPanel {
     }
 
     public void loadPrescriptionDeatails() {
+        
+        String id = jTextField1.getText();
         try {
-            ResultSet rs = MySQL.executeSearch("SELECT \n"
-                    + "    pres.id AS prescription_id,\n"
-                    + "    pres.`date` AS issued_date,\n"
-                    + "    CONCAT(d.first_name, ' ', d.last_name) AS doctor_name,\n"
-                    + "    CONCAT(p.first_name, ' ', p.last_name) AS patient_name,\n"
-                    + "    pres.duration_from_days\n"
-                    + "FROM \n"
-                    + "    prescription pres\n"
-                    + "INNER JOIN \n"
-                    + "	doctor d ON d.id = pres.doctor_id  \n"
-                    + "INNER JOIN \n"
-                    + "   patient p ON p.id = pres.patient_id");
+            ResultSet rs = MySQL.executeSearch(" SELECT * FROM `prescription`  "
+                    + "INNER JOIN `doctor` ON `doctor` . `id` = `prescription` .`doctor_id`  "
+                    + "INNER JOIN `patient` ON `patient` . `id` = `prescription` . `patient_id` "
+                    + "WHERE `patient` . `id` = '"+id+"'");
 
             DefaultTableModel model = (DefaultTableModel) jTable3.getModel();
             model.setRowCount(0);
@@ -121,11 +116,11 @@ public class PatientReportAndPrescription extends javax.swing.JPanel {
             while (rs.next()) {
 
                 Vector<String> v = new Vector<>();
-                v.add(rs.getString("prescription_id"));
-                v.add(rs.getString("issued_date"));
-                v.add(rs.getString("doctor_name"));
-                v.add(rs.getString("patient_name"));
-                v.add(rs.getString("pres.duration_from_days"));
+                v.add(rs.getString("prescription.id"));
+                v.add(rs.getString("prescription.date"));
+                v.add(rs.getString("doctor.first_name") + " " + rs.getString("doctor.last_name"));
+                v.add(rs.getString("patient.first_name") + " " + rs.getString("patient.last_name"));
+                v.add(rs.getString("prescription.duration_from_days"));
 
                 model.addRow(v);
             }
