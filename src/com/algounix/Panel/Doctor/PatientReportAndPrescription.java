@@ -47,7 +47,7 @@ public class PatientReportAndPrescription extends javax.swing.JPanel {
 
             if (resultSet.next()) {
 
-                jLabel10.setText(resultSet.getString("first_name"));
+                jLabel10.setText(resultSet.getString("first_name") + " " + resultSet.getString("last_name"));
                 jLabel11.setText(resultSet.getString("blood_group.name"));
                 
                 String bd = resultSet.getString("birthday");
@@ -89,7 +89,7 @@ public class PatientReportAndPrescription extends javax.swing.JPanel {
                 Vector<String> v = new Vector<>();
                 v.add(rs.getString("patient_report.id"));
                 v.add(rs.getString("date"));
-                v.add(rs.getString("doctor.first_name"));
+                v.add(rs.getString("doctor.first_name" ) + " " + rs.getString("doctor.last_name"));
                 v.add(rs.getString("patient.id"));
 
                 model.addRow(v);
