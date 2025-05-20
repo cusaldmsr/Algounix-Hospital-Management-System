@@ -145,7 +145,7 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace pref="24" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
                   <Component id="jLabel14" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -259,6 +259,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="327326"/>
           </Properties>
+          <Events>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTextField1KeyReleased"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel18">
           <Properties>
@@ -356,7 +359,7 @@
                   <Table columnCount="4" rowCount="0">
                     <Column editable="false" title="Report ID" type="java.lang.Object"/>
                     <Column editable="false" title="Issued Date" type="java.lang.Object"/>
-                    <Column editable="true" title="Doctor Name" type="java.lang.Object"/>
+                    <Column editable="false" title="Doctor Name" type="java.lang.Object"/>
                     <Column editable="false" title="Patient ID" type="java.lang.Object"/>
                   </Table>
                 </Property>
@@ -388,6 +391,9 @@
                   <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTable1MouseClicked"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -875,7 +881,7 @@
                     <Column editable="false" title="Prescription ID" type="java.lang.Object"/>
                     <Column editable="false" title="Issued Date" type="java.lang.Object"/>
                     <Column editable="false" title="Doctor Name" type="java.lang.Object"/>
-                    <Column editable="true" title="Patient Name" type="java.lang.Object"/>
+                    <Column editable="false" title="Patient Name" type="java.lang.Object"/>
                     <Column editable="false" title="Duration" type="java.lang.Object"/>
                   </Table>
                 </Property>
@@ -912,6 +918,9 @@
                   <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTable3MouseClicked"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
