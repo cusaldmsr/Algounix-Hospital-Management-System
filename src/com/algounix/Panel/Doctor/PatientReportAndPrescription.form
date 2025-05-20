@@ -359,7 +359,7 @@
                   <Table columnCount="4" rowCount="0">
                     <Column editable="false" title="Report ID" type="java.lang.Object"/>
                     <Column editable="false" title="Issued Date" type="java.lang.Object"/>
-                    <Column editable="true" title="Doctor Name" type="java.lang.Object"/>
+                    <Column editable="false" title="Doctor Name" type="java.lang.Object"/>
                     <Column editable="false" title="Patient ID" type="java.lang.Object"/>
                   </Table>
                 </Property>
@@ -881,7 +881,7 @@
                     <Column editable="false" title="Prescription ID" type="java.lang.Object"/>
                     <Column editable="false" title="Issued Date" type="java.lang.Object"/>
                     <Column editable="false" title="Doctor Name" type="java.lang.Object"/>
-                    <Column editable="true" title="Patient Name" type="java.lang.Object"/>
+                    <Column editable="false" title="Patient Name" type="java.lang.Object"/>
                     <Column editable="false" title="Duration" type="java.lang.Object"/>
                   </Table>
                 </Property>
@@ -918,6 +918,9 @@
                   <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTable3MouseClicked"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

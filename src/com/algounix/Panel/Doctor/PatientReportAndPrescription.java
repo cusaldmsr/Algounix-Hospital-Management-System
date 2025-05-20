@@ -29,8 +29,39 @@ public class PatientReportAndPrescription extends javax.swing.JPanel {
      */
     public PatientReportAndPrescription() {
         initComponents();
-       // loadDeatails();
+       // loadTable2();
+        // loadDeatails();
         //loadPrescriptionDeatails();
+    }
+    
+    private void loadTable2(){
+    
+        String id = jLabel40.getText();
+        
+        try {
+            ResultSet resultSet = MySQL.executeSearch(" SELECT * FROM `prescription_item` "
+                    + "INNER JOIN `medicine` ON `medicine` . `id` = `prescription_item` . `medicine_id` "
+                    + "INNER JOIN `prescription` ON `prescription` . `id` = `prescription_item` . `prescription_id` "
+                    + "WHERE `prescription` . `id` = '"+id+"' ");
+            
+            DefaultTableModel model = (DefaultTableModel)jTable2.getModel();
+            model.setRowCount(0);
+            
+            while(resultSet.next()) {
+               
+                Vector<String> vector = new Vector<>();
+                vector.add(resultSet.getString("prescription.id"));
+                vector.add(resultSet.getString("medicine.id"));
+                vector.add(resultSet.getString("medicine.name"));
+                vector.add(resultSet.getString("prescription_item.qty"));
+                
+                model.addRow(vector);
+                        
+            
+            }
+        } catch (Exception e) {
+        }
+    
     }
 
     private void loadPatien() {
@@ -49,7 +80,7 @@ public class PatientReportAndPrescription extends javax.swing.JPanel {
 
                 jLabel10.setText(resultSet.getString("first_name") + " " + resultSet.getString("last_name"));
                 jLabel11.setText(resultSet.getString("blood_group.name"));
-                
+
                 String bd = resultSet.getString("birthday");
                 LocalDate dob = LocalDate.parse(bd);
                 LocalDate today = LocalDate.now();
@@ -58,15 +89,13 @@ public class PatientReportAndPrescription extends javax.swing.JPanel {
                 jLabel12.setText(String.valueOf(age.getYears()));
                 jLabel19.setText(resultSet.getString("nic"));
                 jLabel20.setText(resultSet.getString("gender.name"));
-                
-                
 
-            }else{
-               jLabel10.setText("Patient Name Here");
-               jLabel11.setText("Patient Blood Group Here");
-               jLabel12.setText("Patient Age Here");
-               jLabel19.setText("Patient NIC Here");
-               jLabel20.setText("Gender Here");
+            } else {
+                jLabel10.setText("Patient Name Here");
+                jLabel11.setText("Patient Blood Group Here");
+                jLabel12.setText("Patient Age Here");
+                jLabel19.setText("Patient NIC Here");
+                jLabel20.setText("Gender Here");
             }
         } catch (Exception e) {
         }
@@ -80,7 +109,7 @@ public class PatientReportAndPrescription extends javax.swing.JPanel {
         try {
             ResultSet rs = MySQL.executeSearch(" SELECT * FROM `patient_report` "
                     + "INNER JOIN `patient` ON `patient` . `id` = `patient_report` . `patient_id` "
-                    + "INNER JOIN `doctor` ON `doctor` .`id` = `patient_report` . `doctor_id` WHERE `patient` . `id` = '"+id+"' ");
+                    + "INNER JOIN `doctor` ON `doctor` .`id` = `patient_report` . `doctor_id` WHERE `patient` . `id` = '" + id + "' ");
 
             DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
             model.setRowCount(0);
@@ -90,7 +119,7 @@ public class PatientReportAndPrescription extends javax.swing.JPanel {
                 Vector<String> v = new Vector<>();
                 v.add(rs.getString("patient_report.id"));
                 v.add(rs.getString("date"));
-                v.add(rs.getString("doctor.first_name" ) + " " + rs.getString("doctor.last_name"));
+                v.add(rs.getString("doctor.first_name") + " " + rs.getString("doctor.last_name"));
                 v.add(rs.getString("patient.id"));
 
                 model.addRow(v);
@@ -102,13 +131,14 @@ public class PatientReportAndPrescription extends javax.swing.JPanel {
     }
 
     public void loadPrescriptionDeatails() {
+
         
         String id = jTextField1.getText();
         try {
             ResultSet rs = MySQL.executeSearch(" SELECT * FROM `prescription`  "
                     + "INNER JOIN `doctor` ON `doctor` . `id` = `prescription` .`doctor_id`  "
                     + "INNER JOIN `patient` ON `patient` . `id` = `prescription` . `patient_id` "
-                    + "WHERE `patient` . `id` = '"+id+"'");
+                    + "WHERE `patient` . `id` = '" + id + "'");
 
             DefaultTableModel model = (DefaultTableModel) jTable3.getModel();
             model.setRowCount(0);
@@ -124,6 +154,10 @@ public class PatientReportAndPrescription extends javax.swing.JPanel {
 
                 model.addRow(v);
             }
+            
+            
+
+       
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -339,7 +373,7 @@ public class PatientReportAndPrescription extends javax.swing.JPanel {
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, true, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -612,11 +646,16 @@ public class PatientReportAndPrescription extends javax.swing.JPanel {
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, true, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        jTable3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable3MouseClicked(evt);
             }
         });
         jScrollPane4.setViewportView(jTable3);
@@ -760,30 +799,59 @@ public class PatientReportAndPrescription extends javax.swing.JPanel {
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         // TODO add your handling code here:
-        
-         int row = jTable1.getSelectedRow();
-         
-         String id = String.valueOf(jTable1.getValueAt(row, 0));
-         
+
+        int row = jTable1.getSelectedRow();
+
+        String id = String.valueOf(jTable1.getValueAt(row, 0));
+
         try {
             ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `patient_report` "
                     + "INNER JOIN `patient` ON `patient` . `id` = `patient_report` . `patient_id` "
                     + "INNER JOIN `doctor` ON `doctor` . `id` = `patient_report` . `doctor_id` "
-                    + "WHERE `patient_report` . `id` = '"+id+"' ");
-            
+                    + "WHERE `patient_report` . `id` = '" + id + "' ");
+
             if (resultSet.next()) {
                 jLabel33.setText(resultSet.getString("doctor.id"));
                 jLabel32.setText(resultSet.getString("doctor.first_name") + " " + resultSet.getString("doctor.last_name"));
                 jLabel27.setText("patient_report.id");
                 jLabel45.setText(resultSet.getString("patient_report.date"));
                 jTextArea1.setText(resultSet.getString("patient_report.description"));
-                
+
             }
         } catch (Exception e) {
         }
-         
-     
+
+
     }//GEN-LAST:event_jTable1MouseClicked
+
+    private void jTable3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable3MouseClicked
+        // TODO add your handling code here:
+        int row = jTable3.getSelectedRow();
+
+        String id = String.valueOf(jTable3.getValueAt(row, 0));
+        
+        try {
+            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `prescription`  "
+                    + "INNER JOIN `doctor` ON `doctor` . `id` = `prescription` .`doctor_id`  "
+                    + "INNER JOIN `patient` ON `patient` . `id` = `prescription` . `patient_id` "
+                    + "WHERE `prescription` . `id` = '" + id + "'");
+            
+            if(resultSet.next()){
+                
+                jLabel35.setText(resultSet.getString("doctor.id"));
+                jLabel38.setText(resultSet.getString("doctor.first_name") + " " + resultSet.getString("doctor.last_name"));
+                jLabel40.setText(resultSet.getString("prescription.id"));
+                jLabel44.setText(resultSet.getString("prescription.date"));
+                jLabel41.setText(resultSet.getString("prescription.duration_from_days"));
+            
+                loadTable2();
+            }
+            
+           
+        } catch (Exception e) {
+        }
+
+    }//GEN-LAST:event_jTable3MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
