@@ -382,7 +382,7 @@ public class AppointmentList extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton2ActionPerformed
 //report
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        try (InputStream path = this.getClass().getResourceAsStream("/com/algounix/Reports/Algounix_HMS_AppointmentList1.jasper")) {
+        try (InputStream path = this.getClass().getResourceAsStream("/com/algounix/Reports/Algounix_HMS_AppointmentList2.jasper")) {
 
             if (path == null) {
                 throw new FileNotFoundException("Report file not found in the specified path.");

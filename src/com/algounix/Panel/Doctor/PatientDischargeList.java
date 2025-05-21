@@ -6,6 +6,8 @@ package com.algounix.Panel.Doctor;
 
 import com.algounix.GUI.SignIn;
 import com.algounix.Model.MySQL;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -14,6 +16,9 @@ import java.util.Date;
 import java.util.Vector;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -25,6 +30,7 @@ public class PatientDischargeList extends javax.swing.JPanel {
         initComponents();
         loadPatients();
         loadGUI();
+        loadDischargedPatientList();
     }
 
     String prescriptionID;
@@ -66,6 +72,48 @@ public class PatientDischargeList extends javax.swing.JPanel {
         }
     }
 
+    private void loadDischargedPatientList() {
+        try {
+
+            ResultSet resultSet = MySQL.executeSearch("SELECT \n"
+                    + "    p.id AS `patient_id`,\n"
+                    + "    CONCAT(p.first_name, ' ', p.last_name) AS `patient_name`,\n"
+                    + "    a.admit_date AS `admitted_date`,\n"
+                    + "    pd.discharge_date AS `discharge_date`,\n"
+                    + "    CONCAT(d.first_name, ' ' ,d.last_name) AS `doctor_name`,\n"
+                    + "    r.id AS `room_no`,\n"
+                    + "    rt.name AS `room_type`\n"
+                    + "FROM patient_admit AS a\n"
+                    + "JOIN patient as p ON a.patient_id = p.id\n"
+                    + "JOIN room as r ON a.room_id = r.id\n"
+                    + "JOIN room_type AS  rt ON r.room_type_id = rt.id\n"
+                    + "JOIN patient_discharge AS pd ON a.id = pd.patient_admit_id\n"
+                    + "JOIN doctor_has_units AS dhu ON dhu.room_id = r.id\n"
+                    + "JOIN doctor AS d ON dhu.doctor_id = d.id\n"
+                    + "WHERE pd.discharge_date IS NOT NULL\n"
+                    + "ORDER BY pd.discharge_date DESC");
+//            System.out.println(query);
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+            model.setRowCount(0);
+
+            while (resultSet.next()) {
+
+                Vector<String> vector = new Vector<>();
+                vector.add(resultSet.getString("patient_id"));
+                vector.add(resultSet.getString("patient_name"));
+                vector.add(resultSet.getString("discharge_date"));
+                vector.add(resultSet.getString("doctor_name"));
+                vector.add(resultSet.getString("room_no"));
+                vector.add(resultSet.getString("room_type"));
+                model.addRow(vector);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -80,6 +128,7 @@ public class PatientDischargeList extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jTextField2 = new javax.swing.JTextField();
+        jButton3 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel33 = new javax.swing.JLabel();
         jLabel34 = new javax.swing.JLabel();
@@ -213,6 +262,13 @@ public class PatientDischargeList extends javax.swing.JPanel {
             }
         });
 
+        jButton3.setText("Print Discharged List");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -234,7 +290,8 @@ public class PatientDischargeList extends javax.swing.JPanel {
                                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(26, 26, 26))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(25, 25, 25))))
         );
         jPanel3Layout.setVerticalGroup(
@@ -251,8 +308,10 @@ public class PatientDischargeList extends javax.swing.JPanel {
                     .addComponent(jLabel11)
                     .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton3)
+                .addContainerGap(13, Short.MAX_VALUE))
         );
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
@@ -937,6 +996,27 @@ public class PatientDischargeList extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+
+        try (InputStream path = this.getClass().getResourceAsStream("/com/algounix/Reports/Algounix_HMS_Discharge1.jasper")) {
+
+            if (path == null) {
+                throw new FileNotFoundException("Report file not found in the specified path.");
+            }
+
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            MySQL.createConnection();
+
+            JasperPrint report = JasperFillManager.fillReport(path, null, MySQL.connection);
+
+            JasperViewer.viewReport(report, false);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
     //  Calculate Spend Days In Hospital
     private String calculateSpendDays(String date) {
         LocalDate today = LocalDate.now();
@@ -979,7 +1059,7 @@ public class PatientDischargeList extends javax.swing.JPanel {
         jLabel46.setText("Room Type Here");
         jLabel54.setText("Room Charges Here");
         jTextArea3.setText("");
-        
+
         jLabel15.setText("Days Count Here");
 
         jLabel3.setText("Patient ID Here");
@@ -994,10 +1074,10 @@ public class PatientDischargeList extends javax.swing.JPanel {
         jLabel9.setText("Line 01 Here");
         jLabel12.setText("Line 02 Here");
         jLabel13.setText("City Here");
-        
+
         jTextField1.setText("");
         jTextField2.setText("");
-        
+
         jTable1.clearSelection();
         loadGUI();
         loadPatients();
@@ -1006,6 +1086,7 @@ public class PatientDischargeList extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JCheckBox jCheckBox4;
     private javax.swing.JLabel jLabel1;
