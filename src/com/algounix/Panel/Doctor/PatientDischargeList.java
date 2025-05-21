@@ -16,8 +16,10 @@ import java.util.Date;
 import java.util.Vector;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.data.JRTableModelDataSource;
 import net.sf.jasperreports.view.JasperViewer;
 
 /**
@@ -30,7 +32,6 @@ public class PatientDischargeList extends javax.swing.JPanel {
         initComponents();
         loadPatients();
         loadGUI();
-        loadDischargedPatientList();
     }
 
     String prescriptionID;
@@ -70,48 +71,6 @@ public class PatientDischargeList extends javax.swing.JPanel {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    private void loadDischargedPatientList() {
-        try {
-
-            ResultSet resultSet = MySQL.executeSearch("SELECT \n"
-                    + "    p.id AS `patient_id`,\n"
-                    + "    CONCAT(p.first_name, ' ', p.last_name) AS `patient_name`,\n"
-                    + "    a.admit_date AS `admitted_date`,\n"
-                    + "    pd.discharge_date AS `discharge_date`,\n"
-                    + "    CONCAT(d.first_name, ' ' ,d.last_name) AS `doctor_name`,\n"
-                    + "    r.id AS `room_no`,\n"
-                    + "    rt.name AS `room_type`\n"
-                    + "FROM patient_admit AS a\n"
-                    + "JOIN patient as p ON a.patient_id = p.id\n"
-                    + "JOIN room as r ON a.room_id = r.id\n"
-                    + "JOIN room_type AS  rt ON r.room_type_id = rt.id\n"
-                    + "JOIN patient_discharge AS pd ON a.id = pd.patient_admit_id\n"
-                    + "JOIN doctor_has_units AS dhu ON dhu.room_id = r.id\n"
-                    + "JOIN doctor AS d ON dhu.doctor_id = d.id\n"
-                    + "WHERE pd.discharge_date IS NOT NULL\n"
-                    + "ORDER BY pd.discharge_date DESC");
-//            System.out.println(query);
-            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-            model.setRowCount(0);
-
-            while (resultSet.next()) {
-
-                Vector<String> vector = new Vector<>();
-                vector.add(resultSet.getString("patient_id"));
-                vector.add(resultSet.getString("patient_name"));
-                vector.add(resultSet.getString("discharge_date"));
-                vector.add(resultSet.getString("doctor_name"));
-                vector.add(resultSet.getString("room_no"));
-                vector.add(resultSet.getString("room_type"));
-                model.addRow(vector);
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
     }
 
     @SuppressWarnings("unchecked")
@@ -998,23 +957,32 @@ public class PatientDischargeList extends javax.swing.JPanel {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
 
-        try (InputStream path = this.getClass().getResourceAsStream("/com/algounix/Reports/Algounix_HMS_Discharge1.jasper")) {
+        try (InputStream path = this.getClass().getResourceAsStream("/com/algounix/Reports/Algounix-HMS-DischargedPatientListNew.jasper")) {
 
             if (path == null) {
                 throw new FileNotFoundException("Report file not found in the specified path.");
             }
 
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            if (jTable1 == null || jTable1.getModel() == null) {
+                throw new IllegalStateException("Table or table model is not initialized.");
+            }
 
-            MySQL.createConnection();
+            JRTableModelDataSource dataSource = new JRTableModelDataSource(jTable1.getModel());
 
-            JasperPrint report = JasperFillManager.fillReport(path, null, MySQL.connection);
+            // Fill the report
+            JasperPrint jasperPrint = JasperFillManager.fillReport(path, null, dataSource);
 
-            JasperViewer.viewReport(report, false);
-
+            // View the report
+            JasperViewer.viewReport(jasperPrint, false);
+        } catch (FileNotFoundException e) {
+            System.err.println("Error: " + e.getMessage());
+        } catch (JRException e) {
+            System.err.println("JasperReports error: " + e.getMessage());
+            e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }//GEN-LAST:event_jButton3ActionPerformed
 
     //  Calculate Spend Days In Hospital
