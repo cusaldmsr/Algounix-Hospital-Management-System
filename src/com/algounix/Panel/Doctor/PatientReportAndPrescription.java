@@ -29,39 +29,38 @@ public class PatientReportAndPrescription extends javax.swing.JPanel {
      */
     public PatientReportAndPrescription() {
         initComponents();
-       // loadTable2();
-        // loadDeatails();
-        //loadPrescriptionDeatails();
+        loadTable2();
+        loadDeatails();
+        loadPrescriptionDeatails();
     }
-    
-    private void loadTable2(){
-    
+
+    private void loadTable2() {
+
         String id = jLabel40.getText();
-        
+
         try {
             ResultSet resultSet = MySQL.executeSearch(" SELECT * FROM `prescription_item` "
                     + "INNER JOIN `medicine` ON `medicine` . `id` = `prescription_item` . `medicine_id` "
                     + "INNER JOIN `prescription` ON `prescription` . `id` = `prescription_item` . `prescription_id` "
-                    + "WHERE `prescription` . `id` = '"+id+"' ");
-            
-            DefaultTableModel model = (DefaultTableModel)jTable2.getModel();
+                    + "WHERE `prescription` . `id` = '" + id + "' ");
+
+            DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
             model.setRowCount(0);
-            
-            while(resultSet.next()) {
-               
+
+            while (resultSet.next()) {
+
                 Vector<String> vector = new Vector<>();
                 vector.add(resultSet.getString("prescription.id"));
                 vector.add(resultSet.getString("medicine.id"));
                 vector.add(resultSet.getString("medicine.name"));
                 vector.add(resultSet.getString("prescription_item.qty"));
-                
+
                 model.addRow(vector);
-                        
-            
+
             }
         } catch (Exception e) {
         }
-    
+
     }
 
     private void loadPatien() {
@@ -132,7 +131,6 @@ public class PatientReportAndPrescription extends javax.swing.JPanel {
 
     public void loadPrescriptionDeatails() {
 
-        
         String id = jTextField1.getText();
         try {
             ResultSet rs = MySQL.executeSearch(" SELECT * FROM `prescription`  "
@@ -154,10 +152,6 @@ public class PatientReportAndPrescription extends javax.swing.JPanel {
 
                 model.addRow(v);
             }
-            
-            
-
-       
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -829,25 +823,24 @@ public class PatientReportAndPrescription extends javax.swing.JPanel {
         int row = jTable3.getSelectedRow();
 
         String id = String.valueOf(jTable3.getValueAt(row, 0));
-        
+
         try {
             ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `prescription`  "
                     + "INNER JOIN `doctor` ON `doctor` . `id` = `prescription` .`doctor_id`  "
                     + "INNER JOIN `patient` ON `patient` . `id` = `prescription` . `patient_id` "
                     + "WHERE `prescription` . `id` = '" + id + "'");
-            
-            if(resultSet.next()){
-                
+
+            if (resultSet.next()) {
+
                 jLabel35.setText(resultSet.getString("doctor.id"));
                 jLabel38.setText(resultSet.getString("doctor.first_name") + " " + resultSet.getString("doctor.last_name"));
                 jLabel40.setText(resultSet.getString("prescription.id"));
                 jLabel44.setText(resultSet.getString("prescription.date"));
                 jLabel41.setText(resultSet.getString("prescription.duration_from_days"));
-            
+
                 loadTable2();
             }
-            
-           
+
         } catch (Exception e) {
         }
 

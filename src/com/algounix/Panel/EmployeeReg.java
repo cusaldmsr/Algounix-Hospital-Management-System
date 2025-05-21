@@ -27,7 +27,9 @@ import org.jfree.data.general.PieDataset;
 public class EmployeeReg extends javax.swing.JPanel {
 
     private static HashMap<String, String> empTypeMap = new HashMap<>();
+
     
+
 
     public EmployeeReg() {
         initComponents();
@@ -35,6 +37,7 @@ public class EmployeeReg extends javax.swing.JPanel {
         jLabel1.setIcon(iconLogo);
         empType();
         generateID();
+
         displayChart();
 
     }
@@ -255,11 +258,14 @@ public class EmployeeReg extends javax.swing.JPanel {
         jLabel9.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
         jLabel9.setText("Gender");
 
+
         jLabel8.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
         jLabel8.setText("Mobile");
 
+
         jComboBox1.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
 
         jTextField4.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
 
@@ -452,6 +458,202 @@ public class EmployeeReg extends javax.swing.JPanel {
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+
+        String id = jTextField1.getText();
+        String fName = jTextField2.getText();
+        String lName = jTextField3.getText();
+        String email = jTextField4.getText();
+        String nic = jTextField5.getText();
+        String mobile = jTextField6.getText();
+        ButtonModel gender = buttonGroup1.getSelection();
+        String empType = String.valueOf(jComboBox1.getSelectedItem());
+
+        if (fName.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter Employee First Name", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (lName.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter Employee Last Name", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (email.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter Employee Email", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (!email.matches("^(?=.{1,64}@)[A-Za-z0-9\\+_-]+(\\.[A-Za-z0-9\\+_-]+)*@"
+                + "[^-][A-Za-z0-9\\+-]+(\\.[A-Za-z0-9\\+-]+)*(\\.[A-Za-z]{2,})$")) {
+
+            JOptionPane.showMessageDialog(this, "Invalid Email", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (nic.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter  The National Identity Card Number", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (!nic.matches("^(([5,6,7,8,9]{1})([0-9]{1})([0,1,2,3,5,6,7,8]{1})([0-9]{6})([v|V|x|X]))|(([1,2]{1})([0,9]{1})([0-9]{2})([0,1,2,3,5,6,7,8]{1})([0-9]{7}))")) {
+            JOptionPane.showMessageDialog(this, "Invalid National Identity Card Number", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (mobile.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter Employee Mobile Number", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (!mobile.matches("^07[01245678]{1}[0-9]{7}$")) {
+            JOptionPane.showMessageDialog(this, "Invalid Mobile Number", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (gender == null) {
+            JOptionPane.showMessageDialog(this, "Please Select Gender", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (empType.equals("Select")) {
+            JOptionPane.showMessageDialog(this, "Please Select Employee Type", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else {
+
+            String selectGender = gender.getActionCommand();
+
+            try {
+
+                ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `employee` WHERE `id` = '" + id + "' OR `nic` = '" + nic + "' ");
+
+                if (resultSet.next()) {
+
+                    JOptionPane.showMessageDialog(this, "This Employee Already Registered", "Warning", JOptionPane.WARNING_MESSAGE);
+
+                } else {
+
+                    MySQL.executeIUD(" INSERT INTO `employee` (`id` , `first_name` , `last_name` , `email` , `mobile` , `nic` , "
+                            + "`gender_id` , `employee_type_id` , `password` , `employee_status_id` ) "
+                            + " VALUES ('" + id + "' , '" + fName + "' , '" + lName + "' , '" + email + "' , '" + mobile + "' , '" + nic + "' , '" + selectGender + "' , "
+                            + " '" + empTypeMap.get(empType) + "' , '1234' , '1')");
+
+                    JOptionPane.showMessageDialog(this, "This Employee Registered Successfully", "Warning", JOptionPane.INFORMATION_MESSAGE);
+
+                }
+            } catch (Exception e) {
+            }
+
+        }
+
+
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
+        // TODO add your handling code here:
+
+        String id = jTextField1.getText();
+
+        try {
+
+            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `employee` "
+                    + "INNER JOIN `gender` ON `gender` . `id` = `employee` . `gender_id` "
+                    + "INNER JOIN `employee_type` ON `employee_type` . `id` = `employee` . `employee_type_id` "
+                    + "INNER JOIN `employee_status` ON `employee_status` . `id` = `employee` . `employee_status_id` "
+                    + "WHERE `employee` . `id` = '" + id + "' ");
+
+            if (resultSet.next()) {
+
+                jTextField2.setText(resultSet.getString("first_name"));
+                jTextField3.setText(resultSet.getString("last_name"));
+                jTextField4.setText(resultSet.getString("email"));
+                jTextField5.setText(resultSet.getString("nic"));
+                jTextField6.setText(resultSet.getString("mobile"));
+                jComboBox1.setSelectedItem(resultSet.getString("employee_type.name"));
+
+                String gender = resultSet.getString("gender_id");
+
+                if (gender.equals("1")) {
+                    jRadioButton1.setSelected(true);
+                } else if (gender.equals("2")) {
+                    jRadioButton2.setSelected(true);
+                }
+
+               jComboBox1.setEnabled(false);
+               jTextField1.setEditable(true);
+
+            } else {
+
+                jTextField2.setText("");
+                jTextField3.setText("");
+                jTextField4.setText("");
+                jTextField5.setText("");
+                jTextField6.setText("");
+                buttonGroup1.clearSelection();
+                jComboBox1.setSelectedIndex(0);
+               
+
+            }
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_jTextField1KeyReleased
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+
+        String id = jTextField1.getText();
+        String fName = jTextField2.getText();
+        String lName = jTextField3.getText();
+        String email = jTextField4.getText();
+        String nic = jTextField5.getText();
+        String mobile = jTextField6.getText();
+        ButtonModel gender = buttonGroup1.getSelection();
+        String empType = String.valueOf(jComboBox1.getSelectedItem());
+
+        if (fName.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter Employee First Name", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (lName.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter Employee Last Name", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (email.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter Employee Email", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (!email.matches("^(?=.{1,64}@)[A-Za-z0-9\\+_-]+(\\.[A-Za-z0-9\\+_-]+)*@"
+                + "[^-][A-Za-z0-9\\+-]+(\\.[A-Za-z0-9\\+-]+)*(\\.[A-Za-z]{2,})$")) {
+
+            JOptionPane.showMessageDialog(this, "Invalid Email", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (nic.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter  The National Identity Card Number", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (!nic.matches("^(([5,6,7,8,9]{1})([0-9]{1})([0,1,2,3,5,6,7,8]{1})([0-9]{6})([v|V|x|X]))|(([1,2]{1})([0,9]{1})([0-9]{2})([0,1,2,3,5,6,7,8]{1})([0-9]{7}))")) {
+            JOptionPane.showMessageDialog(this, "Invalid National Identity Card Number", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (mobile.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter Employee Mobile Number", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (!mobile.matches("^07[01245678]{1}[0-9]{7}$")) {
+            JOptionPane.showMessageDialog(this, "Invalid Mobile Number", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (gender == null) {
+            JOptionPane.showMessageDialog(this, "Please Select Gender", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (empType.equals("Select")) {
+            JOptionPane.showMessageDialog(this, "Please Select Employee Type", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else {
+
+            String selectGender = gender.getActionCommand();
+
+            try {
+
+                ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `employee` WHERE  `nic` = '" + nic + "' ");
+                boolean canUpdate = false;
+
+                if (resultSet.next()) {
+
+                    if (resultSet.getString("id").equals(id)) {
+
+                        canUpdate = true;
+
+                    } else {
+
+                        JOptionPane.showMessageDialog(this, "This National Identity Card Number is Already Added ", "Warning", JOptionPane.WARNING_MESSAGE);
+
+                    }
+
+                } else {
+
+                    canUpdate = true;
+
+                }
+
+                if (canUpdate) {
+
+                    MySQL.executeIUD("UPDATE `employee` SET `first_name` = '" + fName + "' , `last_name` = '" + lName + "' , `email` = '" + email + "' "
+                            + ", `mobile` = '" + mobile + "' , `nic` = '" + nic + "' , `gender_id` = '" + selectGender + "' , `employee_type_id` = '" + empTypeMap.get(empType) + "' WHERE `id` = '" + id + "' ");
+
+                    JOptionPane.showMessageDialog(this, "Updated Successfully ", "Warning", JOptionPane.INFORMATION_MESSAGE);
+
+                    reset();
+
+                }
+
+            } catch (Exception e) {
+            }
+
+        }
+
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        reset();
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
