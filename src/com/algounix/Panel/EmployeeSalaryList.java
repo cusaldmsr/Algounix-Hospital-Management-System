@@ -13,8 +13,10 @@ import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.data.JRTableModelDataSource;
 import net.sf.jasperreports.view.JasperViewer;
 
 /**
@@ -846,20 +848,28 @@ public class EmployeeSalaryList extends javax.swing.JPanel {
 
     //  Print Report From Details With Table
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        try (InputStream path = this.getClass().getResourceAsStream("/com/algounix/Reports/Algounix_HMS_EmployeeList2.jasper")) {
+          try (InputStream path = this.getClass().getResourceAsStream("/com/algounix/Reports/Algounix-HMS-EmployeeListNew.jasper")) {
 
             if (path == null) {
                 throw new FileNotFoundException("Report file not found in the specified path.");
             }
 
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            if (jTable1 == null || jTable1.getModel() == null) {
+                throw new IllegalStateException("Table or table model is not initialized.");
+            }
 
-            MySQL.createConnection();
+            JRTableModelDataSource dataSource = new JRTableModelDataSource(jTable1.getModel());
 
-            JasperPrint report = JasperFillManager.fillReport(path, null, MySQL.connection);
+            // Fill the report
+            JasperPrint jasperPrint = JasperFillManager.fillReport(path, null, dataSource);
 
-            JasperViewer.viewReport(report, false);
-
+            // View the report
+            JasperViewer.viewReport(jasperPrint, false);
+        } catch (FileNotFoundException e) {
+            System.err.println("Error: " + e.getMessage());
+        } catch (JRException e) {
+            System.err.println("JasperReports error: " + e.getMessage());
+            e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
