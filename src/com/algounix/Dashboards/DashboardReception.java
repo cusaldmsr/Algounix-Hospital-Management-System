@@ -133,10 +133,10 @@ public class DashboardReception extends javax.swing.JFrame {
         doctorChanellingList1 = new com.algounix.Panel.Doctor.DoctorChanellingList();
         addPatientQueList1 = new com.algounix.Panel.Reception.AddPatientQueList();
         patientAdmitList1 = new com.algounix.Panel.Doctor.PatientAdmitList();
-        patientDischargeList1 = new com.algounix.Panel.Doctor.PatientDischargeList();
         patientReportAndPrescription1 = new com.algounix.Panel.Doctor.PatientReportAndPrescription();
         addAppoinment1 = new com.algounix.Panel.Reception.AddAppoinment();
         patientList1 = new com.algounix.Panel.Doctor.PatientList();
+        patientDischargeList1 = new com.algounix.Panel.Doctor.PatientDischargeList();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -540,7 +540,7 @@ public class DashboardReception extends javax.swing.JFrame {
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 676, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 693, Short.MAX_VALUE)
                 .addComponent(minimizebtn, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(closebtn, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -576,10 +576,10 @@ public class DashboardReception extends javax.swing.JFrame {
         CardLayoutPanel.add(doctorChanellingList1, "card21");
         CardLayoutPanel.add(addPatientQueList1, "card22");
         CardLayoutPanel.add(patientAdmitList1, "card23");
-        CardLayoutPanel.add(patientDischargeList1, "card24");
         CardLayoutPanel.add(patientReportAndPrescription1, "card25");
         CardLayoutPanel.add(addAppoinment1, "card25");
         CardLayoutPanel.add(patientList1, "card23");
+        CardLayoutPanel.add(patientDischargeList1, "card23");
 
         jPanel4.add(CardLayoutPanel, java.awt.BorderLayout.CENTER);
 
