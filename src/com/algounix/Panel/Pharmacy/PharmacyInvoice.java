@@ -11,6 +11,8 @@ import com.algounix.Panel.BackOffice.Product;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import java.awt.Color;
 import java.awt.Image;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import java.sql.ResultSet;
@@ -22,6 +24,11 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.data.JRTableModelDataSource;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -1295,6 +1302,8 @@ public class PharmacyInvoice extends javax.swing.JFrame {
         String payerNIC = jTextField3.getText();
         String paymentMethod = String.valueOf(jComboBox1.getSelectedItem());
         String dateTime = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date());
+        String empName = jLabel65.getText();
+        String prescriptionId = jTextField4.getText();
 
         if (payerNIC.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please Enter Payer NIC", "Warning", JOptionPane.WARNING_MESSAGE);
@@ -1331,6 +1340,49 @@ public class PharmacyInvoice extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Payment Successfull", "Success", JOptionPane.INFORMATION_MESSAGE);
 
                 //  Print Invoice Code Lines Here
+                 try (InputStream path = this.getClass().getResourceAsStream("/com/algounix/Reports/Algounix_HMS_Pharmacy_Invoice4.jasper")) {
+
+                    HashMap<String, Object> params = new HashMap<>();
+                    params.put("Parameter1", dateTime);
+                    params.put("Parameter2", invoiceID);
+                    params.put("Parameter3", payerNIC);
+                    params.put("Parameter4", prescriptionId);
+
+                    params.put("Parameter5", SignIn.empID);
+                    params.put("Parameter6", empName);
+
+                    params.put("Parameter7", totalAmount);
+                    params.put("Parameter8", afterDiscount);
+                    params.put("Parameter9", paymentMethod);
+                    params.put("Parameter10", payment);
+                    params.put("Parameter11", balance);
+
+                    if (path == null) {
+                        throw new FileNotFoundException("Report file not found in the specified path.");
+                    }
+
+                    if (jTable2 == null || jTable2.getModel() == null) {
+                        throw new IllegalStateException("Table or table model is not initialized.");
+                    }
+
+                    JRTableModelDataSource dataSource = new JRTableModelDataSource(jTable2.getModel());
+
+                    // Fill the report
+                    JasperPrint jasperPrint = JasperFillManager.fillReport(path, params, dataSource);
+
+                    // View the report
+                    JasperViewer.viewReport(jasperPrint, false);
+                    String date = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss").format(new Date());
+                    System.out.println("Employee Id :" + SignIn.empID + " " + "printed the" + " " + invoiceID + " " + "Invoice at:" + date);
+
+                } catch (FileNotFoundException e) {
+                    System.err.println("Error: " + e.getMessage());
+                } catch (JRException e) {
+                    System.err.println("JasperReports error: " + e.getMessage());
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 setGUIToNextPayment();
             } catch (Exception e) {
                 e.printStackTrace();

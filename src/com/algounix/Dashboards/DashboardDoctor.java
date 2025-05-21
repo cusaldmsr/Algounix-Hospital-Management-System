@@ -99,7 +99,7 @@ public class DashboardDoctor extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         CardLayoutPanel = new javax.swing.JPanel();
-        dashboardDoctor1 = new com.algounix.Panel.Doctor.DashboardDoctor();
+        dashboardDoctor1 = new com.algounix.Panel.Doctor.DashboardDoctorPanel();
         roomMap1 = new com.algounix.Panel.RoomMap();
         patientAdmit1 = new com.algounix.Panel.Doctor.PatientAdmit();
         appointmentList1 = new com.algounix.Panel.Doctor.AppointmentList();
@@ -577,7 +577,7 @@ public class DashboardDoctor extends javax.swing.JFrame {
     private javax.swing.JLabel RoomPapbtn;
     private com.algounix.Panel.Doctor.AppointmentList appointmentList1;
     private com.algounix.Buttons.WindowButton closebtn;
-    private com.algounix.Panel.Doctor.DashboardDoctor dashboardDoctor1;
+    private com.algounix.Panel.Doctor.DashboardDoctorPanel dashboardDoctor1;
     private com.algounix.Panel.Doctor.DoctorChanelling doctorChanelling1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
