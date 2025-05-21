@@ -7,6 +7,14 @@ package com.algounix.Panel.Doctor;
 import com.algounix.Components.ScrollBar;
 import com.algounix.Model.MySQL;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.sql.ResultSet;
+import java.util.Vector;
+import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
 import java.sql.ResultSet;
 import java.util.HashMap;
 import java.util.Vector;
@@ -29,6 +37,41 @@ public class AppointmentList extends javax.swing.JPanel {
          jScrollPane1.setVerticalScrollBar(new ScrollBar());
          FlatSVGIcon Logo = new FlatSVGIcon("com//algounix//Resources//AppointmentList.svg", jLabel9.getWidth(), jLabel9.getHeight());
         jLabel9.setIcon(Logo);
+        loadAppointment();
+    }
+
+    private void loadAppointment() {
+        try {
+
+            String company = String.valueOf(jComboBox1.getSelectedIndex());
+
+            ResultSet resultSet = MySQL.executeSearch("SELECT\n"
+                    + "a.id AS `Appointment ID`,\n"
+                    + "p.id AS `Patient ID`,\n"
+                    + "CONCAT(p.first_name, ' ', p.last_name) AS `Patient Name`,\n"
+                    + "aps.`name` AS `Appointment Status`\n"
+                    + "FROM appoinment AS a\n"
+                    + "INNER JOIN appoinment_status AS aps ON a.appoinment_status_id = aps.id\n"
+                    + "INNER JOIN patient AS p ON p.id = a.patient_id");
+//            System.out.println(query);
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+            model.setRowCount(0);
+
+            while (resultSet.next()) {
+
+                Vector<String> vector = new Vector<>();
+                vector.add(resultSet.getString("Appointment ID"));
+                vector.add(resultSet.getString("Patient ID"));
+                vector.add(resultSet.getString("Patient Name"));
+                vector.add(resultSet.getString("Appointment Status"));
+
+                model.addRow(vector);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     private void loadStatus() {
@@ -134,6 +177,7 @@ public class AppointmentList extends javax.swing.JPanel {
         jLabel8 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
+        jButton3 = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(205, 245, 253));
 
@@ -242,7 +286,7 @@ public class AppointmentList extends javax.swing.JPanel {
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 671, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
@@ -394,13 +438,25 @@ public class AppointmentList extends javax.swing.JPanel {
                 .addContainerGap(89, Short.MAX_VALUE))
         );
 
+        jButton3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jButton3.setText("Print Appointment List");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -410,16 +466,40 @@ public class AppointmentList extends javax.swing.JPanel {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton3)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         new Prescription().setVisible(true);
-        
+
     }//GEN-LAST:event_jButton2ActionPerformed
+//report
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        try (InputStream path = this.getClass().getResourceAsStream("/com/algounix/Reports/Algounix_HMS_AppointmentList2.jasper")) {
+
+            if (path == null) {
+                throw new FileNotFoundException("Report file not found in the specified path.");
+            }
+
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            MySQL.createConnection();
+
+            JasperPrint report = JasperFillManager.fillReport(path, null, MySQL.connection);
+
+            JasperViewer.viewReport(report, false);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jComboBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox1ItemStateChanged
         // TODO add your handling code here:
@@ -440,6 +520,7 @@ public class AppointmentList extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

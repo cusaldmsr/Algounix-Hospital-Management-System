@@ -6,11 +6,18 @@ package com.algounix.Panel;
 
 import com.algounix.Model.MySQL;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.sql.ResultSet;
 import java.util.HashMap;
 import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.data.JRTableModelDataSource;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -326,7 +333,32 @@ public class DoctorList extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        // TODO add your handling code here:
+        // TABLE
+        try (InputStream path = this.getClass().getResourceAsStream("/com/algounix/Reports/Algounix_HMS_NEW_DoctorList1.jasper")) {
+
+            if (path == null) {
+                throw new FileNotFoundException("Report file not found in the specified path.");
+            }
+
+            if (jTable1 == null || jTable1.getModel() == null) {
+                throw new IllegalStateException("Table or table model is not initialized.");
+            }
+
+            JRTableModelDataSource dataSource = new JRTableModelDataSource(jTable1.getModel());
+
+            // Fill the report
+            JasperPrint jasperPrint = JasperFillManager.fillReport(path, null, dataSource);
+
+            // View the report
+            JasperViewer.viewReport(jasperPrint, false);
+        } catch (FileNotFoundException e) {
+            System.err.println("Error: " + e.getMessage());
+        } catch (JRException e) {
+            System.err.println("JasperReports error: " + e.getMessage());
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }//GEN-LAST:event_jButton7ActionPerformed
 
