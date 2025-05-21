@@ -474,9 +474,7 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-
         <Component class="javax.swing.JLabel" name="jLabel1">
-
           <Properties>
             <Property name="horizontalAlignment" type="int" value="0"/>
           </Properties>
@@ -517,7 +515,6 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
           </Properties>
-
 
           <Layout>
             <DimensionLayout dim="0">
