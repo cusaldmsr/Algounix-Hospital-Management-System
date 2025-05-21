@@ -4,13 +4,24 @@
  */
 package com.algounix.Panel;
 
+import com.algounix.GUI.SignIn;
 import com.algounix.Model.MySQL;
+import com.algounix.Model.PharmacyInvoiceItem;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.data.JRTableModelDataSource;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -147,7 +158,72 @@ public class EmployeeSalaryList extends javax.swing.JPanel {
         }
     }
 
-    @SuppressWarnings("unchecked")
+    public void printPaySheet() {
+
+        String empID = jLabel23.getText();
+        String empName = jLabel13.getText();
+        String empEmail = jLabel14.getText();
+        String empNIC = jLabel16.getText();
+        String empType = jLabel17.getText();
+        String empStatus = jLabel22.getText();
+        String noPay = jLabel52.getText();
+        String salaryForWorkingDays = jLabel44.getText();
+        String salaryForOT = jLabel50.getText();
+        String reduceForNoPay = jLabel47.getText();
+        String bonus = jLabel54.getText();
+        String total = jLabel58.getText();
+
+        if (total.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No details for print", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else {
+
+            //  Print Invoice Code Lines Here
+            try (InputStream path = this.getClass().getResourceAsStream("/com/algounix/Reports/Algounix-HMS-Employee_Salary_List_PaySheet.jasper")) {
+
+                HashMap<String, Object> params = new HashMap<>();
+                params.put("Parameter1", empID);
+                params.put("Parameter2", empName);
+                params.put("Parameter3", empEmail);
+                params.put("Parameter4", empStatus);
+                params.put("Parameter5", empNIC);
+                params.put("Parameter6", empType);
+                params.put("Parameter7", noPay);
+                params.put("Parameter8", salaryForWorkingDays);
+                params.put("Parameter9", salaryForOT);
+                params.put("Parameter10", reduceForNoPay);
+                params.put("Parameter11", bonus);
+                params.put("Parameter12", total);
+
+                if (path == null) {
+                    throw new FileNotFoundException("Report file not found in the specified path.");
+                }
+
+                if (jTable1 == null || jTable1.getModel() == null) {
+                    throw new IllegalStateException("Table or table model is not initialized.");
+                }
+
+                JRTableModelDataSource dataSource = new JRTableModelDataSource(jTable1.getModel());
+
+                // Fill the report
+                JasperPrint jasperPrint = JasperFillManager.fillReport(path, params, dataSource);
+
+                // View the report
+                JasperViewer.viewReport(jasperPrint, false);
+                String date = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss").format(new Date());
+                System.out.println("Employee Id :" + SignIn.empID + " " + "printed the" + " " + empID + " " + "'s PaySheet at:" + date);
+
+            } catch (FileNotFoundException e) {
+                System.err.println("Error: " + e.getMessage());
+            } catch (JRException e) {
+                System.err.println("JasperReports error: " + e.getMessage());
+                e.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }}
+
+        @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -854,7 +930,7 @@ public class EmployeeSalaryList extends javax.swing.JPanel {
                 int showConfirm = JOptionPane.showConfirmDialog(this, "Do you Want Issue Salary ?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 
                 if (showConfirm == JOptionPane.YES_OPTION) {
-                    MySQL.executeIUD("UPDATE `emp_salary` SET `emp_salary_status_id` = '2' WHERE `id` = '"+salaryID+"'");
+                    MySQL.executeIUD("UPDATE `emp_salary` SET `emp_salary_status_id` = '2' WHERE `id` = '" + salaryID + "'");
                     JOptionPane.showMessageDialog(this, "Salary Issued For Employee", "Success", JOptionPane.INFORMATION_MESSAGE);
                 }
             } catch (Exception e) {
@@ -868,6 +944,7 @@ public class EmployeeSalaryList extends javax.swing.JPanel {
     //  Print Pay Sheet from Salary Details
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // Print Pay Sheet
+        printPaySheet();
     }//GEN-LAST:event_jButton4ActionPerformed
 
 
