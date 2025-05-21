@@ -18,11 +18,11 @@ import org.jfree.chart.plot.PiePlot;
 import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.data.general.PieDataset;
 
-public class DashboardDoctor extends javax.swing.JPanel {
+public class DashboardDoctorPanel extends javax.swing.JPanel {
 
     HashMap<String, String> appoinmentStatusMap = new HashMap<>();
 
-    public DashboardDoctor() {
+    public DashboardDoctorPanel() {
         initComponents();
         loadAppointmentCount();
         loadAdmitedPatientCount();
@@ -143,21 +143,6 @@ public class DashboardDoctor extends javax.swing.JPanel {
                 String plname = resultSet.getString("patient.last_name");
                 appoinment.add(pfname + " " + plname);
                 appoinment.add(" ");
-
-//                String status = "Status :"+" "+resultSet.getString("appoinment_status.name");
-//                String dtype = resultSet.getString("doctor_type.name");
-//                String dfname = resultSet.getString("doctor.first_name");
-//                String dlname = resultSet.getString("doctor.last_name");
-//                String unit = resultSet.getString("units.name");
-//                String pfname = resultSet.getString("patient.first_name");
-//                String plname = resultSet.getString("patient.last_name");
-//                
-//                String data = status +"-"+ dtype;
-//                String[] spilt = data.split("-");
-//                for (String spilt1 : spilt) {
-//                    System.out.println(spilt1);
-//                    appoinment.add(spilt1);
-//                }
             }
 
             DefaultListModel<String> listModel = new DefaultListModel<>();
@@ -165,11 +150,9 @@ public class DashboardDoctor extends javax.swing.JPanel {
                 listModel.addElement(details);
             }
 
-//                System.out.println(listModel);
             jList1.setModel(listModel);
 
         } catch (Exception e) {
-            // Print the stack trace for debugging
             e.printStackTrace();
         }
     }
@@ -198,6 +181,7 @@ public class DashboardDoctor extends javax.swing.JPanel {
         return new ChartPanel(pieChart);
     }
 
+    
     //piechart1  Dataset
     private PieDataset createTodayAppointmentsDataset() {
         DefaultPieDataset dataset = new DefaultPieDataset();
@@ -220,28 +204,28 @@ public class DashboardDoctor extends javax.swing.JPanel {
 
         return dataset;
     }
-
-    //piechart 2
-    private PieDataset createDoctorTypeDataset() {
-        DefaultPieDataset dataset = new DefaultPieDataset();
+    
+     private PieDataset createDoctorTypeDataset() {
+      DefaultPieDataset dataset = new DefaultPieDataset();
         try {
-            ResultSet rs = MySQL.executeSearch("SELECT ast.name AS status, COUNT(a.id) AS total\n"
-                    + "FROM appoinment a\n"
-                    + "INNER JOIN appoinment_status ast ON a.appoinment_status_id = ast.id\n"
-                    + "WHERE a.date = CURDATE()\n"
-                    + "GROUP BY a.appoinment_status_id");
+            ResultSet rs = MySQL.executeSearch("SELECT dt.name AS doctor_type, COUNT(*) AS total_doc_type\n"
+                    + "FROM doctor d\n"
+                    + "JOIN doctor_type dt ON d.doctor_type_id = dt.id\n"
+                    + "GROUP BY dt.name");
 
             while (rs.next()) {
-                dataset.setValue(rs.getString("status"), rs.getInt("total"));
+                String emplo = rs.getString("doctor_type");
+                int count = rs.getInt("total_doc_type");
+                dataset.setValue(emplo, count);
             }
 
             rs.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return dataset;    }
 
-        return dataset;
-    }
+  
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -345,7 +329,7 @@ public class DashboardDoctor extends javax.swing.JPanel {
                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(jLabel7))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(7, Short.MAX_VALUE))
         );
 
         jPanel14.setBackground(new java.awt.Color(255, 255, 255));
@@ -528,9 +512,9 @@ public class DashboardDoctor extends javax.swing.JPanel {
                         .addComponent(jPanel22, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jPanel14, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addComponent(jPanel13, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel15, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                            .addComponent(jPanel14, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel13, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(chart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
