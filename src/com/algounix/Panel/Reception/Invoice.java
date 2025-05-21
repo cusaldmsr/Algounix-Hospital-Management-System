@@ -13,6 +13,8 @@ import java.awt.Color;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.ImageIcon;
@@ -26,6 +28,11 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.data.JRTableModelDataSource;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -101,8 +108,8 @@ public class Invoice extends javax.swing.JFrame {
             if (empRs.next()) {
                 jLabel63.setText(SignIn.empID);
                 jLabel65.setText(empRs.getString("first_name") + " " + empRs.getString("last_name"));
-            }else{
-                if(SignIn.docID != null){
+            } else {
+                if (SignIn.docID != null) {
                     jLabel63.setText(SignIn.docID);
                     jLabel65.setText(SignIn.docName);
                 }
@@ -1438,11 +1445,20 @@ public class Invoice extends javax.swing.JFrame {
         String invoiceID = jTextField1.getText();
         String payment = jFormattedTextField1.getText();
         String balance = jTextField3.getText();
+        String totAmount = jTextField2.getText();
         String paymentMethod = String.valueOf(jComboBox1.getSelectedItem());
         String date = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date());
         String patientID = jLabel21.getText();
         String payerNIC = jTextField4.getText();
         String insuranceClaim = jFormattedTextField2.getText();
+        String prescriptionId = jTextField4.getText();
+        String doctorName = jLabel43.getText();
+        String patientName = jLabel22.getText();
+        String admittedDate = jLabel41.getText();
+        String dischargedDate = jLabel42.getText();
+        String doctorCharge = jLabel53.getText();
+        String prescriptionCharge = jLabel54.getText();
+        String roomCharge = jLabel55.getText();
 
         if (payerNIC.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please Enter payer NIC Number.", "Warning", JOptionPane.WARNING_MESSAGE);
@@ -1462,6 +1478,52 @@ public class Invoice extends javax.swing.JFrame {
                         + "'" + patientID + "','" + SignIn.empID + "','" + payerNIC + "','" + insuranceClaim + "','" + this.totalDoctorCharges + "')");
 
                 //  Print Invoice Code Lines Here
+                try (InputStream path = this.getClass().getResourceAsStream("/com/algounix/Reports/Algounix_HMS_Invoice1.jasper")) {
+
+                    HashMap<String, Object> params = new HashMap<>();
+                    params.put("Parameter1", date);
+                    params.put("Parameter2", invoiceID);
+                    params.put("Parameter3", payerNIC);
+                    params.put("Parameter4", prescriptionId);
+                    params.put("Parameter5", SignIn.empID);
+                    params.put("Parameter6", doctorName);
+                    params.put("Parameter7", patientName);
+                    params.put("Parameter8", admittedDate);
+                    params.put("Parameter9", dischargedDate);
+                    params.put("Parameter10", doctorCharge);
+                    params.put("Parameter11", prescriptionCharge);
+                    params.put("Parameter12", roomCharge);
+                    params.put("Parameter13", totAmount);
+                    params.put("Parameter14", insuranceClaim);
+                    params.put("Parameter15", paymentMethod);
+                    params.put("Parameter16", payment);
+                    params.put("Parameter17", balance);
+
+                    if (path == null) {
+                        throw new FileNotFoundException("Report file not found in the specified path.");
+                    }
+
+                    if (jTable1 == null || jTable1.getModel() == null) {
+                        throw new IllegalStateException("Table or table model is not initialized.");
+                    }
+
+                    JRTableModelDataSource dataSource = new JRTableModelDataSource(jTable1.getModel());
+
+                    // Fill the report
+                    JasperPrint jasperPrint = JasperFillManager.fillReport(path, params, dataSource);
+
+                    // View the report
+                    JasperViewer.viewReport(jasperPrint, false);
+                    System.out.println("Employee Id :" + SignIn.empID + " " + "printed the" + " " + invoiceID + " " + "Invoice at:" + date);
+
+                } catch (FileNotFoundException e) {
+                    System.err.println("Error: " + e.getMessage());
+                } catch (JRException e) {
+                    System.err.println("JasperReports error: " + e.getMessage());
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 jButton1.setEnabled(false);
                 jButton2.setEnabled(false);
                 jButton3.setEnabled(false);
@@ -1479,16 +1541,17 @@ public class Invoice extends javax.swing.JFrame {
                 });
                 timer.setRepeats(false); // Ensure the timer only runs once
                 timer.start();
-                
+
                 dischargeList.confirmPayment(invoiceID);
-                
+
                 PatientDischarge.setIsPaymentSuccess(true, invoiceID);
 
                 JOptionPane.showMessageDialog(this, " This Window Close Automatically After 10 Seconds.", "Warning", JOptionPane.WARNING_MESSAGE);
-                
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
+
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
