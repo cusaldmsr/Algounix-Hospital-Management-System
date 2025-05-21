@@ -1340,7 +1340,7 @@ public class PharmacyInvoice extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Payment Successfull", "Success", JOptionPane.INFORMATION_MESSAGE);
 
                 //  Print Invoice Code Lines Here
-                 try (InputStream path = this.getClass().getResourceAsStream("/com/algounix/Reports/Algounix_HMS_Pharmacy_Invoice.jasper")) {
+                 try (InputStream path = this.getClass().getResourceAsStream("/com/algounix/Reports/Algounix_HMS_Pharmacy_Invoice4.jasper")) {
 
                     HashMap<String, Object> params = new HashMap<>();
                     params.put("Parameter1", dateTime);
