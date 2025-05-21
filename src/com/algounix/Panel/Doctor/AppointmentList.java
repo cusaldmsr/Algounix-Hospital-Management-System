@@ -98,54 +98,6 @@ public class AppointmentList extends javax.swing.JPanel {
 
     }
     
-     private void loadAppointment() {
-        try {
-
-            String status = String.valueOf(jComboBox1.getSelectedIndex());
-
-            String query = "SELECT * FROM appoinment "
-                    + "INNER JOIN patient ON appoinment.patient_id = patient.id "
-                    + "INNER JOIN appoinment_status ON appoinment.appoinment_status_id = appoinment_status.id";
-
-            String appoId = jTextField1.getText();
-            String patientName = jTextField2.getText();
-
-            if (appoId.isEmpty()) {
-                query += "";
-            } else {
-                query += " WHERE `appoinment` . `id` = '" + appoId + "' ";
-            }
-            if (patientName.isEmpty()) {
-                query += "";
-            } else {
-                query += " WHERE `patient` . `first_name` = '" + patientName + "' ";
-            }
-
-            if (!status.equals("0")) {
-                query += " WHERE `appoinment_status`.`id`='" + status + "'";
-            }
-
-            
-
-            ResultSet resultSet = MySQL.executeSearch(query);
-            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-            model.setRowCount(0);
-
-            while (resultSet.next()) {
-
-                Vector<String> vector = new Vector<>();
-                vector.add(resultSet.getString("id"));
-                vector.add(resultSet.getString("patient.id"));
-                vector.add(resultSet.getString("patient.first_name"));
-                vector.add(resultSet.getString("appoinment_status.name"));
-
-                model.addRow(vector);
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     /**
      * This method is called from within the constructor to initialize the form.
