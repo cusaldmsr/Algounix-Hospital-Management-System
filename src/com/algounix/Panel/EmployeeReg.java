@@ -91,52 +91,7 @@ public class EmployeeReg extends javax.swing.JPanel {
         return dataset;
     }
     
-    private void displayChart() {
-
-        chartpanel.add(createPieChartPanel(createMostSoldDistributionDataset(), "Employee Type Distribution"));
-
-        chartpanel.revalidate();
-        chartpanel.repaint();
-
-        chartpanel.setLayout(new java.awt.GridLayout(1, 2));
-
-    }
     
-     //    Pie Chart Panel
-    private ChartPanel createPieChartPanel(PieDataset dataset, String chartTitle) {
-        JFreeChart pieChart = ChartFactory.createPieChart(
-                chartTitle, // chart title
-                dataset, // data
-                false, // include legend
-                true,
-                false
-        );
-        PiePlot plot = (PiePlot) pieChart.getPlot();
-        plot.setBackgroundPaint(Color.WHITE);
-        return new ChartPanel(pieChart);
-    }
-
-    //piechart 1 Dataset
-    private DefaultPieDataset createMostSoldDistributionDataset() {
-        DefaultPieDataset dataset = new DefaultPieDataset();
-        try {
-            ResultSet rs = MySQL.executeSearch("SELECT et.name AS employee_type, COUNT(*) AS total_emp_type\n"
-                    + "FROM employee e\n"
-                    + "JOIN employee_type et ON e.employee_type_id = et.id\n"
-                    + "GROUP BY et.name");
-
-            while (rs.next()) {
-                String emplo = rs.getString("employee_type");
-                int count = rs.getInt("total_emp_type");
-                dataset.setValue(emplo, count);
-            }
-
-            rs.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return dataset;
-    }
 
     private void generateID() {
 
