@@ -128,24 +128,6 @@ public class Dashboard extends javax.swing.JPanel {
     }
 
     //chart panels
-    //barchart panel
-    private ChartPanel createBarChartPanel(DefaultCategoryDataset dataset, String chartTitle) {
-        JFreeChart barChart = ChartFactory.createBarChart(
-                chartTitle,
-                "Item",
-                "Quantity",
-                dataset
-        );
-
-        CategoryPlot plot = barChart.getCategoryPlot();
-        plot.getDomainAxis().setTickLabelFont(new Font("SansSerif", Font.PLAIN, 10));
-        plot.getRangeAxis().setTickLabelFont(new Font("SansSerif", Font.PLAIN, 10));
-        plot.setBackgroundPaint(Color.WHITE);
-        barChart.getTitle().setFont(new Font("SansSerif", Font.BOLD, 12));
-        barChart.getLegend().setItemFont(new Font("SansSerif", Font.PLAIN, 10));
-
-        return new ChartPanel(barChart);
-    }
 
     // pie chart panel
     private ChartPanel createPieChartPanel(DefaultPieDataset dataset, String chartTitle) {
@@ -159,9 +141,6 @@ public class Dashboard extends javax.swing.JPanel {
 
         PiePlot plot = (PiePlot) pieChart.getPlot();
         plot.setBackgroundPaint(Color.WHITE);
-        plot.setLabelFont(new Font("SansSerif", Font.PLAIN, 10));
-        pieChart.getTitle().setFont(new Font("SansSerif", Font.BOLD, 12));
-        pieChart.getLegend().setItemFont(new Font("SansSerif", Font.PLAIN, 10));
         return new ChartPanel(pieChart);
     }
 
@@ -176,10 +155,6 @@ public class Dashboard extends javax.swing.JPanel {
 
         CategoryPlot plot = lineChart.getCategoryPlot();
         plot.setBackgroundPaint(Color.WHITE);
-        plot.getDomainAxis().setTickLabelFont(new Font("SansSerif", Font.PLAIN, 10));
-        plot.getRangeAxis().setTickLabelFont(new Font("SansSerif", Font.PLAIN, 10));
-        lineChart.getTitle().setFont(new Font("SansSerif", Font.BOLD, 12));
-        lineChart.getLegend().setItemFont(new Font("SansSerif", Font.PLAIN, 10));
         return new ChartPanel(lineChart);
     }
 
