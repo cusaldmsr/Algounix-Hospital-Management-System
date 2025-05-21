@@ -5,12 +5,17 @@
 package com.algounix.Panel;
 
 import com.algounix.Model.MySQL;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.sql.ResultSet;
 import java.util.HashMap;
 import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -841,7 +846,23 @@ public class EmployeeSalaryList extends javax.swing.JPanel {
 
     //  Print Report From Details With Table
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        //Print Table
+        try (InputStream path = this.getClass().getResourceAsStream("/com/algounix/Reports/Algounix_HMS_EmployeeList2.jasper")) {
+
+            if (path == null) {
+                throw new FileNotFoundException("Report file not found in the specified path.");
+            }
+
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            MySQL.createConnection();
+
+            JasperPrint report = JasperFillManager.fillReport(path, null, MySQL.connection);
+
+            JasperViewer.viewReport(report, false);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     //  Issue Salary to Employee if its Passed Already
