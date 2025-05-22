@@ -189,7 +189,6 @@ public class RoomMap extends javax.swing.JPanel {
                 params.put("Parameter15", patientAge);
                 params.put("Parameter16", patientGender);
 
-                // ✅ Compile and fill with an empty data source
                 JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, new JREmptyDataSource());
 
                 JasperViewer.viewReport(jasperPrint, false);
