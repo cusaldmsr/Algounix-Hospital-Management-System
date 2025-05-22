@@ -47,6 +47,16 @@ public class SupplierReg extends javax.swing.JPanel {
         return jTextField3;
     }
 
+    public void setSupplierFeilds(String id, String mobile, String email, String fname, String lname, String company, String status) {
+        jTextField1.setText(fname);
+        jTextField5.setText(id);
+        jTextField2.setText(lname);
+        jTextField3.setText(email);
+        jTextField4.setText(mobile);
+        jLabel7.setText(company);
+        jComboBox1.setSelectedItem(status);
+    }
+
     private SupplierReg(JFrame jFrame, boolean b) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
@@ -183,9 +193,9 @@ public class SupplierReg extends javax.swing.JPanel {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(22, Short.MAX_VALUE)
+                .addContainerGap(20, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -265,10 +275,15 @@ public class SupplierReg extends javax.swing.JPanel {
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         jTextField5.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+        jTextField5.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField5KeyReleased(evt);
+            }
+        });
 
         jButton6.setBackground(new java.awt.Color(205, 245, 253));
         jButton6.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
-        jButton6.setText("Search by ID");
+        jButton6.setText("Select Supplier");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton6ActionPerformed(evt);
@@ -571,38 +586,10 @@ public class SupplierReg extends javax.swing.JPanel {
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
-        try {
-
-            String query = "SELECT * FROM supplier"
-                    + " INNER JOIN `company` ON `supplier`.`company_id`=`company`.`id` "
-                    + "INNER JOIN `supplier_status` ON `supplier`.`supplier_status_id`=`supplier_status`.`id`"
-                    //+"INNER JOIN `supplier_status` ON `supplier`.`supplier_type_id` = `supplier_status`.`id`"
-                    //+ "INNER JOIN `company` ON `supplier`.`company_id` = `company`.`id`");
-                    + "WHERE `supplier`.`id` = " + jTextField5.getText();
-            ResultSet resultSet = MySQL.executeSearch(query);
-
-            if (resultSet.next()) {
-
-                jTextField1.setText(resultSet.getString("first_name"));
-                jTextField2.setText(resultSet.getString("last_name"));
-                jTextField3.setText(resultSet.getString("email"));
-                jTextField4.setText(resultSet.getString("mobile"));
-                jLabel7.setText(resultSet.getString("company.company"));
-                jComboBox1.setSelectedItem(resultSet.getString("supplier_status.name"));
-                //jLabel7.setText(resultSet.getString("companyId"));
-                //String type = String.valueOf(jComboBox1.getSelectedItem());
-
-                companyId = resultSet.getString("supplier.company_id");
-
-            } else {
-                JOptionPane.showMessageDialog(null, "no data found");
-            }
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
-
-            jButton2.setEnabled(false);
-        }
+        JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+        SupplierListDialog SL = new SupplierListDialog(parentFrame, true);
+        SL.setSupplierReg(this);
+        SL.setVisible(true);
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -724,7 +711,44 @@ public class SupplierReg extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void jTextField5KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField5KeyReleased
+        // TODO add your handling code here:
+        loadSupplierFromDB();
+    }//GEN-LAST:event_jTextField5KeyReleased
 
+    private void loadSupplierFromDB() {
+        try {
+
+            String id = jTextField5.getText();
+
+            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `supplier` "
+                    + "INNER JOIN `company` ON `company` . `id` = `supplier` . `company_id` "
+                    + "INNER JOIN `supplier_status` ON `supplier_status` . `id` = `supplier` . `supplier_status_id` "
+                    + "WHERE `supplier` . `id` = '" + id + "' ");
+
+            if (resultSet.next()) {
+
+                jTextField1.setText(resultSet.getString("first_name"));
+                jTextField2.setText(resultSet.getString("last_name"));
+                jTextField3.setText(resultSet.getString("email"));
+                jTextField4.setText(resultSet.getString("mobile"));
+                jLabel7.setText(resultSet.getString("company.company"));
+                jComboBox1.setSelectedItem(resultSet.getString("supplier_status.name"));
+
+            } else {
+
+                jTextField1.setText("");
+                jTextField2.setText("");
+                jTextField3.setText("");
+                jTextField4.setText("");
+                jTextField5.setText("");
+                jLabel7.setText("");
+                jComboBox1.setSelectedIndex(0);
+
+            }
+        } catch (Exception e) {
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel chartpanel;
     private javax.swing.JButton jButton1;

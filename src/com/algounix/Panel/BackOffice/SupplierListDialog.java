@@ -24,6 +24,7 @@ public class SupplierListDialog extends javax.swing.JDialog {
     private static HashMap <String,String> companyMap = new HashMap<>();
     
     private GRN grn;
+    private SupplierReg supReg;
     
     public SupplierListDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -35,6 +36,10 @@ public class SupplierListDialog extends javax.swing.JDialog {
 
     public void setGrn(GRN grn){
         this.grn = grn;
+    }
+    
+    public void setSupplierReg(SupplierReg supReg){
+        this.supReg = supReg;
     }
     
     private void lodeStatus (){
@@ -403,6 +408,17 @@ public class SupplierListDialog extends javax.swing.JDialog {
                 String name = String.valueOf(jTable1.getValueAt(row, 1)+" "+String.valueOf(jTable1.getValueAt(row, 2)));
                 
                 grn.setSupplierFeilds(id, mobile, email, name);
+                this.dispose();
+            } else if (supReg != null) {
+                String id = String.valueOf(jTable1.getValueAt(row, 0));
+                String mobile = String.valueOf(jTable1.getValueAt(row, 3));
+                String email = String.valueOf(jTable1.getValueAt(row, 4));
+                String fname = String.valueOf(jTable1.getValueAt(row, 1));
+                String lname = String.valueOf(jTable1.getValueAt(row, 2));
+                String company = String.valueOf(jTable1.getValueAt(row, 5));
+                String status = String.valueOf(jTable1.getValueAt(row, 6));
+                
+                supReg.setSupplierFeilds(id, mobile, email, fname, lname,company, status);
                 this.dispose();
             }
         }
