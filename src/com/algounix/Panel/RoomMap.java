@@ -4,11 +4,27 @@
  */
 package com.algounix.Panel;
 
+import com.algounix.GUI.SignIn;
 import com.algounix.Model.MySQL;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.sql.Connection;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.Timer;
+import net.sf.jasperreports.engine.JREmptyDataSource;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.view.JasperViewer;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -121,6 +137,75 @@ public class RoomMap extends javax.swing.JPanel {
         return dataset;
     }
 
+    private void printRoomDetails() {
+        String roomNo = jLabel13.getText();
+        String roomTypeNo = jLabel15.getText();
+        String roomCharge = jLabel22.getText();
+        String doctorCharge = jLabel26.getText();
+        String description = jTextArea2.getText();
+        String doctorId = jLabel4.getText();
+        String doctorName = jLabel5.getText();
+        String docMobile = jLabel14.getText();
+        String docType = jLabel18.getText();
+        String docUnit = jLabel20.getText();
+        String patientId = jLabel41.getText();
+        String patientName = jLabel42.getText();
+        String patientMobile = jLabel43.getText();
+        String patientEmail = jLabel44.getText();
+        String patientAge = jLabel45.getText();
+        String patientGender = jLabel46.getText();
+
+        String date = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date());
+
+        try {
+            if (roomNo.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Please Select a room First.", "Warning", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            try (InputStream jrxmlStream = this.getClass().getResourceAsStream("/com/algounix/Reports/Algounix-HMS-RoomMap-Report1.jrxml")) {
+
+                if (jrxmlStream == null) {
+                    throw new FileNotFoundException("JRXML file not found in the specified path.");
+                }
+
+                JasperReport jasperReport = JasperCompileManager.compileReport(jrxmlStream);
+
+                HashMap<String, Object> params = new HashMap<>();
+                params.put("Parameter1", roomNo);
+                params.put("Parameter2", roomTypeNo);
+                params.put("Parameter3", roomCharge);
+                params.put("Parameter4", doctorCharge);
+                params.put("Parameter5", description);
+                params.put("Parameter6", doctorId);
+                params.put("Parameter7", doctorName);
+                params.put("Parameter8", docMobile);
+                params.put("Parameter9", docType);
+                params.put("Parameter10", docUnit);
+                params.put("Parameter11", patientId);
+                params.put("Parameter12", patientName);
+                params.put("Parameter13", patientMobile);
+                params.put("Parameter14", patientEmail);
+                params.put("Parameter15", patientAge);
+                params.put("Parameter16", patientGender);
+
+                JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, new JREmptyDataSource());
+
+                JasperViewer.viewReport(jasperPrint, false);
+
+                System.out.println("Employee Id: " + SignIn.empID + " printed Room Detail report of: Room No. " + roomNo + " at: " + date);
+
+            } catch (FileNotFoundException e) {
+                System.err.println("Error: " + e.getMessage());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -193,6 +278,7 @@ public class RoomMap extends javax.swing.JPanel {
         jTextArea2 = new javax.swing.JTextArea();
         jLabel24 = new javax.swing.JLabel();
         jLabel26 = new javax.swing.JLabel();
+        jButton3 = new javax.swing.JButton();
         chartpanel = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jLabel33 = new javax.swing.JLabel();
@@ -878,6 +964,7 @@ public class RoomMap extends javax.swing.JPanel {
         jTextArea2.setColumns(20);
         jTextArea2.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
         jTextArea2.setRows(5);
+        jTextArea2.setText("Room description here...");
         jScrollPane1.setViewportView(jTextArea2);
 
         jLabel24.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
@@ -885,6 +972,15 @@ public class RoomMap extends javax.swing.JPanel {
 
         jLabel26.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
         jLabel26.setText("Doctor Charge Here");
+
+        jButton3.setBackground(new java.awt.Color(205, 245, 253));
+        jButton3.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+        jButton3.setText("Print Room Details");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -907,7 +1003,10 @@ public class RoomMap extends javax.swing.JPanel {
                                 .addGap(18, 18, 18)))
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel26, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel22, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(jLabel22, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -940,7 +1039,9 @@ public class RoomMap extends javax.swing.JPanel {
                     .addComponent(jLabel24)
                     .addComponent(jLabel26))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel32)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel32)
+                    .addComponent(jButton3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(15, Short.MAX_VALUE))
@@ -1433,6 +1534,11 @@ public class RoomMap extends javax.swing.JPanel {
 
     }//GEN-LAST:event_jButton62ActionPerformed
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        printRoomDetails();
+    }//GEN-LAST:event_jButton3ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel chartpanel;
@@ -1454,6 +1560,7 @@ public class RoomMap extends javax.swing.JPanel {
     private javax.swing.JButton jButton27;
     private javax.swing.JButton jButton28;
     private javax.swing.JButton jButton29;
+    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton30;
     private javax.swing.JButton jButton31;
     private javax.swing.JButton jButton32;
@@ -1535,4 +1642,5 @@ public class RoomMap extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea2;
     // End of variables declaration//GEN-END:variables
+
 }

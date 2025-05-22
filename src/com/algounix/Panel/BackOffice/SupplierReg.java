@@ -12,10 +12,13 @@ import java.awt.Frame;
 import java.awt.Window;
 import java.awt.event.WindowAdapter;
 import java.sql.ResultSet;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
@@ -40,11 +43,22 @@ public class SupplierReg extends javax.swing.JPanel {
         jLabel9.setIcon(iconLogo);
         loadStatus();
         displayCharts();
+        loadSummary(jLabel17, jLabel18, jLabel19, jLabel20, jLabel21);
     }
     private String companyId;
 
     public JTextField getTextField() {
         return jTextField3;
+    }
+
+    public void setSupplierFeilds(String id, String mobile, String email, String fname, String lname, String company, String status) {
+        jTextField1.setText(fname);
+        jTextField5.setText(id);
+        jTextField2.setText(lname);
+        jTextField3.setText(email);
+        jTextField4.setText(mobile);
+        jLabel7.setText(company);
+        jComboBox1.setSelectedItem(status);
     }
 
     private SupplierReg(JFrame jFrame, boolean b) {
@@ -118,6 +132,56 @@ public class SupplierReg extends javax.swing.JPanel {
         return dataset;
     }
 
+    public static void loadSummary(JLabel jLabel17, JLabel jLabel18, JLabel jLabel19, JLabel jLabel20, JLabel jLabel21) {
+        try {
+            // Current Year-Month
+            String currentMonth = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM"));
+
+            // 1. Total Supplier Count
+            ResultSet rs1 = MySQL.executeSearch("SELECT COUNT(*) AS count FROM supplier");
+            if (rs1.next()) {
+                jLabel17.setText(rs1.getString("count"));
+            }
+
+            // 2 & 3. Most Active Supplier of the Month (by GRN count)
+            ResultSet rs2 = MySQL.executeSearch(
+                    "SELECT supplier_id, COUNT(*) AS grn_count "
+                    + "FROM grn "
+                    + "WHERE DATE_FORMAT(date, '%Y-%m') = '" + currentMonth + "' "
+                    + "GROUP BY supplier_id "
+                    + "ORDER BY grn_count DESC LIMIT 1"
+            );
+            if (rs2.next()) {
+                int supplierId = rs2.getInt("supplier_id");
+                jLabel18.setText(String.valueOf(supplierId));
+
+                ResultSet rs3 = MySQL.executeSearch("SELECT first_name, last_name FROM supplier WHERE id = '" + supplierId + "'");
+                if (rs3.next()) {
+                    String fullName = rs3.getString("first_name") + " " + rs3.getString("last_name");
+                    jLabel19.setText(fullName);
+                }
+            }
+
+            // 4. Total GRN Count for Current Month
+            ResultSet rs4 = MySQL.executeSearch(
+                    "SELECT COUNT(*) AS count FROM grn "
+                    + "WHERE DATE_FORMAT(date, '%Y-%m') = '" + currentMonth + "'"
+            );
+            if (rs4.next()) {
+                jLabel20.setText(rs4.getString("count"));
+            }
+
+            // 5. Total Company Count
+            ResultSet rs5 = MySQL.executeSearch("SELECT COUNT(*) AS count FROM company");
+            if (rs5.next()) {
+                jLabel21.setText(rs5.getString("count"));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -183,9 +247,9 @@ public class SupplierReg extends javax.swing.JPanel {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(22, Short.MAX_VALUE)
+                .addContainerGap(20, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -265,10 +329,15 @@ public class SupplierReg extends javax.swing.JPanel {
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         jTextField5.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+        jTextField5.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField5KeyReleased(evt);
+            }
+        });
 
         jButton6.setBackground(new java.awt.Color(205, 245, 253));
         jButton6.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
-        jButton6.setText("Search by ID");
+        jButton6.setText("Select Supplier");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton6ActionPerformed(evt);
@@ -538,10 +607,6 @@ public class SupplierReg extends javax.swing.JPanel {
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-//        JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
-//        CompanyReg com = new CompanyReg(parentFrame, true);
-//        com.setVisible(true);
-
         Window window = SwingUtilities.getWindowAncestor(this);
 
         if (window instanceof Frame) {
@@ -549,11 +614,9 @@ public class SupplierReg extends javax.swing.JPanel {
             dialog.setVisible(true);
 
             jLabel7.setText(dialog.getSelectedCompany());
-
-            companyId = dialog.getSelectedid();
-
+            companyId = dialog.getSelectedid();  // This must return a valid company ID from DB
         } else {
-            System.err.println("The Panel is not Hosted");
+            System.err.println("The Panel is not hosted in a JFrame.");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -571,38 +634,10 @@ public class SupplierReg extends javax.swing.JPanel {
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
-        try {
-
-            String query = "SELECT * FROM supplier"
-                    + " INNER JOIN `company` ON `supplier`.`company_id`=`company`.`id` "
-                    + "INNER JOIN `supplier_status` ON `supplier`.`supplier_status_id`=`supplier_status`.`id`"
-                    //+"INNER JOIN `supplier_status` ON `supplier`.`supplier_type_id` = `supplier_status`.`id`"
-                    //+ "INNER JOIN `company` ON `supplier`.`company_id` = `company`.`id`");
-                    + "WHERE `supplier`.`id` = " + jTextField5.getText();
-            ResultSet resultSet = MySQL.executeSearch(query);
-
-            if (resultSet.next()) {
-
-                jTextField1.setText(resultSet.getString("first_name"));
-                jTextField2.setText(resultSet.getString("last_name"));
-                jTextField3.setText(resultSet.getString("email"));
-                jTextField4.setText(resultSet.getString("mobile"));
-                jLabel7.setText(resultSet.getString("company.company"));
-                jComboBox1.setSelectedItem(resultSet.getString("supplier_status.name"));
-                //jLabel7.setText(resultSet.getString("companyId"));
-                //String type = String.valueOf(jComboBox1.getSelectedItem());
-
-                companyId = resultSet.getString("supplier.company_id");
-
-            } else {
-                JOptionPane.showMessageDialog(null, "no data found");
-            }
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
-
-            jButton2.setEnabled(false);
-        }
+        JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+        SupplierListDialog SL = new SupplierListDialog(parentFrame, true);
+        SL.setSupplierReg(this);
+        SL.setVisible(true);
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -660,15 +695,26 @@ public class SupplierReg extends javax.swing.JPanel {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         try {
-
-            String id = jTextField5.getText();
+            String id = jTextField5.getText();  // Existing supplier ID for update
             String firstName = jTextField1.getText();
             String lastName = jTextField2.getText();
             String email = jTextField3.getText();
             String mobile = jTextField4.getText();
-            String company = jLabel7.getText();
+//            String company = jLabel7.getText();
             String status = String.valueOf(jComboBox1.getSelectedIndex());
 
+            String company = jLabel7.getText();
+            String companyId = null;
+
+            ResultSet rs = MySQL.executeSearch("SELECT `id` FROM `company` WHERE `company` = '" + company + "'");
+            if (rs.next()) {
+                companyId = rs.getString("id");
+            } else {
+                JOptionPane.showMessageDialog(this, "Please select a valid company.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // === Validation ===
             if (firstName.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Please enter First Name");
             } else if (lastName.isEmpty()) {
@@ -681,50 +727,74 @@ public class SupplierReg extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Please enter mobile Number", "Warning", JOptionPane.WARNING_MESSAGE);
             } else if (!mobile.matches("^07[01245678]{1}[0-9]{7}$")) {
                 JOptionPane.showMessageDialog(this, "Invalid mobile", "Warning", JOptionPane.WARNING_MESSAGE);
-
-            } else if (company.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Please Select company", "Warning", JOptionPane.WARNING_MESSAGE);
-
+            } else if (company.isEmpty() || companyId == null || companyId.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Please Select a valid company", "Warning", JOptionPane.WARNING_MESSAGE);
             } else if (status.equals("Select")) {
                 JOptionPane.showMessageDialog(this, "Please Select Status", "Warning", JOptionPane.WARNING_MESSAGE);
             } else {
 
-                ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `supplier` WHERE `email` = '" + email + "' OR `mobile` = '" + mobile + "'");
+                // === Update supplier ===
+                String query = "UPDATE `supplier` SET `first_name` = '" + firstName + "', "
+                        + "`last_name` = '" + lastName + "', "
+                        + "`email` = '" + email + "', "
+                        + "`mobile` = '" + mobile + "', "
+                        + "`supplier_status_id` = '" + status + "', "
+                        + "`company_id` = '" + companyId + "' "
+                        + "WHERE `id` = '" + id + "'";
 
-                boolean canUpdate = false;
+                int result = MySQL.executeIUD(query);
 
-                if (resultSet.next()) {
-
-                    if (!resultSet.getString("email").equals(email)) {
-                        JOptionPane.showMessageDialog(this, "This Mobile number or email already used", "Warning", JOptionPane.WARNING_MESSAGE);
-                    } else {
-                        canUpdate = true;
-                    }
-
+                if (result > 0) {
+                    JOptionPane.showMessageDialog(this, "Supplier updated successfully.");
+                    reset();  // Reset form fields
                 } else {
-                    canUpdate = true;
-
+                    JOptionPane.showMessageDialog(this, "Update failed. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
-
-                if (canUpdate) {
-
-                    MySQL.executeIUD("UPDATE `supplier` SET `first_name` = '" + firstName + "' ,"
-                            + "`last_name` = '" + lastName + "' , `email` = '" + email + "',"
-                            + " `mobile` = '" + mobile + "' ,`supplier_status_id` = '" + status + "',"
-                            + " `company_id` = '" + companyId + "' "
-                            + "WHERE `id` = '" + id + "' ");
-
-                    reset();
-                }
-
             }
-
         } catch (Exception e) {
             e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage(), "Exception", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void jTextField5KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField5KeyReleased
+        // TODO add your handling code here:
+        loadSupplierFromDB();
+    }//GEN-LAST:event_jTextField5KeyReleased
 
+    private void loadSupplierFromDB() {
+        try {
+
+            String id = jTextField5.getText();
+
+            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `supplier` "
+                    + "INNER JOIN `company` ON `company` . `id` = `supplier` . `company_id` "
+                    + "INNER JOIN `supplier_status` ON `supplier_status` . `id` = `supplier` . `supplier_status_id` "
+                    + "WHERE `supplier` . `id` = '" + id + "' ");
+
+            if (resultSet.next()) {
+
+                jTextField1.setText(resultSet.getString("first_name"));
+                jTextField2.setText(resultSet.getString("last_name"));
+                jTextField3.setText(resultSet.getString("email"));
+                jTextField4.setText(resultSet.getString("mobile"));
+                jLabel7.setText(resultSet.getString("company.company"));
+                jComboBox1.setSelectedItem(resultSet.getString("supplier_status.name"));
+
+            } else {
+
+                jTextField1.setText("");
+                jTextField2.setText("");
+                jTextField3.setText("");
+                jTextField4.setText("");
+                jTextField5.setText("");
+                jLabel7.setText("");
+                jComboBox1.setSelectedIndex(0);
+
+            }
+        } catch (Exception e) {
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel chartpanel;
     private javax.swing.JButton jButton1;

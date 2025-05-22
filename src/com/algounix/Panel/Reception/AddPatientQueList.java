@@ -7,6 +7,8 @@ package com.algounix.Panel.Reception;
 import com.algounix.GUI.SignIn;
 import com.algounix.Model.MySQL;
 import java.awt.Color;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -18,6 +20,12 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JREmptyDataSource;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -63,10 +71,10 @@ public class AddPatientQueList extends javax.swing.JPanel {
     private void loadQueList() {
         try {
             String today = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-            
+
             String query = "SELECT * FROM `opd_list` INNER JOIN `doctor_has_units` ON `opd_list`.`doctor_has_units_id` = `doctor_has_units`.`id`"
                     + "INNER JOIN `patient` ON `opd_list`.`patient_id` = `patient`.`id`"
-                    + "INNER JOIN `que_list_status` ON `opd_list`.`que_list_status_id` = `que_list_status`.`id` WHERE `date` = '"+today+"'";
+                    + "INNER JOIN `que_list_status` ON `opd_list`.`que_list_status_id` = `que_list_status`.`id` WHERE `date` = '" + today + "'";
 
             String patientID = jTextField3.getText();
             query += "AND `opd_list`.`patient_id` LIKE '" + patientID + "%'";
@@ -94,13 +102,93 @@ public class AddPatientQueList extends javax.swing.JPanel {
                 lastOpdNumber = rs.getInt("opd_number");
                 model.addRow(vector);
             }
-            
+
             jLabel4.setText(String.valueOf(lastOpdNumber));
             jLabel41.setText(String.valueOf(lastOpdNumber + 1));
 
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void printInvoice() {
+
+        int row = jTable1.getSelectedRow();
+        String invoiceId = jLabel30.getText();
+        String payerNIC = jTextField2.getText();
+        String patientId = jTextField1.getText();
+        String patientName = jLabel10.getText();
+        String patientNIC = jLabel19.getText();
+        String patientAge = jLabel14.getText();
+        String patientGender = jLabel20.getText();
+        String bloodGroup = jLabel12.getText();
+        String queueNo = jLabel41.getText();
+//        String status = String.valueOf(jTable1.getValueAt(row, 3));
+        String status = "Pending";
+        String doctorCharges = jLabel25.getText();
+        String roomCharges = jLabel28.getText();
+        String totCharges = jLabel32.getText();
+        String paymentMethod = String.valueOf(jComboBox1.getSelectedItem());
+        String paidAmount = jFormattedTextField1.getText();
+
+        String balanceDue = jLabel35.getText();
+
+        String date = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date());
+
+        try {
+            if (patientId.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Please Select the patient First.", "Warning", JOptionPane.WARNING_MESSAGE);
+                return;
+            } else if (payerNIC.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Please enter the payer NIC.", "Warning", JOptionPane.WARNING_MESSAGE);
+                return;
+            } else if (status.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Please select the patient in the table.", "Warning", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            try (InputStream jrxmlStream = this.getClass().getResourceAsStream("/com/algounix/Reports/Algounix-HMS-QueListInvoice.jrxml")) {
+
+                if (jrxmlStream == null) {
+                    throw new FileNotFoundException("JRXML file not found in the specified path.");
+                }
+
+                JasperReport jasperReport = JasperCompileManager.compileReport(jrxmlStream);
+
+                HashMap<String, Object> params = new HashMap<>();
+                params.put("Parameter1", invoiceId);
+                params.put("Parameter2", payerNIC);
+                params.put("Parameter3", patientId);
+                params.put("Parameter4", patientName);
+                params.put("Parameter5", patientNIC);
+                params.put("Parameter6", patientAge);
+                params.put("Parameter7", patientGender);
+                params.put("Parameter8", bloodGroup);
+                params.put("Parameter9", queueNo);
+                params.put("Parameter10", status);
+                params.put("Parameter11", doctorCharges);
+                params.put("Parameter12", roomCharges);
+                params.put("Parameter13", totCharges);
+                params.put("Parameter14", paymentMethod);
+                params.put("Parameter15", paidAmount);
+                params.put("Parameter16", balanceDue);
+
+                JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, new JREmptyDataSource());
+
+                JasperViewer.viewReport(jasperPrint, false);
+
+                System.out.println("Employee Id: " + SignIn.empID + " printed OPD Queue nomber :  " + queueNo + "'s Invoice at: " + date);
+
+            } catch (FileNotFoundException e) {
+                System.err.println("Error: " + e.getMessage());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     @SuppressWarnings("unchecked")
@@ -1104,11 +1192,12 @@ public class AddPatientQueList extends javax.swing.JPanel {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            
+
             JOptionPane.showMessageDialog(this, "Patient Added to Que List", "Succeess", JOptionPane.WARNING_MESSAGE);
 
             jLabel4.setText(String.valueOf(opdNo));
             jLabel41.setText(String.valueOf(opdNo + 1));
+            printInvoice();
             clear();
 
         }

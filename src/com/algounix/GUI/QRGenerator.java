@@ -26,20 +26,23 @@ public class QRGenerator extends javax.swing.JFrame {
 
     }
 
+    public QRGenerator(String password) {
+        initComponents();
+        txtInput.setText(password);
+        loadQR();
+    }
+
     public static BufferedImage generateQR(String text, int width, int height) {
         QRCodeWriter qrCodeWriter = new QRCodeWriter();
         try {
             BitMatrix bitMatrix = qrCodeWriter.encode(text, BarcodeFormat.QR_CODE, width, height);
             BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-
             for (int x = 0; x < width; x++) {
                 for (int y = 0; y < height; y++) {
                     image.setRGB(x, y, bitMatrix.get(x, y) ? 0xFF000000 : 0xFFFFFFFF);
                 }
             }
-
             return image;
-
         } catch (WriterException e) {
             e.printStackTrace();
             return null;
@@ -48,15 +51,12 @@ public class QRGenerator extends javax.swing.JFrame {
 
     public void loadQR() {
         String text = txtInput.getText().trim();
-
         if (text.isEmpty()) {
             ImageIcon icon = new ImageIcon("src/com/algounix/Resources/QRanimation.gif");
-            lblQRCode.setIcon(icon); 
+            lblQRCode.setIcon(icon);
             return;
         }
-
         qrImage = QRGenerator.generateQR(text, 368, 368);
-
         if (qrImage != null) {
             ImageIcon icon = new ImageIcon(qrImage);
             lblQRCode.setIcon(icon);
@@ -66,7 +66,8 @@ public class QRGenerator extends javax.swing.JFrame {
     }
 
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jPanel4 = new javax.swing.JPanel();
@@ -101,23 +102,26 @@ public class QRGenerator extends javax.swing.JFrame {
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(24, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 715, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(windowButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20))
-        );
+                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addContainerGap(24, Short.MAX_VALUE)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 715,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(windowButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 26,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(20, 20, 20)));
         jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(windowButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(15, Short.MAX_VALUE))
-        );
+                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(15, 15, 15)
+                                .addGroup(jPanel1Layout
+                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(windowButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 28,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap(15, Short.MAX_VALUE)));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -152,78 +156,86 @@ public class QRGenerator extends javax.swing.JFrame {
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(lblQRCode, javax.swing.GroupLayout.DEFAULT_SIZE, 368, Short.MAX_VALUE)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(btnGenerate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtInput)
-                        .addComponent(btnPrintQR, javax.swing.GroupLayout.DEFAULT_SIZE, 368, Short.MAX_VALUE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+                jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel2Layout
+                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(lblQRCode, javax.swing.GroupLayout.DEFAULT_SIZE, 368,
+                                                Short.MAX_VALUE)
+                                        .addGroup(jPanel2Layout
+                                                .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(btnGenerate, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(txtInput)
+                                                .addComponent(btnPrintQR, javax.swing.GroupLayout.DEFAULT_SIZE, 368,
+                                                        Short.MAX_VALUE)))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
         jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(48, 48, 48)
-                .addComponent(lblQRCode, javax.swing.GroupLayout.PREFERRED_SIZE, 368, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(txtInput, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnGenerate)
-                .addGap(18, 18, 18)
-                .addComponent(btnPrintQR)
-                .addGap(40, 40, 40))
-        );
+                jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(48, 48, 48)
+                                .addComponent(lblQRCode, javax.swing.GroupLayout.PREFERRED_SIZE, 368,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(txtInput, javax.swing.GroupLayout.PREFERRED_SIZE, 30,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnGenerate)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnPrintQR)
+                                .addGap(40, 40, 40)));
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(7, 7, 7)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 791, Short.MAX_VALUE)
-                .addGap(7, 7, 7))
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
+                jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addGap(7, 7, 7)
+                                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 791, Short.MAX_VALUE)
+                                .addGap(7, 7, 7))
+                        .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addContainerGap()));
         jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(7, 7, 7)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
+                jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addGap(7, 7, 7)
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 58,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addContainerGap()));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(0, 0, 0))
-        );
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addGap(0, 0, 0)
+                                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(0, 0, 0)));
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.TRAILING,
+                                javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                Short.MAX_VALUE));
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void windowButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_windowButton1ActionPerformed
+    private void windowButton1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_windowButton1ActionPerformed
         // TODO add your handling code here:
         this.dispose();
-    }//GEN-LAST:event_windowButton1ActionPerformed
+    }// GEN-LAST:event_windowButton1ActionPerformed
 
-    private void btnGenerateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerateActionPerformed
+    private void btnGenerateActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnGenerateActionPerformed
         // TODO add your handling code here:
         String text = txtInput.getText();
 
@@ -242,9 +254,9 @@ public class QRGenerator extends javax.swing.JFrame {
 
         }
 
-    }//GEN-LAST:event_btnGenerateActionPerformed
+    }// GEN-LAST:event_btnGenerateActionPerformed
 
-    private void btnPrintQRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintQRActionPerformed
+    private void btnPrintQRActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnPrintQRActionPerformed
         // TODO add your handling code here:
         if (qrImage == null) {
             JOptionPane.showMessageDialog(this, "Please generate a QR code first.");
@@ -264,12 +276,12 @@ public class QRGenerator extends javax.swing.JFrame {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Failed to print QR code: " + e.getMessage());
         }
-    }//GEN-LAST:event_btnPrintQRActionPerformed
+    }// GEN-LAST:event_btnPrintQRActionPerformed
 
-    private void txtInputKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtInputKeyReleased
+    private void txtInputKeyReleased(java.awt.event.KeyEvent evt) {// GEN-FIRST:event_txtInputKeyReleased
         // TODO add your handling code here:
         loadQR();
-    }//GEN-LAST:event_txtInputKeyReleased
+    }// GEN-LAST:event_txtInputKeyReleased
 
     /**
      * @param args the command line arguments
@@ -293,7 +305,7 @@ public class QRGenerator extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JLabel lblQRCode;
-    private javax.swing.JTextField txtInput;
+    public javax.swing.JTextField txtInput;
     private com.algounix.Buttons.WindowButton windowButton1;
     // End of variables declaration//GEN-END:variables
 }

@@ -20,9 +20,12 @@ import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
+import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRTableModelDataSource;
 import net.sf.jasperreports.view.JasperViewer;
 
@@ -799,24 +802,14 @@ public class AppointmentConfirmation extends javax.swing.JFrame {
                     }
 
                     // Initialize report and connection
-                    try (
-                        InputStream path = this.getClass().getResourceAsStream("/com/algounix/Reports/Algounix-HMS-Appointment-Confirmation2.jasper")) {
+                    try (InputStream jrxmlStream = this.getClass().getResourceAsStream("/com/algounix/Reports/Algounix-HMS-Appointment-Confirmation2.jrxml")) {
 
-                        Connection conn = MySQL.connection;
-                        String testQuery = "SELECT * FROM appoinment WHERE hospital_invoice_id = '" + invoiceID + "'";
-                        ResultSet rs = conn.createStatement().executeQuery(testQuery);
+                        if (jrxmlStream == null) {
+                            throw new FileNotFoundException("JRXML file not found in the specified path.");
 
-                        if (!rs.next()) {
-                            JOptionPane.showMessageDialog(this, "No records found for invoice ID: " + invoiceID);
-                        } else {
-                            // Proceed to generate the report
                         }
-
-                        MySQL.createConnection();
-
-                        if (path == null) {
-                            throw new FileNotFoundException("Report file not found in the specified path.");
-                        }
+                        
+                        JasperReport jasperReport = JasperCompileManager.compileReport(jrxmlStream);
 
                         HashMap<String, Object> params = new HashMap<>();
                         params.put("Parameter1", invoiceID);
@@ -837,10 +830,12 @@ public class AppointmentConfirmation extends javax.swing.JFrame {
                         params.put("Parameter16", payment);
                         params.put("Parameter17", balance);
 
-                        JasperPrint jasperPrint = JasperFillManager.fillReport(path, params, MySQL.connection);
+                        // ✅ Compile and fill with an empty data source
+                        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, new JREmptyDataSource());
+
                         JasperViewer.viewReport(jasperPrint, false);
 
-                        System.out.println("Employee Id: " + SignIn.empID + " printed invoice " + invoiceID + " at: " + date);
+                        System.out.println("Employee Id: " + SignIn.empID + " printed Appointment confirmation invoice of appointment no : " + appointmentNo + " at: " + date);
 
                     } catch (FileNotFoundException e) {
                         System.err.println("Error: " + e.getMessage());

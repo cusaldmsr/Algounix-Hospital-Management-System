@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.21.0.final using JasperReports Library version 6.21.0-4f56c4f36cd19e17675219a9ac4692d5f0f13b06  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Algounix-HMS-RoomMap-Report" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="25297916-3ab8-4167-96ed-4a9bfbc8efc4">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<parameter name="Parameter1" class="java.lang.String"/>
+	<parameter name="Parameter2" class="java.lang.String"/>
+	<parameter name="Parameter3" class="java.lang.String"/>
+	<parameter name="Parameter4" class="java.lang.String"/>
+	<parameter name="Parameter5" class="java.lang.String"/>
+	<parameter name="Parameter6" class="java.lang.String"/>
+	<parameter name="Parameter7" class="java.lang.String"/>
+	<parameter name="Parameter8" class="java.lang.String"/>
+	<parameter name="Parameter9" class="java.lang.String"/>
+	<parameter name="Parameter10" class="java.lang.String"/>
+	<parameter name="Parameter11" class="java.lang.String"/>
+	<parameter name="Parameter12" class="java.lang.String"/>
+	<parameter name="Parameter13" class="java.lang.String"/>
+	<parameter name="Parameter14" class="java.lang.String"/>
+	<parameter name="Parameter15" class="java.lang.String"/>
+	<parameter name="Parameter16" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="1" width="555" height="34" forecolor="#FFFFFF" backcolor="#00A9FF" uuid="09a0d9a7-ea6b-4ee7-8b88-38ddb7e761c4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Room Details Report]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="646">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="555" height="34" forecolor="#030000" backcolor="#89CFF3" uuid="11a8fa00-7cce-4153-a0a9-8be9175a195c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Room Details]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="34" width="180" height="34" forecolor="#030000" backcolor="#89CFF3" uuid="94885cd3-2ffe-4367-b898-b297e8faccd0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="15" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Room No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="68" width="180" height="34" forecolor="#030000" backcolor="#89CFF3" uuid="79d4c9f7-8946-4a25-86fb-753fd57a03e2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="15" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Room Type No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="102" width="180" height="34" forecolor="#030000" backcolor="#89CFF3" uuid="3ae938dd-351c-46ed-968f-672bb1b91667"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="15" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Room Charge]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="136" width="180" height="34" forecolor="#030000" backcolor="#89CFF3" uuid="bfda70af-8d48-4846-ae2e-683d095b57e4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="15" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Doctor Charge]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="170" width="180" height="34" forecolor="#030000" backcolor="#89CFF3" uuid="21c9b06d-60f1-4b1e-b3f6-109466c224ca"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="15" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Description]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Opaque" x="180" y="34" width="375" height="34" backcolor="#CDF5FD" uuid="3cc2b9ce-9fd7-456f-ad7a-de700784e4de"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{Parameter1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="180" y="68" width="375" height="34" backcolor="#CDF5FD" uuid="40a89780-5cb4-43ab-ab64-03300d2ec1f7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{Parameter2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="180" y="102" width="375" height="34" backcolor="#CDF5FD" uuid="9d2094d2-c845-4aef-a181-ad3f464b3a27"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{Parameter3}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="180" y="136" width="375" height="34" backcolor="#CDF5FD" uuid="d332e078-137f-4b97-89b0-dafbdc3778a4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{Parameter4}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="180" y="170" width="375" height="34" backcolor="#CDF5FD" uuid="89e7c96f-0d16-4047-9fed-114166f1f494"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{Parameter5}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="204" width="555" height="34" forecolor="#030000" backcolor="#89CFF3" uuid="c06606e2-9c95-40ad-9573-f6d0f5cc9da4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Assigned Doctor Details]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="238" width="180" height="34" forecolor="#030000" backcolor="#89CFF3" uuid="7ad04ad9-1dbb-4694-b046-5b0037e0724e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="15" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Doctor ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="272" width="180" height="34" forecolor="#030000" backcolor="#89CFF3" uuid="f2df0058-daa5-4034-abee-f82d5332ac81"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="15" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Doctor Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="306" width="180" height="34" forecolor="#030000" backcolor="#89CFF3" uuid="7e904371-5900-4c97-aba6-a4ea83677fe2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="15" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Mobile]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="340" width="180" height="34" forecolor="#030000" backcolor="#89CFF3" uuid="bd661768-26db-4516-aa1b-0d2ee8287ab4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="15" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Doctor Type]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="374" width="180" height="34" forecolor="#030000" backcolor="#89CFF3" uuid="7c35d136-cdb7-41f8-bc9b-d63510286a51"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="15" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Doctor Unit]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Opaque" x="180" y="238" width="375" height="34" backcolor="#CDF5FD" uuid="64eddcac-c658-47df-8b65-6c1335624f38"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$P{Parameter6}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="180" y="272" width="375" height="34" backcolor="#CDF5FD" uuid="7bbf1f59-a60e-4017-9972-926e71e9e77d"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$P{Parameter7}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="180" y="306" width="375" height="35" backcolor="#CDF5FD" uuid="224087cd-46a6-4c1e-a25a-44e9bbd05e70"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$P{Parameter8}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="180" y="341" width="375" height="33" backcolor="#CDF5FD" uuid="f4fb5b33-b5e2-4dba-a3ba-a600a6e060d9"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$P{Parameter9}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="180" y="374" width="375" height="34" backcolor="#CDF5FD" uuid="e4a4a167-b248-4d5d-9e9e-e98421ea0a1e"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$P{Parameter10}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="408" width="555" height="34" forecolor="#030000" backcolor="#89CFF3" uuid="5d586814-fb0c-455d-bb14-d50828d1b019"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Admitted Patient Details ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="442" width="180" height="34" forecolor="#030000" backcolor="#89CFF3" uuid="5d41dcf3-34e2-4915-82c1-66c679be09be"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="15" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Patient ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="476" width="180" height="34" forecolor="#030000" backcolor="#89CFF3" uuid="653dc433-43da-4bff-a24d-a7fafe2fcaa8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="15" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Patient Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="510" width="180" height="34" forecolor="#030000" backcolor="#89CFF3" uuid="00ec7085-6bbc-41a8-a00d-fe394a6fe6a4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="15" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Mobile]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="544" width="180" height="34" forecolor="#030000" backcolor="#89CFF3" uuid="bbe1cad5-364a-4a7f-8f9d-853060780bd5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="15" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Email]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="578" width="180" height="34" forecolor="#030000" backcolor="#89CFF3" uuid="1522b1f9-cce4-4aa4-af86-4c2881f9beb5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="15" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Age]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="612" width="180" height="34" forecolor="#030000" backcolor="#89CFF3" uuid="a95147af-5dc0-462d-915c-4af9c734f944"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="15" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Gender]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Opaque" x="180" y="442" width="375" height="34" backcolor="#CDF5FD" uuid="8ac678b9-a211-46d7-a5a7-6d87d020d03e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{Parameter11}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="180" y="476" width="375" height="34" backcolor="#CDF5FD" uuid="e11c409d-32cd-4b56-8eee-6b95a39266c8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{Parameter12}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="180" y="510" width="375" height="34" backcolor="#CDF5FD" uuid="ef8d539b-9734-4d39-990e-c9089ae66b45"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{Parameter13}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="180" y="544" width="375" height="34" backcolor="#CDF5FD" uuid="fbfa313b-d13c-4249-829f-3d79aa60e3be"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{Parameter14}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="180" y="578" width="375" height="34" backcolor="#CDF5FD" uuid="015dcb5e-ad25-4dc6-9548-4a2fb366d084"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{Parameter15}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="180" y="612" width="375" height="34" backcolor="#CDF5FD" uuid="56a22790-219d-49c1-becf-9814d6259be5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{Parameter16}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+</jasperReport>
