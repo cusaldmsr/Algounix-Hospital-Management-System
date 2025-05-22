@@ -31,6 +31,7 @@ public class UpdateRoom extends javax.swing.JPanel {
     private HashMap<String, String> typeMap = new HashMap<>();
 
     private DefaultListModel mod;
+    private DefaultListModel mod1;
 
     /**
      * Creates new form UpdateRoom
@@ -39,6 +40,7 @@ public class UpdateRoom extends javax.swing.JPanel {
         initComponents();
         loadType();
         loadSuggestions();
+        loadSuggestions2();
         addChargeListeners();
         displayChart();
 
@@ -73,6 +75,13 @@ public class UpdateRoom extends javax.swing.JPanel {
         jPopupMenu1.add(jPanel2);
         mod = new DefaultListModel();
         jList1.setModel(mod);
+    }
+    
+    //load suggestions for Select Doctor ID:
+    private void loadSuggestions2() {
+        jPopupMenu2.add(jPanel4);
+        mod1 = new DefaultListModel();
+        jList2.setModel(mod1);
     }
 
     //Load Total Real Time Part 1
@@ -180,6 +189,10 @@ public class UpdateRoom extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList<>();
         jPopupMenu1 = new javax.swing.JPopupMenu();
+        jPanel4 = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jList2 = new javax.swing.JList<>();
+        jPopupMenu2 = new javax.swing.JPopupMenu();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -230,6 +243,29 @@ public class UpdateRoom extends javax.swing.JPanel {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+        );
+
+        jList2.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jList2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jList2MouseClicked(evt);
+            }
+        });
+        jScrollPane3.setViewportView(jList2);
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
         );
 
         setBackground(new java.awt.Color(205, 245, 253));
@@ -392,9 +428,9 @@ public class UpdateRoom extends javax.swing.JPanel {
         jLabel13.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
         jLabel13.setText("Doctor ID:");
 
-        jTextField5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField5ActionPerformed(evt);
+        jTextField5.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField5KeyReleased(evt);
             }
         });
 
@@ -501,10 +537,6 @@ public class UpdateRoom extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField5ActionPerformed
-
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
@@ -544,7 +576,7 @@ public class UpdateRoom extends javax.swing.JPanel {
 
         try {
             ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `room` "
-                    + "INNER JOIN `doctor_has_units` ON `doctor_has_units`.`room_id` `=room`.`id` "
+                    + "INNER JOIN `doctor_has_units` ON `doctor_has_units`.`room_id` = `room`.`id` "
                     + "INNER JOIN `doctor` ON `doctor`.`id` = `doctor_has_units`.`doctor_id` "
                     + "WHERE `room`.`id` = '" + selectedID + "'");
 
@@ -585,6 +617,53 @@ public class UpdateRoom extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jComboBox1ItemStateChanged
 
+    private void jList2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jList2MouseClicked
+        String doctorID = jList2.getSelectedValue();
+        jTextField5.setText(doctorID);
+        jPopupMenu2.setVisible(false);
+
+        try {
+
+            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `doctor` WHERE `id`='" + doctorID + "'");
+
+            if (resultSet.next()) {
+             jLabel10.setText(resultSet.getString("first_name") + " " + resultSet.getString("last_name"));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jList2MouseClicked
+
+    private void jTextField5KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField5KeyReleased
+        String text = jTextField5.getText().trim();
+
+        if (!text.isEmpty()) {
+
+            try {
+
+                ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `doctor` WHERE `id` LIKE '%" + text + "%'");
+
+                if (!resultSet.isBeforeFirst()) {
+                    return;
+                }
+
+                jPopupMenu2.show(jTextField5, 0, jTextField5.getHeight());
+                mod1.removeAllElements();
+
+                while (resultSet.next()) {
+                    mod1.addElement(resultSet.getString("id"));
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        } else {
+            jPopupMenu2.setVisible(false);
+        }
+    }//GEN-LAST:event_jTextField5KeyReleased
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel chartpanel;
@@ -606,13 +685,17 @@ public class UpdateRoom extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JList<String> jList1;
+    private javax.swing.JList<String> jList2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPopupMenu jPopupMenu1;
+    private javax.swing.JPopupMenu jPopupMenu2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextArea jTextArea2;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
