@@ -8,6 +8,8 @@ import java.io.FileNotFoundException;
 import com.algounix.Model.MySQL;
 import java.io.InputStream;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
@@ -32,6 +34,7 @@ public class DoctorChanellingList extends javax.swing.JPanel {
         initComponents();
         loadDoctors();
         loadStatus();
+        loadAppoinmentDetails();
     }
 
     //  Load Available Doctors for ComboBox
@@ -69,11 +72,11 @@ public class DoctorChanellingList extends javax.swing.JPanel {
         jLabel33 = new javax.swing.JLabel();
         jComboBox3 = new javax.swing.JComboBox<>();
         jLabel46 = new javax.swing.JLabel();
-        jComboBox4 = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
         jLabel47 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
+        jTextField3 = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
@@ -168,12 +171,14 @@ public class DoctorChanellingList extends javax.swing.JPanel {
 
         jComboBox3.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
         jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select" }));
+        jComboBox3.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBox3ItemStateChanged(evt);
+            }
+        });
 
         jLabel46.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
-        jLabel46.setText("Time Slot");
-
-        jComboBox4.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select" }));
+        jLabel46.setText("Que Number");
 
         jButton1.setText("Cancle Appoinment");
 
@@ -181,11 +186,23 @@ public class DoctorChanellingList extends javax.swing.JPanel {
         jLabel47.setText("Patient ID");
 
         jTextField2.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+        jTextField2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField2KeyReleased(evt);
+            }
+        });
 
         jButton2.setText("Print Channeling list");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
+            }
+        });
+
+        jTextField3.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+        jTextField3.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField3KeyReleased(evt);
             }
         });
 
@@ -206,17 +223,15 @@ public class DoctorChanellingList extends javax.swing.JPanel {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jLabel33, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel46, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(12, 12, 12)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(12, 12, 12)
-                                .addComponent(jComboBox3, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
+                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(47, 47, 47)
                                 .addComponent(jLabel47, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField2)))))
+                                .addComponent(jTextField2))
+                            .addComponent(jComboBox3, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(34, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -227,9 +242,9 @@ public class DoctorChanellingList extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel46)
-                    .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel47)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -652,14 +667,15 @@ public class DoctorChanellingList extends javax.swing.JPanel {
     //  Clear All Details in GUI
     private void clearAll() {
         loadDoctors();
+        loadAppoinmentDetails();
 
         Vector<String> unitComboBox = new Vector<>();
         unitComboBox.add("Select a Doctor First");
         jComboBox2.setModel(new DefaultComboBoxModel<>(unitComboBox));
 
         Vector<String> emptyComboBox = new Vector<>();
-        unitComboBox.add("Selec a Doctor First");
-        jComboBox4.setModel(new DefaultComboBoxModel<>(emptyComboBox));
+        emptyComboBox.add("Select");
+        jComboBox3.setModel(new DefaultComboBoxModel<>(emptyComboBox));
     }
 
     //  Change Loaded Details in Unit ComboBox
@@ -667,39 +683,18 @@ public class DoctorChanellingList extends javax.swing.JPanel {
         String doctor = String.valueOf(jComboBox1.getSelectedItem());
         if (!doctor.equals("Select Doctor")) {
             loadUnits(doctorMap.get(doctor));
+            loadAppoinmentDetails();
         } else {
             clearAll();
         }
     }//GEN-LAST:event_jComboBox1ItemStateChanged
-
-    //  Load Chanelling Time Slots to ComboBox form Selected Doctor & Unit
-    private void loadTimeSlots(String doc) {
-        try {
-
-            Vector<String> vector = new Vector<>();
-            vector.add("Select");
-
-            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `doctor_has_time_slots` "
-                    + "INNER JOIN `time_slots` ON `doctor_has_time_slots`.`time_slots_id` = `time_slots`.`id` "
-                    + "WHERE `doctor_has_time_slots`.`doctor_id` = '" + doc + "'");
-
-            while (resultSet.next()) {
-                vector.add(resultSet.getString("time_slots.time_slot"));
-            }
-
-            jComboBox4.setModel(new DefaultComboBoxModel<>(vector));
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     //  Load Chanelling Status to ComboBox
     private void loadStatus() {
         try {
 
             Vector<String> vector = new Vector<>();
-            vector.add("Select Doctor");
+            vector.add("Select");
 
             ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `appoinment_status`");
 
@@ -720,15 +715,87 @@ public class DoctorChanellingList extends javax.swing.JPanel {
         }
     }
 
+    //  Load data of All Appoinments in today
+    private void loadAppoinmentDetails() {
+        try {
+
+            String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+
+            String query = "SELECT * FROM `appoinment` "
+                    + "INNER JOIN `doctor_has_units` ON `appoinment`.`doctor_has_units_id` = `doctor_has_units`.`id`"
+                    + "INNER JOIN `doctor` ON `doctor`.`id` = `doctor_has_units`.`doctor_id`"
+                    + "INNER JOIN `units` ON `doctor_has_units`.`units_id` = `units`.`id`"
+                    + "INNER JOIN `doctor_has_time_slots` ON `appoinment`.doctor_has_time_slots_id = `doctor_has_time_slots`.`id`"
+                    + "INNER JOIN `time_slots` ON `doctor_has_time_slots`.`time_slots_id` = `time_slots`.`id`"
+                    + "INNER JOIN `patient` ON `appoinment`.`patient_id` = `patient`.`id`"
+                    + "INNER JOIN `appoinment_status` ON `appoinment`.`appoinment_status_id` = `appoinment_status`.`id`"
+                    + "WHERE `appoinment`.`date` = '" + date + "'";
+
+            query += "AND `appoinment`.`patient_id` LIKE '" + jTextField2.getText() + "%' ";
+            query += "AND `appoinment`.`que_number` LIKE '" + jTextField3.getText() + "%' ";
+
+            String selectedDoctorId = doctorMap.get(String.valueOf(jComboBox1.getSelectedItem()));
+            if (selectedDoctorId != null) {
+                if (!selectedDoctorId.equals("Select Doctor")) {
+                    query += "AND `doctor_has_units`.`doctor_id` = '" + selectedDoctorId + "'";
+                }
+            }
+
+            String selectedUnitId = unitsMap.get(String.valueOf(jComboBox2.getSelectedItem()));
+            if (selectedUnitId != null) {
+                if (!selectedUnitId.equals("Select a Doctor First")) {
+                    query += "AND `doctor_has_units`.`units_id` = '" + selectedUnitId + "'";
+                }
+            }
+
+            String selectedStatus = statusMap.get(String.valueOf(jComboBox3.getSelectedItem()));
+            if (selectedStatus != null) {
+                if (!selectedStatus.equals("Select")) {
+                    query += "AND `appoinment`.`appoinment_status_id` = '" + selectedStatus + "'";
+                }
+            }
+
+            ResultSet resultSet = MySQL.executeSearch(query);
+
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+            model.setRowCount(0);
+
+            while (resultSet.next()) {
+
+                Vector<String> vector = new Vector<>();
+                vector.add(resultSet.getString("appoinment.patient_id"));
+                vector.add(resultSet.getString("patient.first_name") + " " + resultSet.getString("patient.last_name"));
+                vector.add(resultSet.getString("doctor.first_name") + " " + resultSet.getString("doctor.last_name"));
+                vector.add(resultSet.getString("units.name"));
+                vector.add(resultSet.getString("time_slots.time_slot"));
+                vector.add(resultSet.getString("appoinment.que_number"));
+                vector.add(resultSet.getString("appoinment_status.name"));
+
+                model.addRow(vector);
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     //  Change Loaded Details in Time Slots ComboBox
     private void jComboBox2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox2ItemStateChanged
-        String doctor = String.valueOf(jComboBox1.getSelectedItem());
-        if (!doctor.equals("Select a Doctor First")) {
-            loadTimeSlots(doctorMap.get(doctor));
-        } else {
-            clearAll();
-        }
+        loadAppoinmentDetails();
     }//GEN-LAST:event_jComboBox2ItemStateChanged
+
+    private void jTextField3KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField3KeyReleased
+        loadAppoinmentDetails();
+    }//GEN-LAST:event_jTextField3KeyReleased
+
+    private void jTextField2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField2KeyReleased
+        loadAppoinmentDetails();
+    }//GEN-LAST:event_jTextField2KeyReleased
+
+    private void jComboBox3ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox3ItemStateChanged
+        loadAppoinmentDetails();
+    }//GEN-LAST:event_jComboBox3ItemStateChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -737,7 +804,6 @@ public class DoctorChanellingList extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;
-    private javax.swing.JComboBox<String> jComboBox4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -785,5 +851,6 @@ public class DoctorChanellingList extends javax.swing.JPanel {
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
     // End of variables declaration//GEN-END:variables
 }
