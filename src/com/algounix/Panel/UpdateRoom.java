@@ -12,6 +12,9 @@ import java.util.HashMap;
 import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -36,6 +39,7 @@ public class UpdateRoom extends javax.swing.JPanel {
         initComponents();
         loadType();
         loadSuggestions();
+        addChargeListeners();
         displayChart();
 
 //          FlatSVGIcon icon1Logo = new FlatSVGIcon("com//algounix//Resources//InchargeUpdateRoom.svg", jLabel12.getWidth(), jLabel12.getHeight());
@@ -69,6 +73,56 @@ public class UpdateRoom extends javax.swing.JPanel {
         jPopupMenu1.add(jPanel2);
         mod = new DefaultListModel();
         jList1.setModel(mod);
+    }
+
+    //Load Total Real Time Part 1
+    private void updateTotalCharges() {
+        String serviceText = jTextField2.getText().trim();
+        String foodText = jTextField3.getText().trim();
+        String laundryText = jTextField4.getText().trim();
+
+        try {
+            // Convert to numbers (handle empty fields)
+            double service = serviceText.isEmpty() ? 0.0 : Double.parseDouble(serviceText);
+            double food = foodText.isEmpty() ? 0.0 : Double.parseDouble(foodText);
+            double laundry = laundryText.isEmpty() ? 0.0 : Double.parseDouble(laundryText);
+
+            // Calculate total
+            double total = service + food + laundry;
+
+            // Display total
+            jLabel8.setForeground(Color.red);
+            jLabel8.setText(" Rs. " + String.format("%.2f", total));
+        } catch (NumberFormatException e) {
+            jLabel8.setText("Invalid");
+            JOptionPane.showMessageDialog(this, "Please enter valid numbers!", "Warning", JOptionPane.WARNING_MESSAGE);
+
+        }
+
+    }
+
+    //Load Total Real Time Part 2
+    private void addChargeListeners() {
+        DocumentListener listener = new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                updateTotalCharges();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                updateTotalCharges();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                updateTotalCharges();
+            }
+        };
+
+        jTextField2.getDocument().addDocumentListener(listener);
+        jTextField3.getDocument().addDocumentListener(listener);
+        jTextField4.getDocument().addDocumentListener(listener);
     }
 
     private void displayChart() {
@@ -246,13 +300,12 @@ public class UpdateRoom extends javax.swing.JPanel {
                             .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel4))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jTextField4)
-                                .addComponent(jTextField3)
-                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jComboBox1, 0, 183, Short.MAX_VALUE)
+                            .addComponent(jTextField4)
+                            .addComponent(jTextField3)
+                            .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(105, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -507,7 +560,7 @@ public class UpdateRoom extends javax.swing.JPanel {
     }//GEN-LAST:event_jList1MouseClicked
 
     private void jComboBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox1ItemStateChanged
-       String selectedItem = (String) jComboBox1.getSelectedItem();
+        String selectedItem = (String) jComboBox1.getSelectedItem();
 
         try {
             ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `room_type` "
@@ -515,7 +568,7 @@ public class UpdateRoom extends javax.swing.JPanel {
                     + "WHERE `room_type`.`name` = '" + selectedItem + "'");
 
             if (resultSet.next()) {
-                
+
                 String service = resultSet.getString("service_charge");
                 String food = resultSet.getString("food_charge");
                 String londry = resultSet.getString("londry_charge");
