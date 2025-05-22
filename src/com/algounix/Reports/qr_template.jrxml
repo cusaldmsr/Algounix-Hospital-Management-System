@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.21.3.final using JasperReports Library version 6.21.3-4a3078d20785ebe464f18037d738d12fc98c13cf  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="qr_template" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9592f933-2394-4929-a786-b40a45a21be4">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<parameter name="qrImage" class="java.awt.Image" evaluationTime="Early"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="550" height="79" uuid="b8e762a1-f187-44ce-ab0a-2bb30e46668e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Poppins Light" size="29" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[QR Code ]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="250" splitType="Stretch">
+			<image scaleImage="RetainShape">
+				<reportElement x="166" y="15" width="218" height="220" uuid="b01cfdcb-49d3-44e9-8a3e-2588069f889d"/>
+				<box padding="0"/>
+				<imageExpression><![CDATA[$P{qrImage}]]></imageExpression>
+			</image>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+</jasperReport>
