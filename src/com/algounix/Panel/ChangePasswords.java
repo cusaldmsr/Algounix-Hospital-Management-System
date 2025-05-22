@@ -324,54 +324,7 @@ public class ChangePasswords extends javax.swing.JPanel {
     }//GEN-LAST:event_jTextField3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-//        String type = String.valueOf(jComboBox1.getSelectedItem());
-//        String username = jTextField1.getText();
-//        String opw = jTextField2.getText();
-//        String npw = jTextField3.getText();
-//        String cpw = jTextField4.getText();
-//
-//        if (type.equals("Select")) {
-//            JOptionPane.showMessageDialog(this, "Please select your employee type!", "Warning", JOptionPane.WARNING_MESSAGE);
-//        } else if (username.isEmpty()) {
-//            JOptionPane.showMessageDialog(this, "Please enter your username!", "Warning", JOptionPane.WARNING_MESSAGE);
-//        } else if (opw.isEmpty()) {
-//            JOptionPane.showMessageDialog(this, "Please enter your old password!", "Warning", JOptionPane.WARNING_MESSAGE);
-//        } else if (npw.isEmpty()) {
-//            JOptionPane.showMessageDialog(this, "Please enter your new password!", "Warning", JOptionPane.WARNING_MESSAGE);
-//        } else if (cpw.isEmpty()) {
-//            JOptionPane.showMessageDialog(this, "Please confirm your new password!", "Warning", JOptionPane.WARNING_MESSAGE);
-//        } else {
-//
-//            try {
-//
-//                ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `employee` WHERE `id` = '" + username + "' AND `employee_type_id` = '" + empMap.get(type) + "' AND `password` = '" + opw + "'");
-//
-//                if (resultSet.next()) {
-//                    if (npw.equals(cpw)) {
-//                        MySQL.executeIUD("UPDATE `employee` SET `password` ='" + cpw + "' "
-//                                + "WHERE `id` = '" + username + "'");
-//                        JOptionPane.showMessageDialog(this, "Password Successfully Changed!", "Success", JOptionPane.INFORMATION_MESSAGE);
-//                        String date = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss").format(new Date());
-//                        System.out.println("Employee Id :" + SignIn.empID + " " + "changed his Password at:" + date);
-//                        loadEmployee();
-//                        reset();
-//
-//                    } else {
-//
-//                        JOptionPane.showMessageDialog(this, "Confirm your new password again!", "Warning", JOptionPane.WARNING_MESSAGE);
-//                        jTextField4.grabFocus();
-//                    }
-//                } else {
-//                    JOptionPane.showMessageDialog(this, "Check your employee type , username and old password again!", "Warning", JOptionPane.WARNING_MESSAGE);
-//
-//                }
-//
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        }
-
+   
         String type = String.valueOf(jComboBox1.getSelectedItem());
         String username = jTextField1.getText();
         String opw = jTextField2.getText();
