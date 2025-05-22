@@ -19,7 +19,10 @@ import java.sql.ResultSet;
 import java.util.HashMap;
 import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.data.JRTableModelDataSource;
 
 /**
  *
@@ -28,14 +31,15 @@ import javax.swing.table.DefaultTableModel;
 public class AppointmentList extends javax.swing.JPanel {
 
     private static HashMap<String, String> statusMap = new HashMap<>();
+
     /**
      * Creates new form AppointmentList
      */
     public AppointmentList() {
         initComponents();
         loadStatus();
-         jScrollPane1.setVerticalScrollBar(new ScrollBar());
-         FlatSVGIcon Logo = new FlatSVGIcon("com//algounix//Resources//AppointmentList.svg", jLabel9.getWidth(), jLabel9.getHeight());
+        jScrollPane1.setVerticalScrollBar(new ScrollBar());
+        FlatSVGIcon Logo = new FlatSVGIcon("com//algounix//Resources//AppointmentList.svg", jLabel9.getWidth(), jLabel9.getHeight());
         jLabel9.setIcon(Logo);
         loadAppointment();
     }
@@ -97,7 +101,6 @@ public class AppointmentList extends javax.swing.JPanel {
         }
 
     }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -434,20 +437,32 @@ public class AppointmentList extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton2ActionPerformed
 //report
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        try (InputStream path = this.getClass().getResourceAsStream("/com/algounix/Reports/Algounix_HMS_AppointmentList2.jasper")) {
+        try (InputStream path = this.getClass().getResourceAsStream("/com/algounix/Reports/Algounix_HMS_AppointmentList3.jasper")) {
 
             if (path == null) {
                 throw new FileNotFoundException("Report file not found in the specified path.");
             }
 
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            if (jTable1 == null || jTable1.getModel() == null) {
+                throw new IllegalStateException("Table or table model is not initialized.");
+            }
 
-            MySQL.createConnection();
+            if (jTable1.getModel().getRowCount() == 0) {
+                JOptionPane.showMessageDialog(null, "No data available to generate the report.", "Empty Report", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+            JRTableModelDataSource dataSource = new JRTableModelDataSource(jTable1.getModel());
 
-            JasperPrint report = JasperFillManager.fillReport(path, null, MySQL.connection);
+            // Fill the report
+            JasperPrint jasperPrint = JasperFillManager.fillReport(path, null, dataSource);
 
-            JasperViewer.viewReport(report, false);
-
+            // View the report
+            JasperViewer.viewReport(jasperPrint, false);
+        } catch (FileNotFoundException e) {
+            System.err.println("Error: " + e.getMessage());
+        } catch (JRException e) {
+            System.err.println("JasperReports error: " + e.getMessage());
+            e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
