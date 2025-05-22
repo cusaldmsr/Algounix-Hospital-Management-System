@@ -17,18 +17,19 @@ import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
+
 /**
  *
  * @author kusal
  */
 public class ChangePasswords extends javax.swing.JPanel {
 
+    private QRGenerator qrGenerator;
     /**
      * Creates new form Settings
      */
     HashMap<String, String> empMap = new HashMap<>();
-  
-    
+
     public ChangePasswords() {
         initComponents();
         loadEmployee();
@@ -37,8 +38,8 @@ public class ChangePasswords extends javax.swing.JPanel {
         jLabel2.setIcon(iconLogo);
 
     }
-    
-     private void loadEmployee() {
+
+    private void loadEmployee() {
 
         try {
 
@@ -73,9 +74,6 @@ public class ChangePasswords extends javax.swing.JPanel {
 
     }
 
-     
-     
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -104,7 +102,6 @@ public class ChangePasswords extends javax.swing.JPanel {
         jLabel10 = new javax.swing.JLabel();
         jTextField4 = new javax.swing.JTextField();
         jPanel5 = new javax.swing.JPanel();
-        jButton3 = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(205, 245, 253));
 
@@ -287,30 +284,15 @@ public class ChangePasswords extends javax.swing.JPanel {
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
 
-        jButton3.setBackground(new java.awt.Color(205, 245, 253));
-        jButton3.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
-        jButton3.setText("Create a QR Code");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGap(0, 1013, Short.MAX_VALUE)
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addContainerGap(41, Short.MAX_VALUE)
-                .addComponent(jButton3)
-                .addGap(33, 33, 33))
+            .addGap(0, 100, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -343,6 +325,53 @@ public class ChangePasswords extends javax.swing.JPanel {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+//        String type = String.valueOf(jComboBox1.getSelectedItem());
+//        String username = jTextField1.getText();
+//        String opw = jTextField2.getText();
+//        String npw = jTextField3.getText();
+//        String cpw = jTextField4.getText();
+//
+//        if (type.equals("Select")) {
+//            JOptionPane.showMessageDialog(this, "Please select your employee type!", "Warning", JOptionPane.WARNING_MESSAGE);
+//        } else if (username.isEmpty()) {
+//            JOptionPane.showMessageDialog(this, "Please enter your username!", "Warning", JOptionPane.WARNING_MESSAGE);
+//        } else if (opw.isEmpty()) {
+//            JOptionPane.showMessageDialog(this, "Please enter your old password!", "Warning", JOptionPane.WARNING_MESSAGE);
+//        } else if (npw.isEmpty()) {
+//            JOptionPane.showMessageDialog(this, "Please enter your new password!", "Warning", JOptionPane.WARNING_MESSAGE);
+//        } else if (cpw.isEmpty()) {
+//            JOptionPane.showMessageDialog(this, "Please confirm your new password!", "Warning", JOptionPane.WARNING_MESSAGE);
+//        } else {
+//
+//            try {
+//
+//                ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `employee` WHERE `id` = '" + username + "' AND `employee_type_id` = '" + empMap.get(type) + "' AND `password` = '" + opw + "'");
+//
+//                if (resultSet.next()) {
+//                    if (npw.equals(cpw)) {
+//                        MySQL.executeIUD("UPDATE `employee` SET `password` ='" + cpw + "' "
+//                                + "WHERE `id` = '" + username + "'");
+//                        JOptionPane.showMessageDialog(this, "Password Successfully Changed!", "Success", JOptionPane.INFORMATION_MESSAGE);
+//                        String date = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss").format(new Date());
+//                        System.out.println("Employee Id :" + SignIn.empID + " " + "changed his Password at:" + date);
+//                        loadEmployee();
+//                        reset();
+//
+//                    } else {
+//
+//                        JOptionPane.showMessageDialog(this, "Confirm your new password again!", "Warning", JOptionPane.WARNING_MESSAGE);
+//                        jTextField4.grabFocus();
+//                    }
+//                } else {
+//                    JOptionPane.showMessageDialog(this, "Check your employee type , username and old password again!", "Warning", JOptionPane.WARNING_MESSAGE);
+//
+//                }
+//
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
+
         String type = String.valueOf(jComboBox1.getSelectedItem());
         String username = jTextField1.getText();
         String opw = jTextField2.getText();
@@ -362,27 +391,32 @@ public class ChangePasswords extends javax.swing.JPanel {
         } else {
 
             try {
-
                 ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `employee` WHERE `id` = '" + username + "' AND `employee_type_id` = '" + empMap.get(type) + "' AND `password` = '" + opw + "'");
 
                 if (resultSet.next()) {
                     if (npw.equals(cpw)) {
-                        MySQL.executeIUD("UPDATE `employee` SET `password` ='" + cpw + "' "
-                                + "WHERE `id` = '" + username + "'");
+                        MySQL.executeIUD("UPDATE `employee` SET `password` ='" + cpw + "' WHERE `id` = '" + username + "'");
                         JOptionPane.showMessageDialog(this, "Password Successfully Changed!", "Success", JOptionPane.INFORMATION_MESSAGE);
                         String date = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss").format(new Date());
-                        System.out.println("Employee Id :" + SignIn.empID + " " + "changed his Password at:" + date);
+                        System.out.println("Employee Id :" + SignIn.empID + " changed his Password at: " + date);
                         loadEmployee();
                         reset();
 
-                    } else {
+                        // Show option pane to ask about QR code
+                        int result = JOptionPane.showConfirmDialog(this, "Do you want to create a QR code for your new password?", "QR Code", JOptionPane.YES_NO_OPTION);
+                        if (result == JOptionPane.YES_OPTION) {
+                            QRGenerator qrGen = new QRGenerator();
+                            qrGen.setVisible(true);
+                            qrGen.txtInput.setText(cpw);
+                            qrGen.loadQR(); // Optional: Automatically load QR
+                        }
 
+                    } else {
                         JOptionPane.showMessageDialog(this, "Confirm your new password again!", "Warning", JOptionPane.WARNING_MESSAGE);
                         jTextField4.grabFocus();
                     }
                 } else {
-                    JOptionPane.showMessageDialog(this, "Check your employee type , username and old password again!", "Warning", JOptionPane.WARNING_MESSAGE);
-
+                    JOptionPane.showMessageDialog(this, "Check your employee type, username, and old password again!", "Warning", JOptionPane.WARNING_MESSAGE);
                 }
 
             } catch (Exception e) {
@@ -396,16 +430,10 @@ public class ChangePasswords extends javax.swing.JPanel {
         reset();
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-        new QRGenerator().setVisible(true);
-    }//GEN-LAST:event_jButton3ActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
