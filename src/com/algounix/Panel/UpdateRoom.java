@@ -76,16 +76,15 @@ public class UpdateRoom extends javax.swing.JPanel {
         mod = new DefaultListModel();
         jList1.setModel(mod);
     }
-    
+
     //load suggestions for Select Doctor ID:
     private void loadSuggestions2() {
         jPopupMenu2.add(jPanel4);
         mod1 = new DefaultListModel();
         jList2.setModel(mod1);
     }
-    
-    
-    private void updateRoom(){
+
+    private void updateRoom() {
         String room_id = jTextField1.getText();
         String doc_id = jTextField5.getText();
         String doc_name = jLabel10.getText();
@@ -104,12 +103,10 @@ public class UpdateRoom extends javax.swing.JPanel {
             try {
 
                 ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `room` "
-                    + "INNER JOIN `doctor_has_units` ON `doctor_has_units`.`room_id` = `room`.`id` "
-                    + "WHERE `room`.`id` = '" + room_id + "' "
-                    + "AND `room`.`discription` = '" + description + "' "
-                    + "AND `doctor_has_units`.`doctor_id` = '" + doc_id + "'");
-
-                       
+                        + "INNER JOIN `doctor_has_units` ON `doctor_has_units`.`room_id` = `room`.`id` "
+                        + "WHERE `room`.`id` = '" + room_id + "' "
+                        + "AND `room`.`discription` = '" + description + "' "
+                        + "AND `doctor_has_units`.`doctor_id` = '" + doc_id + "'");
 
                 if (resultSet.next()) {
                     JOptionPane.showMessageDialog(this, "Please Change Something to Update", "Warning", JOptionPane.WARNING_MESSAGE);
@@ -117,13 +114,13 @@ public class UpdateRoom extends javax.swing.JPanel {
                     //Update the room description
                     MySQL.executeIUD("UPDATE `room` "
                             + "SET `room`.`discription` = '" + description + "'"
-                    + "WHERE `room`.`id` = '" + room_id + "' ");
-                    
+                            + "WHERE `room`.`id` = '" + room_id + "' ");
+
                     //Update the doctor assigned to that room
                     MySQL.executeIUD("UPDATE `doctor_has_units` "
                             + "SET `doctor_has_units`.`doctor_id` = '" + doc_id + "'"
-                    + "WHERE `doctor_has_units`.`room_id` = '" + room_id + "' ");
-                    
+                            + "WHERE `doctor_has_units`.`room_id` = '" + room_id + "' ");
+
                     resetjPanel3();
                     JOptionPane.showMessageDialog(this, "Updated", "Success", JOptionPane.INFORMATION_MESSAGE);
                 }
@@ -134,7 +131,7 @@ public class UpdateRoom extends javax.swing.JPanel {
 
         }
     }
-    
+
     private void resetjPanel3() {
 
         jTextField1.setText("");
@@ -143,7 +140,59 @@ public class UpdateRoom extends javax.swing.JPanel {
         jTextArea2.setText("");
 
     }
-    
+
+    private void updateCharges() {
+        String type = String.valueOf(jComboBox1.getSelectedItem());
+        String service_Charge = jTextField2.getText();
+        String food_Charge  = jTextField3.getText();
+        String laundry_Charge  = jTextField4.getText();
+
+        if (type.equals("Select")) {
+            JOptionPane.showMessageDialog(this, "Please Select a Room Type", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (service_Charge.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter Service Charge ", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (food_Charge.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter Food Charge :", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (laundry_Charge.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter Laundry Charge", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else {
+
+            try {
+
+                ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `room_chargers` "
+                        + "WHERE `room_chargers`.`service_charge` = '" + service_Charge + "' "
+                        + "AND `room_chargers`.`food_charge` = '" + food_Charge + "' "
+                        + "AND `room_chargers`.`londry_charge` = '" + laundry_Charge + "'");
+
+                if (resultSet.next()) {
+                    JOptionPane.showMessageDialog(this, "Please Change Something to Update", "Warning", JOptionPane.WARNING_MESSAGE);
+                } else {
+                    MySQL.executeIUD("UPDATE `room_chargers` "
+                            + "SET `room_chargers`.`service_charge` = '" + service_Charge + "'"
+                            + "AND `room_chargers`.`food_charge` = '" + food_Charge + "' "
+                            + "AND `room_chargers`.`londry_charge` = '" + laundry_Charge + "'");
+
+                    resetjPanel1();
+                    JOptionPane.showMessageDialog(this, "Updated", "Success", JOptionPane.INFORMATION_MESSAGE);
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+
+    private void resetjPanel1() {
+
+        jComboBox1.setSelectedIndex(0);
+        jTextField2.setText("");
+        jTextField3.setText("");
+        jTextField4.setText("");
+        jLabel8.setText(">>>>>>>>>>");
+
+    }
+
     //Load Total Real Time Part 1
     private void updateTotalCharges() {
         String serviceText = jTextField2.getText().trim();
@@ -594,7 +643,7 @@ public class UpdateRoom extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        updateCharges();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -687,7 +736,7 @@ public class UpdateRoom extends javax.swing.JPanel {
             ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `doctor` WHERE `id`='" + doctorID + "'");
 
             if (resultSet.next()) {
-             jLabel10.setText(resultSet.getString("first_name") + " " + resultSet.getString("last_name"));
+                jLabel10.setText(resultSet.getString("first_name") + " " + resultSet.getString("last_name"));
             }
 
         } catch (Exception e) {
