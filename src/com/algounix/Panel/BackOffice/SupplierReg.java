@@ -12,10 +12,13 @@ import java.awt.Frame;
 import java.awt.Window;
 import java.awt.event.WindowAdapter;
 import java.sql.ResultSet;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
@@ -40,6 +43,7 @@ public class SupplierReg extends javax.swing.JPanel {
         jLabel9.setIcon(iconLogo);
         loadStatus();
         displayCharts();
+        loadSummary(jLabel17, jLabel18, jLabel19, jLabel20, jLabel21);
     }
     private String companyId;
 
@@ -126,6 +130,56 @@ public class SupplierReg extends javax.swing.JPanel {
             e.printStackTrace();
         }
         return dataset;
+    }
+
+    public static void loadSummary(JLabel jLabel17, JLabel jLabel18, JLabel jLabel19, JLabel jLabel20, JLabel jLabel21) {
+        try {
+            // Current Year-Month
+            String currentMonth = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM"));
+
+            // 1. Total Supplier Count
+            ResultSet rs1 = MySQL.executeSearch("SELECT COUNT(*) AS count FROM supplier");
+            if (rs1.next()) {
+                jLabel17.setText(rs1.getString("count"));
+            }
+
+            // 2 & 3. Most Active Supplier of the Month (by GRN count)
+            ResultSet rs2 = MySQL.executeSearch(
+                    "SELECT supplier_id, COUNT(*) AS grn_count "
+                    + "FROM grn "
+                    + "WHERE DATE_FORMAT(date, '%Y-%m') = '" + currentMonth + "' "
+                    + "GROUP BY supplier_id "
+                    + "ORDER BY grn_count DESC LIMIT 1"
+            );
+            if (rs2.next()) {
+                int supplierId = rs2.getInt("supplier_id");
+                jLabel18.setText(String.valueOf(supplierId));
+
+                ResultSet rs3 = MySQL.executeSearch("SELECT first_name, last_name FROM supplier WHERE id = '" + supplierId + "'");
+                if (rs3.next()) {
+                    String fullName = rs3.getString("first_name") + " " + rs3.getString("last_name");
+                    jLabel19.setText(fullName);
+                }
+            }
+
+            // 4. Total GRN Count for Current Month
+            ResultSet rs4 = MySQL.executeSearch(
+                    "SELECT COUNT(*) AS count FROM grn "
+                    + "WHERE DATE_FORMAT(date, '%Y-%m') = '" + currentMonth + "'"
+            );
+            if (rs4.next()) {
+                jLabel20.setText(rs4.getString("count"));
+            }
+
+            // 5. Total Company Count
+            ResultSet rs5 = MySQL.executeSearch("SELECT COUNT(*) AS count FROM company");
+            if (rs5.next()) {
+                jLabel21.setText(rs5.getString("count"));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -553,10 +607,6 @@ public class SupplierReg extends javax.swing.JPanel {
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-//        JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
-//        CompanyReg com = new CompanyReg(parentFrame, true);
-//        com.setVisible(true);
-
         Window window = SwingUtilities.getWindowAncestor(this);
 
         if (window instanceof Frame) {
@@ -564,11 +614,9 @@ public class SupplierReg extends javax.swing.JPanel {
             dialog.setVisible(true);
 
             jLabel7.setText(dialog.getSelectedCompany());
-
-            companyId = dialog.getSelectedid();
-
+            companyId = dialog.getSelectedid();  // This must return a valid company ID from DB
         } else {
-            System.err.println("The Panel is not Hosted");
+            System.err.println("The Panel is not hosted in a JFrame.");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -647,15 +695,26 @@ public class SupplierReg extends javax.swing.JPanel {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         try {
-
-            String id = jTextField5.getText();
+            String id = jTextField5.getText();  // Existing supplier ID for update
             String firstName = jTextField1.getText();
             String lastName = jTextField2.getText();
             String email = jTextField3.getText();
             String mobile = jTextField4.getText();
-            String company = jLabel7.getText();
+//            String company = jLabel7.getText();
             String status = String.valueOf(jComboBox1.getSelectedIndex());
 
+            String company = jLabel7.getText();
+            String companyId = null;
+
+            ResultSet rs = MySQL.executeSearch("SELECT `id` FROM `company` WHERE `company` = '" + company + "'");
+            if (rs.next()) {
+                companyId = rs.getString("id");
+            } else {
+                JOptionPane.showMessageDialog(this, "Please select a valid company.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // === Validation ===
             if (firstName.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Please enter First Name");
             } else if (lastName.isEmpty()) {
@@ -668,46 +727,33 @@ public class SupplierReg extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Please enter mobile Number", "Warning", JOptionPane.WARNING_MESSAGE);
             } else if (!mobile.matches("^07[01245678]{1}[0-9]{7}$")) {
                 JOptionPane.showMessageDialog(this, "Invalid mobile", "Warning", JOptionPane.WARNING_MESSAGE);
-
-            } else if (company.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Please Select company", "Warning", JOptionPane.WARNING_MESSAGE);
-
+            } else if (company.isEmpty() || companyId == null || companyId.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Please Select a valid company", "Warning", JOptionPane.WARNING_MESSAGE);
             } else if (status.equals("Select")) {
                 JOptionPane.showMessageDialog(this, "Please Select Status", "Warning", JOptionPane.WARNING_MESSAGE);
             } else {
 
-                ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `supplier` WHERE `email` = '" + email + "' OR `mobile` = '" + mobile + "'");
+                // === Update supplier ===
+                String query = "UPDATE `supplier` SET `first_name` = '" + firstName + "', "
+                        + "`last_name` = '" + lastName + "', "
+                        + "`email` = '" + email + "', "
+                        + "`mobile` = '" + mobile + "', "
+                        + "`supplier_status_id` = '" + status + "', "
+                        + "`company_id` = '" + companyId + "' "
+                        + "WHERE `id` = '" + id + "'";
 
-                boolean canUpdate = false;
+                int result = MySQL.executeIUD(query);
 
-                if (resultSet.next()) {
-
-                    if (!resultSet.getString("email").equals(email)) {
-                        JOptionPane.showMessageDialog(this, "This Mobile number or email already used", "Warning", JOptionPane.WARNING_MESSAGE);
-                    } else {
-                        canUpdate = true;
-                    }
-
+                if (result > 0) {
+                    JOptionPane.showMessageDialog(this, "Supplier updated successfully.");
+                    reset();  // Reset form fields
                 } else {
-                    canUpdate = true;
-
+                    JOptionPane.showMessageDialog(this, "Update failed. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
-
-                if (canUpdate) {
-
-                    MySQL.executeIUD("UPDATE `supplier` SET `first_name` = '" + firstName + "' ,"
-                            + "`last_name` = '" + lastName + "' , `email` = '" + email + "',"
-                            + " `mobile` = '" + mobile + "' ,`supplier_status_id` = '" + status + "',"
-                            + " `company_id` = '" + companyId + "' "
-                            + "WHERE `id` = '" + id + "' ");
-
-                    reset();
-                }
-
             }
-
         } catch (Exception e) {
             e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage(), "Exception", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
