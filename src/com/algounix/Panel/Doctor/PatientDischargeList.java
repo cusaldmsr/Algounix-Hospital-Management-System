@@ -967,6 +967,12 @@ public class PatientDischargeList extends javax.swing.JPanel {
                 throw new IllegalStateException("Table or table model is not initialized.");
             }
 
+            if (jTable1.getModel().getRowCount() == 0) {
+                
+                JOptionPane.showMessageDialog(null, "No data available to generate the report.", "Empty Report", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+
             JRTableModelDataSource dataSource = new JRTableModelDataSource(jTable1.getModel());
 
             // Fill the report
