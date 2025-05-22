@@ -34,6 +34,7 @@ import javax.swing.table.DefaultTableModel;
 public class Invoice extends javax.swing.JFrame {
 
     PatientDischargeList dischargeList;
+    PatientDischarge discharge;
 
     String spendDays;
 
@@ -50,6 +51,16 @@ public class Invoice extends javax.swing.JFrame {
         initComponents();
         Image icon = new ImageIcon(this.getClass().getResource("/com/algounix/Resources/HMS-Logo.png")).getImage();
         this.setIconImage(icon);
+        loadGUI();
+        setEmployeeDetailsLabels();
+        loadPaymentMethods();
+    }
+    
+    public Invoice(PatientDischarge discharge) {
+        initComponents();
+        Image icon = new ImageIcon(this.getClass().getResource("/com/algounix/Resources/HMS-Logo.png")).getImage();
+        this.setIconImage(icon);
+        this.discharge = discharge;
         loadGUI();
         setEmployeeDetailsLabels();
         loadPaymentMethods();
@@ -1455,6 +1466,7 @@ public class Invoice extends javax.swing.JFrame {
         } else if (Double.parseDouble(balance) < 0) {
             JOptionPane.showMessageDialog(this, "Please Complete Full Payment", "Warning", JOptionPane.WARNING_MESSAGE);
         } else {
+            
             try {
                 MySQL.executeIUD("INSERT INTO `hospital_invoice` (`id`,`total_amount`,`payment`,`balance`,`payment_method_id`,"
                         + "`date`,`patient_id`,`employee_id`,`payer_nic`,`insurance_claim`,`total_doctor_chargers`) "
@@ -1482,7 +1494,7 @@ public class Invoice extends javax.swing.JFrame {
                 
                 dischargeList.confirmPayment(invoiceID);
                 
-                PatientDischarge.setIsPaymentSuccess(true, invoiceID);
+                discharge.dischargePatient(invoiceID);
 
                 JOptionPane.showMessageDialog(this, " This Window Close Automatically After 10 Seconds.", "Warning", JOptionPane.WARNING_MESSAGE);
                 
