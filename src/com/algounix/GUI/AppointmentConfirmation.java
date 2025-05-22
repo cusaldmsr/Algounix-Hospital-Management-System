@@ -6,6 +6,12 @@ package com.algounix.GUI;
 
 import com.algounix.Model.MySQL;
 import com.algounix.Panel.Reception.AddAppoinment;
+import java.sql.Connection;  // ✅ CORRECT
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
@@ -13,6 +19,12 @@ import java.util.Date;
 import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
+import javax.swing.Timer;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.data.JRTableModelDataSource;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -714,7 +726,7 @@ public class AppointmentConfirmation extends javax.swing.JFrame {
                 jButton1.setEnabled(false);
                 jButton2.setEnabled(true);
 
-                JOptionPane.showMessageDialog(this, "Payment Complete", "Success", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Payment Complete", "Success", JOptionPane.INFORMATION_MESSAGE);
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -732,30 +744,126 @@ public class AppointmentConfirmation extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 
         String invoiceID = jLabel30.getText();
+        String payerNIC = jTextField1.getText();
+        String patientID = jLabel21.getText();
+        String patientName = jLabel22.getText();
+        String patientMobile = jLabel24.getText();
+        String doctorName = jLabel25.getText();
+        String channellingUnit = jLabel26.getText();
+        String roomNo = jLabel27.getText();
+        String recivedDate = jLabel28.getText();
+        String recivedTimeslot = jLabel29.getText();
+        String appointmentNo = jLabel37.getText();
+        String doctorCharge = jLabel31.getText();
+        String roomCharge = jLabel32.getText();
+        String totAmount = jLabel33.getText();
+        String paymentMethod = String.valueOf(jComboBox1.getSelectedItem());
+
+        String payment = jFormattedTextField1.getText();
+        String balance = jLabel34.getText();
+
+        String date = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date());
+
         int appoinmentStatusID = 1;
         int queNum = countPerTimeSlot + 1;
 
         try {
-
-            ResultSet resultSet1 = MySQL.executeSearch("SELECT `id` FROM `doctor_has_units` WHERE `doctor_id`='" + detailsMap.get("doctorID") + "' AND `units_id`='" + detailsMap.get("unitID") + "'");
-            ResultSet resultSet2 = MySQL.executeSearch("SELECT `id` FROM `doctor_has_time_slots` WHERE `doctor_id`='" + detailsMap.get("doctorID") + "' AND `time_slots_id`='" + detailsMap.get("timeSlot") + "'");
-
-            int doctorHasUnitID = 0;
-            int doctorHasTimeSlotsID = 0;
-
-            if (resultSet1.next()) {
-                doctorHasUnitID = resultSet1.getInt("id");
-            }
-
-            if (resultSet2.next()) {
-                doctorHasTimeSlotsID = resultSet2.getInt("id");
-            }
-
-            if (doctorHasUnitID != 0 && doctorHasTimeSlotsID != 0) {
-                MySQL.executeIUD("INSERT INTO `appoinment` (`date`,`doctor_has_units_id`,`doctor_has_time_slots_id`,`patient_id`,`appoinment_status_id`,`employee_id`,`hospital_invoice_id`,`que_number`) "
-                        + "VALUES ('" + detailsMap.get("selectedDate") + "','" + doctorHasUnitID + "','" + doctorHasTimeSlotsID + "','" + detailsMap.get("patientID") + "','" + appoinmentStatusID + "','" + SignIn.empID + "','" + invoiceID + "','" + queNum + "')");
+            if (payerNIC.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Please Enter payer NIC Number.", "Warning", JOptionPane.WARNING_MESSAGE);
+            } else if (!payerNIC.matches("^(([5-9]{1})([0-9]{1})([0-3,5-8]{1})([0-9]{6})([vVxX]))|(([1-2]{1})([0,9]{1})([0-9]{2})([0-3,5-8]{1})([0-9]{7}))")) {
+                JOptionPane.showMessageDialog(this, "Please Enter Valid NIC Number.", "Warning", JOptionPane.WARNING_MESSAGE);
+            } else if (Double.parseDouble(payment) < 0) {
+                JOptionPane.showMessageDialog(this, "Please Enter Your Payment Amount", "Warning", JOptionPane.WARNING_MESSAGE);
+            } else if (Double.parseDouble(balance) < 0) {
+                JOptionPane.showMessageDialog(this, "Please Complete Full Payment", "Warning", JOptionPane.WARNING_MESSAGE);
             } else {
-                JOptionPane.showMessageDialog(this, "Unknown Error Occured. Please Try Again Later.", "Warning", JOptionPane.WARNING_MESSAGE);
+                try {
+                    ResultSet resultSet1 = MySQL.executeSearch("SELECT `id` FROM `doctor_has_units` WHERE `doctor_id`='" + detailsMap.get("doctorID") + "' AND `units_id`='" + detailsMap.get("unitID") + "'");
+                    ResultSet resultSet2 = MySQL.executeSearch("SELECT `id` FROM `doctor_has_time_slots` WHERE `doctor_id`='" + detailsMap.get("doctorID") + "' AND `time_slots_id`='" + detailsMap.get("timeSlot") + "'");
+
+                    int doctorHasUnitID = 0;
+                    int doctorHasTimeSlotsID = 0;
+
+                    if (resultSet1.next()) {
+                        doctorHasUnitID = resultSet1.getInt("id");
+                    }
+                    if (resultSet2.next()) {
+                        doctorHasTimeSlotsID = resultSet2.getInt("id");
+                    }
+
+                    if (doctorHasUnitID != 0 && doctorHasTimeSlotsID != 0) {
+                        MySQL.executeIUD("INSERT INTO `appoinment` (`date`,`doctor_has_units_id`,`doctor_has_time_slots_id`,`patient_id`,`appoinment_status_id`,`employee_id`,`hospital_invoice_id`,`que_number`) "
+                                + "VALUES ('" + detailsMap.get("selectedDate") + "','" + doctorHasUnitID + "','" + doctorHasTimeSlotsID + "','" + detailsMap.get("patientID") + "','" + appoinmentStatusID + "','" + SignIn.empID + "','" + invoiceID + "','" + queNum + "')");
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Unknown Error Occurred. Please Try Again Later.", "Warning", JOptionPane.WARNING_MESSAGE);
+                    }
+
+                    // Initialize report and connection
+                    try (
+                        InputStream path = this.getClass().getResourceAsStream("/com/algounix/Reports/Algounix-HMS-Appointment-Confirmation2.jasper")) {
+
+                        Connection conn = MySQL.connection;
+                        String testQuery = "SELECT * FROM appoinment WHERE hospital_invoice_id = '" + invoiceID + "'";
+                        ResultSet rs = conn.createStatement().executeQuery(testQuery);
+
+                        if (!rs.next()) {
+                            JOptionPane.showMessageDialog(this, "No records found for invoice ID: " + invoiceID);
+                        } else {
+                            // Proceed to generate the report
+                        }
+
+                        MySQL.createConnection();
+
+                        if (path == null) {
+                            throw new FileNotFoundException("Report file not found in the specified path.");
+                        }
+
+                        HashMap<String, Object> params = new HashMap<>();
+                        params.put("Parameter1", invoiceID);
+                        params.put("Parameter2", payerNIC);
+                        params.put("Parameter3", patientID);
+                        params.put("Parameter4", patientName);
+                        params.put("Parameter5", patientMobile);
+                        params.put("Parameter6", doctorName);
+                        params.put("Parameter7", channellingUnit);
+                        params.put("Parameter8", roomNo);
+                        params.put("Parameter9", recivedDate);
+                        params.put("Parameter10", recivedTimeslot);
+                        params.put("Parameter11", appointmentNo);
+                        params.put("Parameter12", doctorCharge);
+                        params.put("Parameter13", roomCharge);
+                        params.put("Parameter14", totAmount);
+                        params.put("Parameter15", paymentMethod);
+                        params.put("Parameter16", payment);
+                        params.put("Parameter17", balance);
+
+                        JasperPrint jasperPrint = JasperFillManager.fillReport(path, params, MySQL.connection);
+                        JasperViewer.viewReport(jasperPrint, false);
+
+                        System.out.println("Employee Id: " + SignIn.empID + " printed invoice " + invoiceID + " at: " + date);
+
+                    } catch (FileNotFoundException e) {
+                        System.err.println("Error: " + e.getMessage());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    JOptionPane.showMessageDialog(this, "Appointment Confirmation Successful", "Info", JOptionPane.INFORMATION_MESSAGE);
+
+                    Timer timer = new Timer(10000, new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent evt) {
+                            disposeGUI();
+                        }
+                    });
+                    timer.setRepeats(false);
+                    timer.start();
+
+                    JOptionPane.showMessageDialog(this, "This window will close automatically after 10 seconds.", "Warning", JOptionPane.WARNING_MESSAGE);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
 
             addAppointment.clearPatientDetails();
@@ -766,9 +874,11 @@ public class AppointmentConfirmation extends javax.swing.JFrame {
             e.printStackTrace();
         }
 
-        this.dispose();
-        JOptionPane.showMessageDialog(this, "Appointment Confimation Successfull", "info", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void disposeGUI() {
+        this.dispose();
+    }
 
     /**
      * @param args the command line arguments

@@ -123,41 +123,42 @@
                               <Component id="jLabel43" alignment="1" max="32767" attributes="0"/>
                               <Component id="AppointmentListbtn2" alignment="1" min="-2" pref="227" max="-2" attributes="0"/>
                               <Component id="AppointmentListbtn3" alignment="1" min="-2" pref="227" max="-2" attributes="0"/>
-                              <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="EmployeeListbtn" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="EmployeeRegbtn" alignment="1" pref="228" max="32767" attributes="0"/>
-                              </Group>
-                              <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="PatientReportbtn" alignment="1" pref="228" max="32767" attributes="0"/>
-                                  <Component id="PatientAdmitbtn2" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="PatientAdmitbtn3" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="PatientListbtn" alignment="1" max="32767" attributes="0"/>
-                              </Group>
-                              <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="RoomsReservationbtn" alignment="1" pref="228" max="32767" attributes="0"/>
-                                  <Component id="RoomPapbtn" alignment="1" max="32767" attributes="0"/>
-                              </Group>
-                              <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="StockListbtn1" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="StockListbtn" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="AddProductbtn" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="StockTransferbtn" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="Stockbtn" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="GRNbtn1" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="GRNbtn" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="StockTransferbtn1" alignment="1" pref="228" max="32767" attributes="0"/>
-                              </Group>
-                              <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="BrandRegbtn" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="CompanyRegbtn" alignment="1" pref="228" max="32767" attributes="0"/>
-                                  <Component id="SupplierListbtn" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="SupplierRegbtn" alignment="1" max="32767" attributes="0"/>
-                              </Group>
-                              <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="AppointmentListbtn" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="Appointmentbtn" alignment="1" pref="228" max="32767" attributes="0"/>
-                              </Group>
                               <Component id="jLabel40" alignment="1" min="-2" pref="228" max="-2" attributes="0"/>
+                              <Component id="jLabel42" alignment="1" min="-2" pref="228" max="-2" attributes="0"/>
+                              <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="Appointmentbtn" alignment="1" pref="228" max="32767" attributes="0"/>
+                                  <Component id="AppointmentListbtn" alignment="1" max="32767" attributes="0"/>
+                              </Group>
+                              <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="SupplierRegbtn" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="SupplierListbtn" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="CompanyRegbtn" alignment="1" pref="228" max="32767" attributes="0"/>
+                                  <Component id="BrandRegbtn" alignment="1" max="32767" attributes="0"/>
+                              </Group>
+                              <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="GRNbtn" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="GRNbtn1" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="Stockbtn" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="StockTransferbtn" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="StockTransferbtn1" alignment="1" pref="228" max="32767" attributes="0"/>
+                                  <Component id="AddProductbtn" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="StockListbtn" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="StockListbtn1" alignment="1" max="32767" attributes="0"/>
+                              </Group>
+                              <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="RoomPapbtn" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="RoomsReservationbtn" alignment="1" pref="228" max="32767" attributes="0"/>
+                              </Group>
+                              <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="PatientListbtn" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="PatientAdmitbtn3" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="PatientAdmitbtn2" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="PatientReportbtn" alignment="1" pref="228" max="32767" attributes="0"/>
+                              </Group>
+                              <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="EmployeeRegbtn" alignment="1" pref="228" max="32767" attributes="0"/>
+                                  <Component id="EmployeeListbtn" alignment="1" max="32767" attributes="0"/>
+                              </Group>
                           </Group>
                       </Group>
                       <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
@@ -258,6 +259,8 @@
                           <Component id="jLabel39" min="-2" pref="44" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="jLabel40" min="-2" pref="44" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="jLabel42" min="-2" pref="44" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -746,6 +749,17 @@
                   </Properties>
                   <Events>
                     <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabel40MouseClicked"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel42">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Poppins" size="13" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="QR Generator"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabel42MouseClicked"/>
                   </Events>
                 </Component>
               </SubComponents>
