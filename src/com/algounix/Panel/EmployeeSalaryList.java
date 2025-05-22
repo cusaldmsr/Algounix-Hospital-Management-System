@@ -848,7 +848,7 @@ public class EmployeeSalaryList extends javax.swing.JPanel {
 
     //  Print Report From Details With Table
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-          try (InputStream path = this.getClass().getResourceAsStream("/com/algounix/Reports/Algounix-HMS-EmployeeListNew.jasper")) {
+        try (InputStream path = this.getClass().getResourceAsStream("/com/algounix/Reports/Algounix-HMS-EmployeeListNew.jasper")) {
 
             if (path == null) {
                 throw new FileNotFoundException("Report file not found in the specified path.");
@@ -858,6 +858,10 @@ public class EmployeeSalaryList extends javax.swing.JPanel {
                 throw new IllegalStateException("Table or table model is not initialized.");
             }
 
+            if (jTable1.getModel().getRowCount() == 0) {
+                JOptionPane.showMessageDialog(null, "No data available to generate the report.", "Empty Report", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
             JRTableModelDataSource dataSource = new JRTableModelDataSource(jTable1.getModel());
 
             // Fill the report
@@ -885,7 +889,7 @@ public class EmployeeSalaryList extends javax.swing.JPanel {
                 int showConfirm = JOptionPane.showConfirmDialog(this, "Do you Want Issue Salary ?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 
                 if (showConfirm == JOptionPane.YES_OPTION) {
-                    MySQL.executeIUD("UPDATE `emp_salary` SET `emp_salary_status_id` = '2' WHERE `id` = '"+salaryID+"'");
+                    MySQL.executeIUD("UPDATE `emp_salary` SET `emp_salary_status_id` = '2' WHERE `id` = '" + salaryID + "'");
                     JOptionPane.showMessageDialog(this, "Salary Issued For Employee", "Success", JOptionPane.INFORMATION_MESSAGE);
                 }
             } catch (Exception e) {
