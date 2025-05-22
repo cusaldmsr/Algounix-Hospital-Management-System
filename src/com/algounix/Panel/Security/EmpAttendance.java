@@ -6,6 +6,8 @@ package com.algounix.Panel.Security;
 
 import com.algounix.Model.MySQL;
 import java.awt.Color;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
@@ -16,6 +18,11 @@ import java.util.Vector;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.data.JRTableModelDataSource;
+import net.sf.jasperreports.view.JasperViewer;
 
 public class EmpAttendance extends javax.swing.JPanel {
 
@@ -467,6 +474,11 @@ public class EmpAttendance extends javax.swing.JPanel {
 
         jButton1.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
         jButton1.setText("Print Report");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -771,12 +783,12 @@ public class EmpAttendance extends javax.swing.JPanel {
                     long totalMinutes = duration.toMinutes();
                     long hours = totalMinutes / 60;
                     long minutes = totalMinutes % 60;
-                    String totalWorkingHours = String.valueOf(hours)+"."+String.valueOf(minutes);
+                    String totalWorkingHours = String.valueOf(hours) + "." + String.valueOf(minutes);
 
-                    if(totalWorkingHours.equals("0")){
-                        totalWorkingHours = "0"+"."+String.valueOf(duration.toMinutes());
+                    if (totalWorkingHours.equals("0")) {
+                        totalWorkingHours = "0" + "." + String.valueOf(duration.toMinutes());
                     }
-                    
+
                     if (duration.toHours() >= 4) {
                         //  2 - Leaved Status
                         status = "2";
@@ -789,8 +801,8 @@ public class EmpAttendance extends javax.swing.JPanel {
                             + "`working_hours` = '" + totalWorkingHours + "' WHERE `employee_id` = '" + empID + "' AND `attendance_status_id` = '1'");
 
                     JOptionPane.showMessageDialog(this, empID + "'s Out Time Marked Successfully", "Success", JOptionPane.WARNING_MESSAGE);
-                }else{
-                    JOptionPane.showMessageDialog(this,"Something went wrong. Please Try again Later", "Success", JOptionPane.WARNING_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Something went wrong. Please Try again Later", "Success", JOptionPane.WARNING_MESSAGE);
                 }
 
             } catch (Exception e) {
@@ -800,6 +812,40 @@ public class EmpAttendance extends javax.swing.JPanel {
         }
         clear();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        try (InputStream path = this.getClass().getResourceAsStream("/com/algounix/Reports/Algounix-HMS-Employee-AttendanceList.jasper")) {
+
+            if (path == null) {
+                throw new FileNotFoundException("Report file not found in the specified path.");
+            }
+
+            if (jTable2 == null || jTable2.getModel() == null) {
+                throw new IllegalStateException("Table or table model is not initialized.");
+            }
+
+            if (jTable2.getModel().getRowCount() == 0) {
+                JOptionPane.showMessageDialog(null, "No data available to generate the report.", "Empty Report", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+
+            JRTableModelDataSource dataSource = new JRTableModelDataSource(jTable2.getModel());
+
+            // Fill the report
+            JasperPrint jasperPrint = JasperFillManager.fillReport(path, null, dataSource);
+
+            // View the report
+            JasperViewer.viewReport(jasperPrint, false);
+        } catch (FileNotFoundException e) {
+            System.err.println("Error: " + e.getMessage());
+        } catch (JRException e) {
+            System.err.println("JasperReports error: " + e.getMessage());
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
