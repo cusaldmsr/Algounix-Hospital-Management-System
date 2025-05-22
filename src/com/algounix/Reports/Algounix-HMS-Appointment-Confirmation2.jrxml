@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.21.0.final using JasperReports Library version 6.21.0-4f56c4f36cd19e17675219a9ac4692d5f0f13b06  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Algounix-HMS-Appointment-Confirmation" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f7fed64a-a012-4592-983f-8011510e7a15">
+	<parameter name="Parameter1" class="java.lang.String"/>
+	<parameter name="Parameter2" class="java.lang.String"/>
+	<parameter name="Parameter3" class="java.lang.String"/>
+	<parameter name="Parameter4" class="java.lang.String"/>
+	<parameter name="Parameter5" class="java.lang.String"/>
+	<parameter name="Parameter6" class="java.lang.String"/>
+	<parameter name="Parameter7" class="java.lang.String"/>
+	<parameter name="Parameter8" class="java.lang.String"/>
+	<parameter name="Parameter9" class="java.lang.String"/>
+	<parameter name="Parameter10" class="java.lang.String"/>
+	<parameter name="Parameter11" class="java.lang.String"/>
+	<parameter name="Parameter12" class="java.lang.String"/>
+	<parameter name="Parameter13" class="java.lang.String"/>
+	<parameter name="Parameter14" class="java.lang.String"/>
+	<parameter name="Parameter15" class="java.lang.String"/>
+	<parameter name="Parameter16" class="java.lang.String"/>
+	<parameter name="Parameter17" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="COLUMN_0" class="java.lang.String"/>
+	<field name="COLUMN_1" class="java.lang.String"/>
+	<field name="COLUMN_2" class="java.lang.String"/>
+	<field name="COLUMN_3" class="java.lang.String"/>
+	<field name="COLUMN_4" class="java.lang.String"/>
+	<field name="COLUMN_5" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="1" width="555" height="34" forecolor="#FFFFFF" backcolor="#00A9FF" uuid="ee45700e-5d90-48d6-b8c9-713cb3be1fa1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Appointment Confirmation ]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="48" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="80" height="24" backcolor="#89CFF3" uuid="929595e9-688b-4e31-bae4-7ba2e830ca9e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Invoice ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="180" y="0" width="80" height="24" backcolor="#89CFF3" uuid="0ab8ac34-e0eb-4cf5-bda6-ec0fa4bb9789"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Payer NIC]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="360" y="0" width="80" height="24" backcolor="#89CFF3" uuid="6a281cf7-1b6e-4bd5-a963-4ae27b605a4d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="360" y="24" width="80" height="24" backcolor="#89CFF3" uuid="ff5fe100-6b48-45f1-ad86-bc8ac4c228db"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Patient Mobile]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="24" width="80" height="24" backcolor="#89CFF3" uuid="f94abbee-2260-496b-b5df-2b6857e96259"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Patient ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="180" y="24" width="80" height="24" backcolor="#89CFF3" uuid="be01a21e-7570-4a8e-8f78-6200759f5c6d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Patient Name]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Opaque" x="80" y="0" width="100" height="24" backcolor="#CDF5FD" uuid="7eb45f8b-8432-42b2-8e1e-b13e153ec54a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{Parameter1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="260" y="0" width="100" height="24" backcolor="#CDF5FD" uuid="a3009904-54c9-4f36-ba6a-aa60a83b9bf6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{Parameter2}]]></textFieldExpression>
+			</textField>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement mode="Opaque" x="440" y="0" width="115" height="24" backcolor="#CDF5FD" uuid="102ae2ce-a688-4886-a550-cad2006749c3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="80" y="24" width="100" height="24" backcolor="#CDF5FD" uuid="1d4d9161-9280-4895-9daa-68e42b761779"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{Parameter3}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="260" y="24" width="100" height="24" backcolor="#CDF5FD" uuid="8ad96750-5d6a-4caa-879a-c898e257c8fa"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{Parameter4}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="440" y="24" width="115" height="24" backcolor="#CDF5FD" uuid="5c23d583-545c-4342-bc7f-b3917ced505b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{Parameter5}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="24" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="80" height="24" backcolor="#89CFF3" uuid="6d1afc61-8570-4098-b43d-e4dfb349e5a3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Doctor Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="80" y="0" width="85" height="24" backcolor="#89CFF3" uuid="94c56a90-1543-481e-81f9-0904d2c8f005"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Channeling Unit]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="165" y="0" width="80" height="24" backcolor="#89CFF3" uuid="7d5eafd0-a75b-4524-bed6-2203b40e92cf"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Room Number]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="245" y="0" width="90" height="24" backcolor="#89CFF3" uuid="f9a634e0-284a-4624-a7c4-da309fb706c7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Received Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="335" y="0" width="100" height="24" backcolor="#89CFF3" uuid="5462d5e3-567f-4023-8ff4-f1bc6618dd6c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Received Time Slot]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="435" y="0" width="120" height="24" backcolor="#89CFF3" uuid="a2597604-a1a7-4454-a37f-28260ed41d04"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Appointment Number]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="30" splitType="Stretch">
+			<textField>
+				<reportElement mode="Opaque" x="0" y="0" width="80" height="30" backcolor="#CDF5FD" uuid="0c294b09-994e-401a-b3e4-1a9f736d18f4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{Parameter6}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="80" y="0" width="85" height="30" backcolor="#CDF5FD" uuid="a82a854c-fe41-40e0-af1d-4f16348ac94c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{Parameter7}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="165" y="0" width="80" height="30" backcolor="#CDF5FD" uuid="37c54fb1-3eec-4f1f-bbd1-cbf359d1583a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{Parameter8}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="245" y="0" width="90" height="30" backcolor="#CDF5FD" uuid="8fcb252d-1521-4eb0-9642-230eb1c0d687"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{Parameter9}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="335" y="0" width="100" height="30" backcolor="#CDF5FD" uuid="72602eec-1903-4906-b108-456c1bfe24ad"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{Parameter10}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="435" y="0" width="120" height="30" backcolor="#CDF5FD" uuid="b78831f9-2d10-4ffb-bf44-de813027ce2d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{Parameter11}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="144" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="335" y="0" width="100" height="24" backcolor="#89CFF3" uuid="7ae6e84f-a65d-4e2b-a96c-fe2dad9aa794"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Doctor Charges ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="335" y="24" width="100" height="24" backcolor="#89CFF3" uuid="61714915-eaed-46e8-a756-6d9d23854d3a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Room Charges ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="335" y="48" width="100" height="24" backcolor="#89CFF3" uuid="0a3540f6-f1c6-43ac-ba59-fd03e406f90b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Amount]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="335" y="72" width="100" height="24" backcolor="#89CFF3" uuid="e649cf5b-262f-471e-8b1e-8a4c584ad716"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Payment Method]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="335" y="96" width="100" height="24" backcolor="#89CFF3" uuid="758cdae9-342e-401e-a3cf-366c9efb8912"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Payment]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="335" y="120" width="100" height="24" backcolor="#89CFF3" uuid="5debc256-2c60-44af-9ec6-81fb5fb391aa"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Balance]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Opaque" x="435" y="0" width="120" height="24" backcolor="#CDF5FD" uuid="5a2dacf3-c356-4e0b-b92b-a19ee5621c93"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{Parameter12}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="435" y="24" width="120" height="24" backcolor="#CDF5FD" uuid="ebbc83be-5c02-414a-a870-2fde4e84bfff"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{Parameter13}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="435" y="48" width="120" height="24" backcolor="#CDF5FD" uuid="5c1e3729-0045-49bc-8a55-a00be1e75eae"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{Parameter14}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="435" y="72" width="120" height="24" backcolor="#CDF5FD" uuid="34867f86-d21c-4b08-b180-6d18facfe76c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{Parameter15}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="435" y="96" width="120" height="24" backcolor="#CDF5FD" uuid="df4873ae-63c3-48cd-b957-96dccdeb36a4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{Parameter16}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="435" y="120" width="120" height="24" backcolor="#CDF5FD" uuid="bbd1a763-8e20-476d-9db3-b28f5a805d30"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{Parameter17}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+</jasperReport>
