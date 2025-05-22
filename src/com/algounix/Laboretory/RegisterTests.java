@@ -8,6 +8,8 @@ import com.algounix.GUI.SignIn;
 import com.algounix.Model.MySQL;
 import com.algounix.Model.TestItem;
 import java.awt.Color;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import javax.swing.DefaultListModel;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
@@ -20,6 +22,11 @@ import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.data.JRTableModelDataSource;
+import net.sf.jasperreports.view.JasperViewer;
 
 public class RegisterTests extends javax.swing.JPanel {
 
@@ -1273,6 +1280,7 @@ public class RegisterTests extends javax.swing.JPanel {
         String payerNIC = jTextField3.getText();
         String payment = jFormattedTextField1.getText();
         String balance = jTextField5.getText();
+        String reportId = jLabel30.getText();
 
         if (jTextField2.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please Select Patient First", "Warning", JOptionPane.WARNING_MESSAGE);
@@ -1303,6 +1311,45 @@ public class RegisterTests extends javax.swing.JPanel {
                 jLabel49.setForeground(Color.green);
 
                 // Print Invoice
+        
+                try (InputStream path = this.getClass().getResourceAsStream("/com/algounix/Reports/Algounix-HMS-LabInvoice.jasper")) {
+
+                    HashMap<String, Object> params = new HashMap<>();
+                    params.put("Parameter1", invoiceID);
+                    params.put("Parameter2", payerNIC);
+                    params.put("Parameter3", reportId);
+                    params.put("Parameter4", total);
+                    params.put("Parameter5", paymentMethod);
+                    params.put("Parameter6", payment);
+                    params.put("Parameter7", balance);
+             
+
+                    if (path == null) {
+                        throw new FileNotFoundException("Report file not found in the specified path.");
+                    }
+
+                    if (jTable2 == null || jTable2.getModel() == null) {
+                        throw new IllegalStateException("Table or table model is not initialized.");
+                    }
+
+                    JRTableModelDataSource dataSource = new JRTableModelDataSource(jTable2.getModel());
+
+                    // Fill the report
+                    JasperPrint jasperPrint = JasperFillManager.fillReport(path, params, dataSource);
+
+                    // View the report
+                    JasperViewer.viewReport(jasperPrint, false);
+                    System.out.println("Employee Id :" + SignIn.empID + " " + "printed the" + " " + invoiceID + " " + "Lab Test Invoice at:" + today);
+
+                } catch (FileNotFoundException e) {
+                    System.err.println("Error: " + e.getMessage());
+                } catch (JRException e) {
+                    System.err.println("JasperReports error: " + e.getMessage());
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            
                 // Print Invoice
                 
                 jButton6.setEnabled(false);
