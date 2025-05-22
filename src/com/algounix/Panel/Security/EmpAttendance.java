@@ -823,6 +823,11 @@ public class EmpAttendance extends javax.swing.JPanel {
             if (jTable2 == null || jTable2.getModel() == null) {
                 throw new IllegalStateException("Table or table model is not initialized.");
             }
+  
+            if (jTable2.getModel().getRowCount() == 0) { 
+                JOptionPane.showMessageDialog(null, "No data available to generate the report.", "Empty Report", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
 
             JRTableModelDataSource dataSource = new JRTableModelDataSource(jTable2.getModel());
 
