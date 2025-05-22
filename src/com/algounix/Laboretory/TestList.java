@@ -901,6 +901,12 @@ public class TestList extends javax.swing.JPanel {
                 throw new IllegalStateException("Table or table model is not initialized.");
             }
 
+            if (jTable2.getModel().getRowCount() == 0) {
+
+                JOptionPane.showMessageDialog(null, "No data available to generate the report.", "Empty Report", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+
             JRTableModelDataSource dataSource = new JRTableModelDataSource(jTable2.getModel());
 
             // Fill the report
@@ -929,6 +935,11 @@ public class TestList extends javax.swing.JPanel {
                 throw new IllegalStateException("Table or table model is not initialized.");
             }
 
+            if (jTable4.getModel().getRowCount() == 0) {
+
+                JOptionPane.showMessageDialog(null, "No data available to generate the report.", "Empty Report", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
             JRTableModelDataSource dataSource = new JRTableModelDataSource(jTable4.getModel());
 
             // Fill the report
