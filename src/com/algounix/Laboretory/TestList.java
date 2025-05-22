@@ -7,7 +7,9 @@ package com.algounix.Laboretory;
 import com.algounix.Model.MySQL;
 import java.awt.Desktop;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -18,6 +20,11 @@ import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.data.JRTableModelDataSource;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -163,7 +170,8 @@ public class TestList extends javax.swing.JPanel {
         jLabel38 = new javax.swing.JLabel();
         jScrollPane6 = new javax.swing.JScrollPane();
         jTable4 = new javax.swing.JTable();
-        jButton8 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel39 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -182,9 +190,10 @@ public class TestList extends javax.swing.JPanel {
         jLabel36 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
-        jButton7 = new javax.swing.JButton();
         jLabel23 = new javax.swing.JLabel();
         jLabel24 = new javax.swing.JLabel();
+        jButton8 = new javax.swing.JButton();
+        jButton9 = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(205, 245, 253));
 
@@ -403,11 +412,21 @@ public class TestList extends javax.swing.JPanel {
         });
         jScrollPane6.setViewportView(jTable4);
 
-        jButton8.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
-        jButton8.setText("Cancle Test");
-        jButton8.addActionListener(new java.awt.event.ActionListener() {
+        jButton3.setBackground(new java.awt.Color(205, 245, 253));
+        jButton3.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+        jButton3.setText("Print Test List");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton8ActionPerformed(evt);
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        jButton4.setBackground(new java.awt.Color(205, 245, 253));
+        jButton4.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+        jButton4.setText("Cancle Test");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
             }
         });
 
@@ -417,11 +436,14 @@ public class TestList extends javax.swing.JPanel {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel38, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap(25, Short.MAX_VALUE)
+                .addContainerGap(31, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 876, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -431,7 +453,9 @@ public class TestList extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton8)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton3)
+                    .addComponent(jButton4))
                 .addContainerGap())
         );
 
@@ -572,19 +596,29 @@ public class TestList extends javax.swing.JPanel {
         });
         jScrollPane4.setViewportView(jTable2);
 
-        jButton7.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
-        jButton7.setText("View Test Report");
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
-            }
-        });
-
         jLabel23.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
         jLabel23.setText("Rating");
 
         jLabel24.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
         jLabel24.setText("Select Test to Get Rating");
+
+        jButton8.setBackground(new java.awt.Color(205, 245, 253));
+        jButton8.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+        jButton8.setText("Print Test List");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
+
+        jButton9.setBackground(new java.awt.Color(205, 245, 253));
+        jButton9.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+        jButton9.setText("View Test Report");
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -597,9 +631,11 @@ public class TestList extends javax.swing.JPanel {
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(106, 106, 106)
-                        .addComponent(jButton7))
+                        .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(33, 33, 33)
+                        .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 464, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(14, Short.MAX_VALUE))
         );
@@ -612,9 +648,10 @@ public class TestList extends javax.swing.JPanel {
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton7)
                     .addComponent(jLabel23)
-                    .addComponent(jLabel24))
+                    .addComponent(jLabel24)
+                    .addComponent(jButton8)
+                    .addComponent(jButton9))
                 .addContainerGap(18, Short.MAX_VALUE))
         );
 
@@ -798,35 +835,43 @@ public class TestList extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jTable2MouseClicked
 
-    //  Open Saved PDF File
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        if (testID == null) {
-            JOptionPane.showMessageDialog(this, "Please Select A Test", "Warning", JOptionPane.WARNING_MESSAGE);
-        } else if (jTable2.getSelectedRow() == -1) {
-            JOptionPane.showMessageDialog(this, "Please Select A Test Item First", "Warning", JOptionPane.WARNING_MESSAGE);
-        } else if (filePath == null) {
-            JOptionPane.showMessageDialog(this, "Please Select A Test Item", "Warning", JOptionPane.WARNING_MESSAGE);
-        } else {
-            try {
-                // Specify the path to the PDF file
-                File pdfFile = new File("src/com/algounix/TestReports/" + testID + "/" + filePath); // Adjust the path as needed
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        try (InputStream path = this.getClass().getResourceAsStream("/com/algounix/Reports/Algounix-HMS-LabTestList.jasper")) {
 
-                // Check if the file exists
-                if (pdfFile.exists()) {
-                    // Use Desktop class to open the file
-                    Desktop.getDesktop().open(pdfFile);
-                } else {
-                    JOptionPane.showMessageDialog(this, "File not found!", "Error", JOptionPane.ERROR_MESSAGE);
-                }
-            } catch (IOException ex) {
-                JOptionPane.showMessageDialog(this, "Error opening file: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-                ex.printStackTrace();
+            if (path == null) {
+                throw new FileNotFoundException("Report file not found in the specified path.");
             }
-        }
-    }//GEN-LAST:event_jButton7ActionPerformed
 
-    //  Cancle Selected Test
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+            if (jTable4 == null || jTable4.getModel() == null) {
+                throw new IllegalStateException("Table or table model is not initialized.");
+            }
+
+            if (jTable4.getModel().getRowCount() == 0) {
+
+                JOptionPane.showMessageDialog(null, "No data available to generate the report.", "Empty Report", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+            JRTableModelDataSource dataSource = new JRTableModelDataSource(jTable4.getModel());
+
+            // Fill the report
+            JasperPrint jasperPrint = JasperFillManager.fillReport(path, null, dataSource);
+
+            // View the report
+            JasperViewer.viewReport(jasperPrint, false);
+        } catch (FileNotFoundException e) {
+            System.err.println("Error: " + e.getMessage());
+        } catch (JRException e) {
+            System.err.println("JasperReports error: " + e.getMessage());
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
         int row = jTable4.getSelectedRow();
         if (row != -1) {
             testID = String.valueOf(jTable4.getValueAt(row, 0));
@@ -854,14 +899,78 @@ public class TestList extends javax.swing.JPanel {
         } else {
             JOptionPane.showMessageDialog(this, "Please Select A Row First", "Warning", JOptionPane.WARNING_MESSAGE);
         }
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        // TODO add your handling code here:
+        try (InputStream path = this.getClass().getResourceAsStream("/com/algounix/Reports/Algounix-HMS-Lab-Details-Report.jasper")) {
+
+            if (path == null) {
+                throw new FileNotFoundException("Report file not found in the specified path.");
+            }
+
+            if (jTable2 == null || jTable2.getModel() == null) {
+                throw new IllegalStateException("Table or table model is not initialized.");
+            }
+
+            if (jTable2.getModel().getRowCount() == 0) {
+
+                JOptionPane.showMessageDialog(null, "No data available to generate the report.", "Empty Report", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+
+            JRTableModelDataSource dataSource = new JRTableModelDataSource(jTable2.getModel());
+
+            // Fill the report
+            JasperPrint jasperPrint = JasperFillManager.fillReport(path, null, dataSource);
+
+            // View the report
+            JasperViewer.viewReport(jasperPrint, false);
+        } catch (FileNotFoundException e) {
+            System.err.println("Error: " + e.getMessage());
+        } catch (JRException e) {
+            System.err.println("JasperReports error: " + e.getMessage());
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        // TODO add your handling code here:
+        if (testID == null) {
+            JOptionPane.showMessageDialog(this, "Please Select A Test", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (jTable2.getSelectedRow() == -1) {
+            JOptionPane.showMessageDialog(this, "Please Select A Test Item First", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (filePath == null) {
+            JOptionPane.showMessageDialog(this, "Please Select A Test Item", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else {
+            try {
+                // Specify the path to the PDF file
+                File pdfFile = new File("src/com/algounix/TestReports/" + testID + "/" + filePath); // Adjust the path as needed
+
+                // Check if the file exists
+                if (pdfFile.exists()) {
+                    // Use Desktop class to open the file
+                    Desktop.getDesktop().open(pdfFile);
+                } else {
+                    JOptionPane.showMessageDialog(this, "File not found!", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(this, "Error opening file: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                ex.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_jButton9ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButton9;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private com.toedter.calendar.JDateChooser jDateChooser1;
