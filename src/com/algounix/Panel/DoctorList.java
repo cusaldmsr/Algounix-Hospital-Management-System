@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.util.HashMap;
 import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -342,6 +343,11 @@ public class DoctorList extends javax.swing.JPanel {
 
             if (jTable1 == null || jTable1.getModel() == null) {
                 throw new IllegalStateException("Table or table model is not initialized.");
+            }
+
+            if (jTable1.getModel().getRowCount() == 0) {
+                JOptionPane.showMessageDialog(null, "No data available to generate the report.", "Empty Report", JOptionPane.INFORMATION_MESSAGE);
+                return;
             }
 
             JRTableModelDataSource dataSource = new JRTableModelDataSource(jTable1.getModel());
