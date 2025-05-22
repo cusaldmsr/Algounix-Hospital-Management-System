@@ -83,7 +83,67 @@ public class UpdateRoom extends javax.swing.JPanel {
         mod1 = new DefaultListModel();
         jList2.setModel(mod1);
     }
+    
+    
+    private void updateRoom(){
+        String room_id = jTextField1.getText();
+        String doc_id = jTextField5.getText();
+        String doc_name = jLabel10.getText();
+        String description = jTextArea2.getText();
 
+        if (room_id.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter Room ID ", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (doc_id.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter Doctor ID", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (doc_name.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter Doctor ID", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (description.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter Description", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else {
+
+            try {
+
+                ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `room` "
+                    + "INNER JOIN `doctor_has_units` ON `doctor_has_units`.`room_id` = `room`.`id` "
+                    + "WHERE `room`.`id` = '" + room_id + "' "
+                    + "AND `room`.`discription` = '" + description + "' "
+                    + "AND `doctor_has_units`.`doctor_id` = '" + doc_id + "'");
+
+                       
+
+                if (resultSet.next()) {
+                    JOptionPane.showMessageDialog(this, "Please Change Something to Update", "Warning", JOptionPane.WARNING_MESSAGE);
+                } else {
+                    //Update the room description
+                    MySQL.executeIUD("UPDATE `room` "
+                            + "SET `room`.`discription` = '" + description + "'"
+                    + "WHERE `room`.`id` = '" + room_id + "' ");
+                    
+                    //Update the doctor assigned to that room
+                    MySQL.executeIUD("UPDATE `doctor_has_units` "
+                            + "SET `doctor_has_units`.`doctor_id` = '" + doc_id + "'"
+                    + "WHERE `doctor_has_units`.`room_id` = '" + room_id + "' ");
+                    
+                    resetjPanel3();
+                    JOptionPane.showMessageDialog(this, "Updated", "Success", JOptionPane.INFORMATION_MESSAGE);
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+    
+    private void resetjPanel3() {
+
+        jTextField1.setText("");
+        jTextField5.setText("");
+        jLabel10.setText(".............................................................................................");
+        jTextArea2.setText("");
+
+    }
+    
     //Load Total Real Time Part 1
     private void updateTotalCharges() {
         String serviceText = jTextField2.getText().trim();
@@ -538,7 +598,7 @@ public class UpdateRoom extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+        updateRoom();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
