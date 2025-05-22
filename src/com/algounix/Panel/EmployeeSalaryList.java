@@ -221,9 +221,10 @@ public class EmployeeSalaryList extends javax.swing.JPanel {
                 e.printStackTrace();
             }
 
-        }}
+        }
+    }
 
-        @SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -917,7 +918,31 @@ public class EmployeeSalaryList extends javax.swing.JPanel {
 
     //  Print Report From Details With Table
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        //Print Table
+        try (InputStream path = this.getClass().getResourceAsStream("/com/algounix/Reports/Algounix-HMS-EmployeeListNew.jasper")) {
+
+            if (path == null) {
+                throw new FileNotFoundException("Report file not found in the specified path.");
+            }
+
+            if (jTable1 == null || jTable1.getModel() == null) {
+                throw new IllegalStateException("Table or table model is not initialized.");
+            }
+
+            JRTableModelDataSource dataSource = new JRTableModelDataSource(jTable1.getModel());
+
+            // Fill the report
+            JasperPrint jasperPrint = JasperFillManager.fillReport(path, null, dataSource);
+
+            // View the report
+            JasperViewer.viewReport(jasperPrint, false);
+        } catch (FileNotFoundException e) {
+            System.err.println("Error: " + e.getMessage());
+        } catch (JRException e) {
+            System.err.println("JasperReports error: " + e.getMessage());
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     //  Issue Salary to Employee if its Passed Already
