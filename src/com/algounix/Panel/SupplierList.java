@@ -14,6 +14,7 @@ import java.sql.ResultSet;
 import java.util.HashMap;
 import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
@@ -305,6 +306,7 @@ public class SupplierList extends javax.swing.JPanel {
                 .addGap(0, 0, 0))
         );
 
+        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton1.setText("Print Supplier List");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -324,7 +326,7 @@ public class SupplierList extends javax.swing.JPanel {
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -366,7 +368,7 @@ public class SupplierList extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
-       try (InputStream path = this.getClass().getResourceAsStream("/com/algounix/Reports/Algounix-HMS-SupplierListNew.jasper")) {
+        try (InputStream path = this.getClass().getResourceAsStream("/com/algounix/Reports/Algounix-HMS-SupplierListNew.jasper")) {
 
             if (path == null) {
                 throw new FileNotFoundException("Report file not found in the specified path.");
@@ -374,6 +376,12 @@ public class SupplierList extends javax.swing.JPanel {
 
             if (jTable1 == null || jTable1.getModel() == null) {
                 throw new IllegalStateException("Table or table model is not initialized.");
+            }
+
+         
+            if (jTable1.getModel().getRowCount() == 0) {
+                JOptionPane.showMessageDialog(null, "No data available to generate the report.", "Empty Report", JOptionPane.INFORMATION_MESSAGE);
+                return;
             }
 
             JRTableModelDataSource dataSource = new JRTableModelDataSource(jTable1.getModel());
