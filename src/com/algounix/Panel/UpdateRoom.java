@@ -26,7 +26,7 @@ import org.jfree.data.general.PieDataset;
 public class UpdateRoom extends javax.swing.JPanel {
 
     private HashMap<String, String> typeMap = new HashMap<>();
-    
+
     private DefaultListModel mod;
 
     /**
@@ -63,9 +63,9 @@ public class UpdateRoom extends javax.swing.JPanel {
         }
 
     }
-    
+
     //load suggestions for Select Room ID :
-     private void loadSuggestions(){
+    private void loadSuggestions() {
         jPopupMenu1.add(jPanel2);
         mod = new DefaultListModel();
         jList1.setModel(mod);
@@ -190,6 +190,11 @@ public class UpdateRoom extends javax.swing.JPanel {
 
         jComboBox1.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBox1ItemStateChanged(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
         jLabel4.setText("Service Charge :");
@@ -457,7 +462,7 @@ public class UpdateRoom extends javax.swing.JPanel {
         if (!roomNo.isBlank()) {
 
             try {
-                ResultSet resultSet = MySQL.executeSearch("SELECT `id` FROM `room` WHERE `id` LIKE '"+roomNo+"%'");
+                ResultSet resultSet = MySQL.executeSearch("SELECT `id` FROM `room` WHERE `id` LIKE '" + roomNo + "%'");
 
                 if (!resultSet.isBeforeFirst()) {
                     return;
@@ -465,7 +470,7 @@ public class UpdateRoom extends javax.swing.JPanel {
 
                 jPopupMenu1.show(jTextField1, 0, jTextField1.getHeight());
                 mod.removeAllElements();
-        
+
                 while (resultSet.next()) {
                     mod.addElement(resultSet.getString("id"));
                 }
@@ -475,7 +480,7 @@ public class UpdateRoom extends javax.swing.JPanel {
             }
         } else {
             jPopupMenu1.setVisible(false);
-            
+
         }
     }//GEN-LAST:event_jTextField1KeyReleased
 
@@ -485,21 +490,47 @@ public class UpdateRoom extends javax.swing.JPanel {
         jPopupMenu1.setVisible(false);
 
         try {
-            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM room "
-                    + "INNER JOIN doctor_has_units ON doctor_has_units.room_id=room.id "
-                    + "INNER JOIN doctor ON doctor.id=doctor_has_units.doctor_id "
-                    + "WHERE room.id='" + selectedID + "'");
+            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `room` "
+                    + "INNER JOIN `doctor_has_units` ON `doctor_has_units`.`room_id` `=room`.`id` "
+                    + "INNER JOIN `doctor` ON `doctor`.`id` = `doctor_has_units`.`doctor_id` "
+                    + "WHERE `room`.`id` = '" + selectedID + "'");
 
-            if (resultSet.next()) {                   
-                  jTextField5.setText(resultSet.getString("doctor.id"));
-                  jLabel10.setText(resultSet.getString("first_name") + " " + resultSet.getString("last_name"));
-                  jTextArea2.setText(resultSet.getString("room.discription"));
+            if (resultSet.next()) {
+                jTextField5.setText(resultSet.getString("doctor.id"));
+                jLabel10.setText(resultSet.getString("first_name") + " " + resultSet.getString("last_name"));
+                jTextArea2.setText(resultSet.getString("room.discription"));
             }
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }//GEN-LAST:event_jList1MouseClicked
+
+    private void jComboBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox1ItemStateChanged
+       String selectedItem = (String) jComboBox1.getSelectedItem();
+
+        try {
+            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `room_type` "
+                    + "INNER JOIN `room_chargers` ON `room_chargers`.`id` = `room_type`.`room_chargers_id` "
+                    + "WHERE `room_type`.`name` = '" + selectedItem + "'");
+
+            if (resultSet.next()) {
+                
+                String service = resultSet.getString("service_charge");
+                String food = resultSet.getString("food_charge");
+                String londry = resultSet.getString("londry_charge");
+                double total = Double.parseDouble(service) + Double.parseDouble(food) + Double.parseDouble(londry);
+
+                jTextField2.setText(service);
+                jTextField3.setText(food);
+                jTextField4.setText(londry);
+                jLabel8.setText(" Rs. " + String.format("%.2f", total));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jComboBox1ItemStateChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
