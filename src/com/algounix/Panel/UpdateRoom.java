@@ -26,6 +26,8 @@ import org.jfree.data.general.PieDataset;
 public class UpdateRoom extends javax.swing.JPanel {
 
     private HashMap<String, String> typeMap = new HashMap<>();
+    
+    private DefaultListModel mod;
 
     /**
      * Creates new form UpdateRoom
@@ -33,6 +35,7 @@ public class UpdateRoom extends javax.swing.JPanel {
     public UpdateRoom() {
         initComponents();
         loadType();
+        loadSuggestions();
         displayChart();
 
 //          FlatSVGIcon icon1Logo = new FlatSVGIcon("com//algounix//Resources//InchargeUpdateRoom.svg", jLabel12.getWidth(), jLabel12.getHeight());
@@ -61,7 +64,12 @@ public class UpdateRoom extends javax.swing.JPanel {
 
     }
     
-    
+    //load suggestions for Select Room ID :
+     private void loadSuggestions(){
+        jPopupMenu1.add(jPanel2);
+        mod = new DefaultListModel();
+        jList1.setModel(mod);
+    }
 
     private void displayChart() {
 
@@ -472,7 +480,25 @@ public class UpdateRoom extends javax.swing.JPanel {
     }//GEN-LAST:event_jTextField1KeyReleased
 
     private void jList1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jList1MouseClicked
-        
+        String selectedID = jList1.getSelectedValue();
+        jTextField1.setText(selectedID);
+        jPopupMenu1.setVisible(false);
+
+        try {
+            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM room "
+                    + "INNER JOIN doctor_has_units ON doctor_has_units.room_id=room.id "
+                    + "INNER JOIN doctor ON doctor.id=doctor_has_units.doctor_id "
+                    + "WHERE room.id='" + selectedID + "'");
+
+            if (resultSet.next()) {                   
+                  jTextField5.setText(resultSet.getString("doctor.id"));
+                  jLabel10.setText(resultSet.getString("first_name") + " " + resultSet.getString("last_name"));
+                  jTextArea2.setText(resultSet.getString("room.discription"));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_jList1MouseClicked
 
 
