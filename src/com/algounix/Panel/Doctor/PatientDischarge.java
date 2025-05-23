@@ -792,7 +792,6 @@ public class PatientDischarge extends javax.swing.JPanel {
                 + "INNER JOIN `patient_report` ON `patient_admit`.`patient_report_id`=`patient_report`.`id` "
                 + "INNER JOIN `doctor` ON `patient_report`.`doctor_id`=`doctor`.`id` "
                 + "WHERE `appoinment_status_id`='" + ADMITTED_STATUS_ID + "' AND "
-                + "`patient_report`.`doctor_id`='" + SignIn.docID + "' AND "
                 + "`patient`.`id` LIKE '%" + searchText + "%'";
 
         String query2 = "SELECT `first_name`,`last_name` FROM `doctor` WHERE `doctor`.`id`='" + SignIn.docID + "'";

@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package com.algounix.Panel.Reception;
 
 import com.algounix.GUI.SignIn;
@@ -1449,6 +1446,7 @@ public class Invoice extends javax.swing.JFrame {
         String paymentMethod = String.valueOf(jComboBox1.getSelectedItem());
         String date = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date());
         String patientID = jLabel21.getText();
+        String emplID = jLabel63.getText();
         String payerNIC = jTextField4.getText();
         String insuranceClaim = jFormattedTextField2.getText();
         String prescriptionId = jTextField4.getText();
@@ -1475,17 +1473,17 @@ public class Invoice extends javax.swing.JFrame {
                 MySQL.executeIUD("INSERT INTO `hospital_invoice` (`id`,`total_amount`,`payment`,`balance`,`payment_method_id`,"
                         + "`date`,`patient_id`,`employee_id`,`payer_nic`,`insurance_claim`,`total_doctor_chargers`) "
                         + "VALUES ('" + invoiceID + "','" + this.totalAmount + "','" + payment + "','" + balance + "','" + peymentMethodMap.get(paymentMethod) + "','" + date + "',"
-                        + "'" + patientID + "','" + SignIn.empID + "','" + payerNIC + "','" + insuranceClaim + "','" + this.totalDoctorCharges + "')");
+                        + "'" + patientID + "','" + emplID + "','" + payerNIC + "','" + insuranceClaim + "','" + this.totalDoctorCharges + "')");
 
                 //  Print Invoice Code Lines Here
-                try (InputStream path = this.getClass().getResourceAsStream("/com/algounix/Reports/Algounix_HMS_Invoice1.jasper")) {
+                try (InputStream path = this.getClass().getResourceAsStream("/com/algounix/Reports/New-Invoice-HMS.jasper")) {
 
                     HashMap<String, Object> params = new HashMap<>();
                     params.put("Parameter1", date);
                     params.put("Parameter2", invoiceID);
                     params.put("Parameter3", payerNIC);
                     params.put("Parameter4", prescriptionId);
-                    params.put("Parameter5", SignIn.empID);
+                    params.put("Parameter5", emplID);
                     params.put("Parameter6", doctorName);
                     params.put("Parameter7", patientName);
                     params.put("Parameter8", admittedDate);
@@ -1530,7 +1528,7 @@ public class Invoice extends javax.swing.JFrame {
                 jLabel93.setText("PAYMENT COMPLETE");
                 jLabel93.setForeground(Color.green);
 
-                JOptionPane.showMessageDialog(this, "Payment Complete.", "Success", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Payment Complete.", "Success", JOptionPane.INFORMATION_MESSAGE);
 
                 // Start a timer to dispose of the JFrame after 10 seconds
                 Timer timer = new Timer(10000, new ActionListener() {
@@ -1542,7 +1540,7 @@ public class Invoice extends javax.swing.JFrame {
                 timer.setRepeats(false); // Ensure the timer only runs once
                 timer.start();
 
-                dischargeList.confirmPayment(invoiceID);
+//                dischargeList.confirmPayment(invoiceID);
 
                 PatientDischarge.setIsPaymentSuccess(true, invoiceID);
 
