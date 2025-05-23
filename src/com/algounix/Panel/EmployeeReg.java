@@ -260,7 +260,7 @@ public class EmployeeReg extends javax.swing.JPanel {
         buttonGroup1.add(jRadioButton2);
         jRadioButton2.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
         jRadioButton2.setText(" Female");
-        jRadioButton1.setActionCommand("2");
+        jRadioButton2.setActionCommand("2");
 
         jTextField3.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
 
