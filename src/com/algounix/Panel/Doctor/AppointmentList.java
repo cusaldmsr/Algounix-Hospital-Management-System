@@ -31,6 +31,7 @@ public class AppointmentList extends javax.swing.JPanel {
     public AppointmentList() {
         initComponents();
         loadStatus();
+        loadAppointment();
          jScrollPane1.setVerticalScrollBar(new ScrollBar());
          FlatSVGIcon Logo = new FlatSVGIcon("com//algounix//Resources//AppointmentList.svg", jLabel9.getWidth(), jLabel9.getHeight());
         jLabel9.setIcon(Logo);
