@@ -4,12 +4,28 @@
  */
 package com.algounix.Panel.Reception;
 
+import com.algounix.GUI.SignIn;
 import com.algounix.Model.MySQL;
+import com.algounix.Panel.Doctor.PatientDischarge;
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.data.JRTableModelDataSource;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -20,7 +36,7 @@ public class ReceptionInvoiceReprint extends javax.swing.JPanel {
     /**
      * Creates new form InvoiceReprint
      */
-    String prescriptionID ;
+    String prescriptionID;
     HashMap<String, String> methodMap = new HashMap<>();
 
     public ReceptionInvoiceReprint() {
@@ -98,6 +114,82 @@ public class ReceptionInvoiceReprint extends javax.swing.JPanel {
         }
     }
 
+    private void printInvoiceRePrint() {
+        String invoiceID = jLabel64.getText();
+        String issuedDate = jLabel30.getText();
+        String payment = jLabel63.getText();
+        String balance = jLabel68.getText();
+        String totAmount = jLabel65.getText();
+        String paymentMethod = jLabel66.getText();
+        String patientID = jLabel11.getText();
+        String emplID = jLabel70.getText();
+        String payerNIC = jLabel63.getText();
+        String insuranceClaim = jLabel72.getText();
+        String prescriptionId = jLabel29.getText();
+        String doctorName = jLabel23.getText();
+        String patientName = jLabel10.getText();
+        String admittedDate = jLabel35.getText();
+        String dischargedDate = jLabel37.getText();
+        String doctorCharge = jLabel42.getText();
+        String prescriptionCharge = jLabel44.getText();
+        String roomCharge = jLabel46.getText();
+
+        
+        if (patientID.equals("0")) {
+            JOptionPane.showMessageDialog(this, "Please select a valid Invoice.", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else {
+
+            try (InputStream path = this.getClass().getResourceAsStream("/com/algounix/Reports/Algounix_HMS_InvoiceRe-Print1.jasper")) {
+
+                HashMap<String, Object> params = new HashMap<>();
+                params.put("Parameter1", issuedDate);
+                params.put("Parameter2", invoiceID);
+                params.put("Parameter3", payerNIC);
+                params.put("Parameter4", prescriptionId);
+                params.put("Parameter5", emplID);
+                params.put("Parameter6", doctorName);
+                params.put("Parameter7", patientName);
+                params.put("Parameter8", admittedDate);
+                params.put("Parameter9", dischargedDate);
+                params.put("Parameter10", doctorCharge);
+                params.put("Parameter11", prescriptionCharge);
+                params.put("Parameter12", roomCharge);
+                params.put("Parameter13", totAmount);
+                params.put("Parameter14", insuranceClaim);
+                params.put("Parameter15", paymentMethod);
+                params.put("Parameter16", payment);
+                params.put("Parameter17", balance);
+
+                if (path == null) {
+                    throw new FileNotFoundException("Report file not found in the specified path.");
+                }
+
+                if (jTable2 == null || jTable2.getModel() == null) {
+                    throw new IllegalStateException("Table or table model is not initialized.");
+                }
+
+                JRTableModelDataSource dataSource = new JRTableModelDataSource(jTable2.getModel());
+
+                // Fill the report
+                JasperPrint jasperPrint = JasperFillManager.fillReport(path, params, dataSource);
+
+                // View the report
+                String date = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date());
+                JasperViewer.viewReport(jasperPrint, false);
+                System.out.println("Employee Id :" + SignIn.empID + " " + "printed the" + " " + invoiceID + " " + "Invoice at:" + date);
+
+            } catch (FileNotFoundException e) {
+                System.err.println("Error: " + e.getMessage());
+            } catch (JRException e) {
+                System.err.println("JasperReports error: " + e.getMessage());
+                e.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -147,6 +239,7 @@ public class ReceptionInvoiceReprint extends javax.swing.JPanel {
         jLabel32 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
+        jButton2 = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
         jLabel33 = new javax.swing.JLabel();
         jLabel34 = new javax.swing.JLabel();
@@ -180,7 +273,6 @@ public class ReceptionInvoiceReprint extends javax.swing.JPanel {
         jLabel59 = new javax.swing.JLabel();
         jLabel60 = new javax.swing.JLabel();
         jLabel61 = new javax.swing.JLabel();
-        jCheckBox1 = new javax.swing.JCheckBox();
         jLabel62 = new javax.swing.JLabel();
         jLabel63 = new javax.swing.JLabel();
         jLabel64 = new javax.swing.JLabel();
@@ -188,6 +280,10 @@ public class ReceptionInvoiceReprint extends javax.swing.JPanel {
         jLabel66 = new javax.swing.JLabel();
         jLabel67 = new javax.swing.JLabel();
         jLabel68 = new javax.swing.JLabel();
+        jLabel69 = new javax.swing.JLabel();
+        jLabel70 = new javax.swing.JLabel();
+        jLabel71 = new javax.swing.JLabel();
+        jLabel72 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(205, 245, 253));
         setPreferredSize(new java.awt.Dimension(1092, 805));
@@ -328,16 +424,16 @@ public class ReceptionInvoiceReprint extends javax.swing.JPanel {
         jLabel9.setText("Patient Email");
 
         jLabel10.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
-        jLabel10.setText("jLabel10");
+        jLabel10.setText("...................");
 
         jLabel11.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
-        jLabel11.setText("jLabel10");
+        jLabel11.setText("0");
 
         jLabel12.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
-        jLabel12.setText("jLabel10");
+        jLabel12.setText("...................");
 
         jLabel13.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
-        jLabel13.setText("jLabel10");
+        jLabel13.setText("...................");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -531,6 +627,15 @@ public class ReceptionInvoiceReprint extends javax.swing.JPanel {
         });
         jScrollPane2.setViewportView(jTable2);
 
+        jButton2.setBackground(new java.awt.Color(160, 233, 255));
+        jButton2.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
+        jButton2.setText("Print Invoice Re-Print");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
@@ -550,9 +655,10 @@ public class ReceptionInvoiceReprint extends javax.swing.JPanel {
                             .addComponent(jLabel30, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE)
                             .addComponent(jLabel31, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel32, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel29, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(jLabel29, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 514, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
@@ -560,7 +666,9 @@ public class ReceptionInvoiceReprint extends javax.swing.JPanel {
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addContainerGap())
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addComponent(jLabel24)
                         .addGap(18, 18, 18)
@@ -579,8 +687,9 @@ public class ReceptionInvoiceReprint extends javax.swing.JPanel {
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel28)
                             .addComponent(jLabel32))
-                        .addGap(0, 91, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
+                        .addComponent(jButton2)
+                        .addGap(16, 16, 16))))
         );
 
         jPanel7.setBackground(new java.awt.Color(255, 255, 255));
@@ -795,9 +904,6 @@ public class ReceptionInvoiceReprint extends javax.swing.JPanel {
         jLabel61.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
         jLabel61.setText("Payment");
 
-        jCheckBox1.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
-        jCheckBox1.setText("Claim By Insurance");
-
         jLabel62.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
         jLabel62.setText("Balance ");
 
@@ -819,6 +925,18 @@ public class ReceptionInvoiceReprint extends javax.swing.JPanel {
         jLabel68.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
         jLabel68.setText("jLabel68");
 
+        jLabel69.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+        jLabel69.setText("Employee");
+
+        jLabel70.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+        jLabel70.setText("jLabel70");
+
+        jLabel71.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+        jLabel71.setText("Insurance claimed");
+
+        jLabel72.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+        jLabel72.setText("jLabel67");
+
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
         jPanel10Layout.setHorizontalGroup(
@@ -829,13 +947,14 @@ public class ReceptionInvoiceReprint extends javax.swing.JPanel {
                     .addComponent(jLabel56, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel10Layout.createSequentialGroup()
                         .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jCheckBox1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel57, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel58, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel59, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel60, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel60, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
                             .addComponent(jLabel61, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel62, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel62, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel69, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel71, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel63, javax.swing.GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE)
@@ -843,7 +962,9 @@ public class ReceptionInvoiceReprint extends javax.swing.JPanel {
                             .addComponent(jLabel65, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel66, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel67, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel68, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(jLabel68, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel70, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel72, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         jPanel10Layout.setVerticalGroup(
@@ -872,12 +993,18 @@ public class ReceptionInvoiceReprint extends javax.swing.JPanel {
                     .addComponent(jLabel61)
                     .addComponent(jLabel67))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jCheckBox1)
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel71)
+                    .addComponent(jLabel72))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel62)
                     .addComponent(jLabel68))
-                .addContainerGap(9, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel69)
+                    .addComponent(jLabel70))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -929,7 +1056,7 @@ public class ReceptionInvoiceReprint extends javax.swing.JPanel {
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 272, Short.MAX_VALUE)
+                    .addComponent(jPanel9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -954,7 +1081,7 @@ public class ReceptionInvoiceReprint extends javax.swing.JPanel {
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         try {
-            
+
             int row = jTable1.getSelectedRow();
 
             String invoiceID = String.valueOf(jTable1.getValueAt(row, 0));
@@ -1047,7 +1174,6 @@ public class ReceptionInvoiceReprint extends javax.swing.JPanel {
                 jLabel68.setText(resultSet.getString("hospital_invoice.balance"));
             }
 
-            
 //            ResultSet resultSet1 = MySQL.executeSearch("SELECT * FROM `hospital_invoice` "
 //                    + "INNER JOIN `patient_discharge` ON `hospital_invoice`.`id`=`patient_discharge`.`hospital_invoice_id` "
 //                    + "INNER JOIN `patient_admit` ON `patient_discharge`.`patient_admit_id`=`patient_admit`.`id` "
@@ -1057,12 +1183,11 @@ public class ReceptionInvoiceReprint extends javax.swing.JPanel {
 //                    + "INNER JOIN `medicine` ON `prescription_item`.`medicine_id`=`medicine`.`id` "
 //                    + "INNER JOIN `main_stock` ON `medicine`.`id`=`main_stock`.`medicine_id` "
 //                    + "WHERE `prescription`.`id`='" + prescriptionID + "'");
-
             ResultSet resultSet1 = MySQL.executeSearch("SELECT * FROM `prescription` INNER JOIN `prescription_item` "
                     + "ON `prescription`.`id` = `prescription_item`.`prescription_id` "
                     + "INNER JOIN `medicine` ON `medicine`.`id`= `prescription_item`.`medicine_id`"
                     + "INNER JOIN `main_stock` ON `main_stock`.`medicine_id` = `medicine`.`id`"
-                    + "WHERE `prescription_item`.`prescription_id` = '"+prescriptionID+"'");
+                    + "WHERE `prescription_item`.`prescription_id` = '" + prescriptionID + "'");
 
             DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
             model.setRowCount(0);
@@ -1084,9 +1209,13 @@ public class ReceptionInvoiceReprint extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jTable1MouseClicked
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        printInvoiceRePrint();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JComboBox<String> jComboBox1;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
@@ -1154,7 +1283,11 @@ public class ReceptionInvoiceReprint extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel66;
     private javax.swing.JLabel jLabel67;
     private javax.swing.JLabel jLabel68;
+    private javax.swing.JLabel jLabel69;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel70;
+    private javax.swing.JLabel jLabel71;
+    private javax.swing.JLabel jLabel72;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
