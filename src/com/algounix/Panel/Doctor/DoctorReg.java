@@ -1,12 +1,60 @@
 
 package com.algounix.Panel.Doctor;
 
+import com.algounix.Model.MySQL;
 import java.sql.ResultSet;
+import java.util.HashMap;
+import java.util.Vector;
+import javax.swing.DefaultComboBoxModel;
 
 public class DoctorReg extends javax.swing.JPanel {
+    
+    HashMap<String, String> doctorTypeMap = new HashMap<>();
+    HashMap<String, String> doctorUnitsMap = new HashMap<>();
 
     public DoctorReg() {
         initComponents();
+        loadDoctorTypes();
+    }
+    
+    private void loadDoctorTypes() {
+        try {
+            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `doctor_type`");
+
+            Vector<String> vector = new Vector();
+            vector.add("Select");
+
+            while (resultSet.next()) {
+                vector.add(resultSet.getString("name"));
+                doctorTypeMap.put(resultSet.getString("name"), resultSet.getString("id"));
+            }
+
+            DefaultComboBoxModel model = new DefaultComboBoxModel(vector);
+            jComboBox1.setModel(model);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    private void loadDoctorUnits() {
+        try {
+            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `units`");
+
+            Vector<String> vector = new Vector();
+            vector.add("Select");
+
+            while (resultSet.next()) {
+                vector.add(resultSet.getString("name"));
+                doctorUnitsMap.put(resultSet.getString("name"), resultSet.getString("id"));
+            }
+
+            DefaultComboBoxModel model = new DefaultComboBoxModel(vector);
+            jComboBox2.setModel(model);
+            jComboBox4.setModel(model);
+            jComboBox6.setModel(model);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     
     @SuppressWarnings("unchecked")
@@ -271,8 +319,13 @@ public class DoctorReg extends javax.swing.JPanel {
         jLabel35.setText("Select Unit 01");
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox2.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBox2ItemStateChanged(evt);
+            }
+        });
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Unit First" }));
 
         jLabel36.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
         jLabel36.setText("Related Rooms");
@@ -282,7 +335,7 @@ public class DoctorReg extends javax.swing.JPanel {
         jLabel37.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
         jLabel37.setText("Select Unit 02");
 
-        jComboBox5.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox5.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Unit First" }));
 
         jLabel38.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
         jLabel38.setText("Related Rooms");
@@ -292,7 +345,7 @@ public class DoctorReg extends javax.swing.JPanel {
         jLabel39.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
         jLabel39.setText("Select Unit 03");
 
-        jComboBox7.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox7.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Unit First" }));
 
         jLabel42.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
         jLabel42.setText("Related Rooms");
@@ -624,6 +677,11 @@ public class DoctorReg extends javax.swing.JPanel {
 
         jRadioButton2.setActionCommand("2");
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jComboBox2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox2ItemStateChanged
+        String unit = String.valueOf(jComboBox2.getSelectedItem());
+        
+    }//GEN-LAST:event_jComboBox2ItemStateChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
