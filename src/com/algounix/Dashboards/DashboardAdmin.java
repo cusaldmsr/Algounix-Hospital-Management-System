@@ -104,7 +104,6 @@ public class DashboardAdmin extends javax.swing.JFrame {
         Stockbtn = new javax.swing.JLabel();
         AddProductbtn = new javax.swing.JLabel();
         StockTransferbtn = new javax.swing.JLabel();
-        StockListbtn = new javax.swing.JLabel();
         SupplierRegbtn = new javax.swing.JLabel();
         SupplierListbtn = new javax.swing.JLabel();
         CompanyRegbtn = new javax.swing.JLabel();
@@ -117,7 +116,6 @@ public class DashboardAdmin extends javax.swing.JFrame {
         AppointmentListbtn1 = new javax.swing.JLabel();
         jLabel43 = new javax.swing.JLabel();
         AppointmentListbtn2 = new javax.swing.JLabel();
-        StockListbtn1 = new javax.swing.JLabel();
         StockTransferbtn1 = new javax.swing.JLabel();
         GRNbtn1 = new javax.swing.JLabel();
         DoctorListbtn1 = new javax.swing.JLabel();
@@ -132,8 +130,6 @@ public class DashboardAdmin extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
-        minimizebtn = new com.algounix.Buttons.WindowButton();
-        closebtn = new com.algounix.Buttons.WindowButton();
         jLabel3 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         CardLayoutPanel = new javax.swing.JPanel();
@@ -322,14 +318,6 @@ public class DashboardAdmin extends javax.swing.JFrame {
             }
         });
 
-        StockListbtn.setFont(new java.awt.Font("Poppins", 0, 13)); // NOI18N
-        StockListbtn.setText("Main Stock List");
-        StockListbtn.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                StockListbtnMouseClicked(evt);
-            }
-        });
-
         SupplierRegbtn.setFont(new java.awt.Font("Poppins", 0, 13)); // NOI18N
         SupplierRegbtn.setText("Supplier Registration");
         SupplierRegbtn.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -411,14 +399,6 @@ public class DashboardAdmin extends javax.swing.JFrame {
         AppointmentListbtn2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 AppointmentListbtn2MouseClicked(evt);
-            }
-        });
-
-        StockListbtn1.setFont(new java.awt.Font("Poppins", 0, 13)); // NOI18N
-        StockListbtn1.setText("Pharmacy Stock List");
-        StockListbtn1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                StockListbtn1MouseClicked(evt);
             }
         });
 
@@ -521,33 +501,32 @@ public class DashboardAdmin extends javax.swing.JFrame {
                     .addComponent(jLabel40, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel42, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(Appointmentbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)
-                        .addComponent(AppointmentListbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(EmployeeListbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(EmployeeRegbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(SupplierRegbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(SupplierListbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(CompanyRegbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)
-                        .addComponent(BrandRegbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(PatientReportbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)
+                        .addComponent(PatientAdmitbtn2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(PatientAdmitbtn3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(PatientListbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(GRNbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(GRNbtn1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(RoomsReservationbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)
+                        .addComponent(RoomPapbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(Stockbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(GRNbtn1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)
+                        .addComponent(GRNbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(StockTransferbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(StockTransferbtn1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)
-                        .addComponent(AddProductbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(StockListbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(StockListbtn1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(AddProductbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(RoomPapbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(RoomsReservationbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE))
+                        .addComponent(BrandRegbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(CompanyRegbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)
+                        .addComponent(SupplierListbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(SupplierRegbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(PatientListbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(PatientAdmitbtn3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(PatientAdmitbtn2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(PatientReportbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(EmployeeRegbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)
-                        .addComponent(EmployeeListbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(AppointmentListbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(Appointmentbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                 .addComponent(DoctorListbtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(DoctorReportbtn, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)
@@ -608,10 +587,6 @@ public class DashboardAdmin extends javax.swing.JFrame {
                 .addComponent(StockTransferbtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(AddProductbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(StockListbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(StockListbtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -705,20 +680,6 @@ public class DashboardAdmin extends javax.swing.JFrame {
         jPanel5.setBackground(new java.awt.Color(160, 233, 255));
         jPanel5.setPreferredSize(new java.awt.Dimension(803, 40));
 
-        minimizebtn.setBackground(new java.awt.Color(255, 204, 51));
-        minimizebtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                minimizebtnActionPerformed(evt);
-            }
-        });
-
-        closebtn.setBackground(new java.awt.Color(255, 51, 51));
-        closebtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                closebtnActionPerformed(evt);
-            }
-        });
-
         jLabel3.setFont(new java.awt.Font("Poppins Light", 3, 18)); // NOI18N
         jLabel3.setText("12 : 30 AM");
 
@@ -734,16 +695,10 @@ public class DashboardAdmin extends javax.swing.JFrame {
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(48, 48, 48)
                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 686, Short.MAX_VALUE)
-                .addComponent(minimizebtn, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(closebtn, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(22, 22, 22))
+                .addContainerGap(758, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(minimizebtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(closebtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
             .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -787,16 +742,6 @@ public class DashboardAdmin extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void closebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closebtnActionPerformed
-        // TODO add your handling code here:
-        System.exit(0);
-    }//GEN-LAST:event_closebtnActionPerformed
-
-    private void minimizebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minimizebtnActionPerformed
-        // TODO add your handling code here:
-        this.setState(JFrame.ICONIFIED);
-    }//GEN-LAST:event_minimizebtnActionPerformed
 
     private void AdminDashboardbtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AdminDashboardbtnMouseClicked
         // TODO add your handling code here:
@@ -980,19 +925,6 @@ public class DashboardAdmin extends javax.swing.JFrame {
         CardLayoutPanel.revalidate();
     }//GEN-LAST:event_AppointmentListbtn1MouseClicked
 
-    private void StockListbtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_StockListbtnMouseClicked
-        // TODO add your handling code here:
-        CardLayoutPanel.removeAll();
-        CardLayoutPanel.repaint();
-        CardLayoutPanel.revalidate();
-
-        //Add Panel
-        CardLayoutPanel.add(stockList1);
-        CardLayoutPanel.repaint();
-        CardLayoutPanel.revalidate();
-
-    }//GEN-LAST:event_StockListbtnMouseClicked
-
     private void RoomsReservationbtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RoomsReservationbtnMouseClicked
         // TODO add your handling code here:
         CardLayoutPanel.removeAll();
@@ -1098,20 +1030,6 @@ public class DashboardAdmin extends javax.swing.JFrame {
         CardLayoutPanel.revalidate();
 
     }//GEN-LAST:event_AppointmentListbtn2MouseClicked
-
-    private void StockListbtn1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_StockListbtn1MouseClicked
-        // TODO add your handling code here:
-        //Remove Panel
-
-        CardLayoutPanel.removeAll();
-        CardLayoutPanel.repaint();
-        CardLayoutPanel.revalidate();
-
-        //Add Panel
-        CardLayoutPanel.add(pharmacyStockList1);
-        CardLayoutPanel.repaint();
-        CardLayoutPanel.revalidate();
-    }//GEN-LAST:event_StockListbtn1MouseClicked
 
     private void StockTransferbtn1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_StockTransferbtn1MouseClicked
         // TODO add your handling code here:
@@ -1273,8 +1191,6 @@ public class DashboardAdmin extends javax.swing.JFrame {
     private javax.swing.JLabel PatientReportbtn;
     private javax.swing.JLabel RoomPapbtn;
     private javax.swing.JLabel RoomsReservationbtn;
-    private javax.swing.JLabel StockListbtn;
-    private javax.swing.JLabel StockListbtn1;
     private javax.swing.JLabel StockTransferbtn;
     private javax.swing.JLabel StockTransferbtn1;
     private javax.swing.JLabel Stockbtn;
@@ -1283,7 +1199,6 @@ public class DashboardAdmin extends javax.swing.JFrame {
     private com.algounix.Panel.Reception.AddAppoinment addAppoinment1;
     private com.algounix.Panel.Doctor.AppointmentList appointmentList1;
     private com.algounix.Panel.ChangePasswords changePasswords1;
-    private com.algounix.Buttons.WindowButton closebtn;
     private com.algounix.Panel.Dashboard dashboard1;
     private com.algounix.Panel.Doctor.DoctorAttendunce doctorAttendunce1;
     private com.algounix.Panel.Doctor.DoctorChanellingList doctorChanellingList1;
@@ -1317,7 +1232,6 @@ public class DashboardAdmin extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
-    private com.algounix.Buttons.WindowButton minimizebtn;
     private com.algounix.Panel.Doctor.PatientAdmitList patientAdmitList1;
     private com.algounix.Panel.Doctor.PatientDischargeList patientDischargeList1;
     private com.algounix.Panel.Doctor.PatientList patientList1;

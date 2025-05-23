@@ -39,7 +39,7 @@ public class Reports extends javax.swing.JPanel {
         chart7.add(createPieChartPanel(createRoomOccupancyDataset(), "Room Occupancy Rate")); // ok
         chart8.add(createBarChartPanel(createTotalRevenuebyHospitalServDataset(), "Total Revenue from Hospital Services")); // ok
         chart9.add(createPieChartPanel(createPatientAgeGroupDataset(), "Patient Age Group Distribution")); // ok
-        chart10.add(createPieChartPanel(createPatientAgeGroupDataset(), " Top 5 Prescribed Medicines")); // ok
+        chart10.add(createPieChartPanel(createTopPrescribedMedicinesPieDataset(), " Top 5 Prescribed Medicines")); // ok
         chart11.add(createPieChartPanel(createTestTypeDataset(), "Lab Test Type Distribution")); // ok
         chart12.add(createLineChartPanel(createIncomeLineChartDataset(), "Monthly Income "));
 
@@ -203,6 +203,29 @@ public class Reports extends javax.swing.JPanel {
         }
         return dataset;
     }
+private DefaultPieDataset createTopPrescribedMedicinesPieDataset() {
+    DefaultPieDataset dataset = new DefaultPieDataset();
+    try {
+        ResultSet rs = MySQL.executeSearch("SELECT m.name AS medicine_name, COUNT(*) AS prescription_count\n"
+                + "FROM prescription_item pi\n"
+                + "JOIN prescription p ON pi.prescription_id = p.id\n"
+                + "JOIN medicine m ON pi.medicine_id = m.id\n"
+                + "WHERE p.date >= CURDATE() - INTERVAL 1 MONTH\n"
+                + "GROUP BY m.name\n"
+                + "ORDER BY prescription_count DESC\n"
+                + "LIMIT 5");
+        while (rs.next()) {
+            String name = rs.getString("medicine_name");
+            int count = rs.getInt("prescription_count");
+            dataset.setValue(name, count);
+        }
+        rs.close();
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return dataset;
+}
+
 
     //Last Month Fast-Moving Medicines in Pharmacy Stock – Weekly Comparison
     private DefaultCategoryDataset createPharmacyFastMovingItemDataset() {
@@ -227,6 +250,7 @@ public class Reports extends javax.swing.JPanel {
         }
         return dataset;
     }
+    
 
     //Income Growth Comparison
     private DefaultCategoryDataset createIncomeGrowthDataset() {

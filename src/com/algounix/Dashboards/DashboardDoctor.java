@@ -18,7 +18,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.ImageIcon;
 import javax.swing.Timer;
-import raven.glasspanepopup.GlassPanePopup;
+
 
 /**
  *
@@ -59,7 +59,6 @@ public class DashboardDoctor extends javax.swing.JFrame {
         this.setIconImage(new ImageIcon("com//algounix//MenuIcons//GRN.png").getImage());
          Image icon = new ImageIcon(this.getClass().getResource("/com/algounix/Resources/HMS-Logo.png")).getImage();
         this.setIconImage(icon);
-        GlassPanePopup.install(this);
 
     }
 
@@ -88,15 +87,12 @@ public class DashboardDoctor extends javax.swing.JFrame {
         jLabel38 = new javax.swing.JLabel();
         EmployeeRegbtn2 = new javax.swing.JLabel();
         EmployeeRegbtn3 = new javax.swing.JLabel();
-        EmployeeRegbtn1 = new javax.swing.JLabel();
         EmployeeRegbtn4 = new javax.swing.JLabel();
         MenuLogo = new javax.swing.JLabel();
         AdminDashboardSignOutbtn = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
-        minimizebtn = new com.algounix.Buttons.WindowButton();
-        closebtn = new com.algounix.Buttons.WindowButton();
         jLabel3 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         CardLayoutPanel = new javax.swing.JPanel();
@@ -208,14 +204,6 @@ public class DashboardDoctor extends javax.swing.JFrame {
             }
         });
 
-        EmployeeRegbtn1.setFont(new java.awt.Font("Poppins", 0, 13)); // NOI18N
-        EmployeeRegbtn1.setText("Appointment List");
-        EmployeeRegbtn1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                EmployeeRegbtn1MouseClicked(evt);
-            }
-        });
-
         EmployeeRegbtn4.setFont(new java.awt.Font("Poppins", 0, 13)); // NOI18N
         EmployeeRegbtn4.setText("Discharge Patient");
         EmployeeRegbtn4.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -242,11 +230,10 @@ public class DashboardDoctor extends javax.swing.JFrame {
                     .addComponent(RoomPapbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(EmployeeRegbtn2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(EmployeeRegbtn3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(EmployeeRegbtn1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(EmployeeRegbtn4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(PatientListbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(PatientReportbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE))))
+                        .addComponent(PatientReportbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)
+                        .addComponent(PatientListbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -258,9 +245,7 @@ public class DashboardDoctor extends javax.swing.JFrame {
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(EmployeeRegbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(EmployeeRegbtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(EmployeeRegbtn2, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(EmployeeRegbtn3, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -339,20 +324,6 @@ public class DashboardDoctor extends javax.swing.JFrame {
         jPanel5.setBackground(new java.awt.Color(160, 233, 255));
         jPanel5.setPreferredSize(new java.awt.Dimension(803, 40));
 
-        minimizebtn.setBackground(new java.awt.Color(255, 204, 51));
-        minimizebtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                minimizebtnActionPerformed(evt);
-            }
-        });
-
-        closebtn.setBackground(new java.awt.Color(255, 51, 51));
-        closebtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                closebtnActionPerformed(evt);
-            }
-        });
-
         jLabel3.setFont(new java.awt.Font("Poppins Light", 3, 18)); // NOI18N
         jLabel3.setText("12 : 30 AM");
 
@@ -368,16 +339,10 @@ public class DashboardDoctor extends javax.swing.JFrame {
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 742, Short.MAX_VALUE)
-                .addComponent(minimizebtn, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(closebtn, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(22, 22, 22))
+                .addContainerGap(814, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(minimizebtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(closebtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
             .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -404,16 +369,6 @@ public class DashboardDoctor extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void closebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closebtnActionPerformed
-        // TODO add your handling code here:
-        System.exit(0);
-    }//GEN-LAST:event_closebtnActionPerformed
-
-    private void minimizebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minimizebtnActionPerformed
-        // TODO add your handling code here:
-        this.setState(JFrame.ICONIFIED);
-    }//GEN-LAST:event_minimizebtnActionPerformed
 
     private void AdminDashboardbtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AdminDashboardbtnMouseClicked
         // TODO add your handling code here:
@@ -526,10 +481,6 @@ public class DashboardDoctor extends javax.swing.JFrame {
         CardLayoutPanel.revalidate();
     }//GEN-LAST:event_EmployeeRegbtn3MouseClicked
 
-    private void EmployeeRegbtn1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EmployeeRegbtn1MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_EmployeeRegbtn1MouseClicked
-
     private void EmployeeRegbtn4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EmployeeRegbtn4MouseClicked
         // TODO add your handling code here:
         //Remove Panel
@@ -584,7 +535,6 @@ public class DashboardDoctor extends javax.swing.JFrame {
     private javax.swing.JLabel AdminDashboardbtn;
     private javax.swing.JPanel CardLayoutPanel;
     private javax.swing.JLabel EmployeeRegbtn;
-    private javax.swing.JLabel EmployeeRegbtn1;
     private javax.swing.JLabel EmployeeRegbtn2;
     private javax.swing.JLabel EmployeeRegbtn3;
     private javax.swing.JLabel EmployeeRegbtn4;
@@ -593,7 +543,6 @@ public class DashboardDoctor extends javax.swing.JFrame {
     private javax.swing.JLabel PatientReportbtn;
     private javax.swing.JLabel RoomPapbtn;
     private com.algounix.Panel.Doctor.AppointmentList appointmentList2;
-    private com.algounix.Buttons.WindowButton closebtn;
     private com.algounix.Panel.Doctor.DashboardDoctorPanel dashboardDoctor1;
     private com.algounix.Panel.Doctor.DoctorChanelling doctorChanelling1;
     private javax.swing.JLabel jLabel1;
@@ -610,7 +559,6 @@ public class DashboardDoctor extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
-    private com.algounix.Buttons.WindowButton minimizebtn;
     private com.algounix.Panel.Doctor.OpdList opdList1;
     private com.algounix.Panel.Doctor.PatientAdmit patientAdmit1;
     private com.algounix.Panel.Doctor.PatientAdmit patientAdmit2;

@@ -34,6 +34,7 @@ public class Prescription extends javax.swing.JFrame {
     private DoctorChanelling docChanelling;
     private PatientAdmit patientAdmit;
     private PatientDischarge patientDischarge;
+    private OpdList opdList;
 
     private boolean isDischarge = false;
 
@@ -80,6 +81,21 @@ public class Prescription extends javax.swing.JFrame {
         validateSpinner2();
         clearAll();      
     }
+    
+    
+    public Prescription(HashMap<String, String> presDetails, OpdList opdList) {
+        initComponents();
+        loadUI();
+        this.isDischarge = false;
+        this.presDetails = presDetails;
+        this.opdList = opdList;
+        setPrescriptionDetails();
+        jTextField1.setText(generatePrescriptionID());
+        validateSpinner1();
+        validateSpinner2();
+        clearAll();      
+    }
+
 
     private void loadUI() {
         Image icon = new ImageIcon(this.getClass().getResource("/com/algounix/Resources/HMS-Logo.png")).getImage();

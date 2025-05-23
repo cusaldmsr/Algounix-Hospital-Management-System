@@ -103,13 +103,12 @@ public class DashboardReception extends javax.swing.JFrame {
         AppointmentListbtn1 = new javax.swing.JLabel();
         PatientAdmitbtn2 = new javax.swing.JLabel();
         PatientAdmitbtn3 = new javax.swing.JLabel();
+        Appointmentbtn1 = new javax.swing.JLabel();
         MenuLogo = new javax.swing.JLabel();
         AdminDashboardSignOutbtn = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
-        minimizebtn = new com.algounix.Buttons.WindowButton();
-        closebtn = new com.algounix.Buttons.WindowButton();
         jLabel3 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         CardLayoutPanel = new javax.swing.JPanel();
@@ -332,6 +331,14 @@ public class DashboardReception extends javax.swing.JFrame {
             }
         });
 
+        Appointmentbtn1.setFont(new java.awt.Font("Poppins", 0, 13)); // NOI18N
+        Appointmentbtn1.setText("Appointment List");
+        Appointmentbtn1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Appointmentbtn1MouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -368,7 +375,8 @@ public class DashboardReception extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(AppointmentListbtn1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(AppointmentListbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(Appointmentbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE))))
+                        .addComponent(Appointmentbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(Appointmentbtn1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE))))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -420,6 +428,8 @@ public class DashboardReception extends javax.swing.JFrame {
                 .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(Appointmentbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Appointmentbtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(AppointmentListbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -487,20 +497,6 @@ public class DashboardReception extends javax.swing.JFrame {
         jPanel5.setBackground(new java.awt.Color(160, 233, 255));
         jPanel5.setPreferredSize(new java.awt.Dimension(803, 40));
 
-        minimizebtn.setBackground(new java.awt.Color(255, 204, 51));
-        minimizebtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                minimizebtnActionPerformed(evt);
-            }
-        });
-
-        closebtn.setBackground(new java.awt.Color(255, 51, 51));
-        closebtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                closebtnActionPerformed(evt);
-            }
-        });
-
         jLabel3.setFont(new java.awt.Font("Poppins Light", 3, 18)); // NOI18N
         jLabel3.setText("12 : 30 AM");
 
@@ -516,16 +512,10 @@ public class DashboardReception extends javax.swing.JFrame {
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 721, Short.MAX_VALUE)
-                .addComponent(minimizebtn, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(closebtn, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(22, 22, 22))
+                .addContainerGap(765, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(minimizebtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(closebtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
             .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -563,16 +553,6 @@ public class DashboardReception extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void closebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closebtnActionPerformed
-        // TODO add your handling code here:
-        System.exit(0);
-    }//GEN-LAST:event_closebtnActionPerformed
-
-    private void minimizebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minimizebtnActionPerformed
-        // TODO add your handling code here:
-        this.setState(JFrame.ICONIFIED);
-    }//GEN-LAST:event_minimizebtnActionPerformed
 
     private void AdminDashboardbtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AdminDashboardbtnMouseClicked
         // TODO add your handling code here:
@@ -803,6 +783,19 @@ public class DashboardReception extends javax.swing.JFrame {
         CardLayoutPanel.revalidate();
     }//GEN-LAST:event_PatientAdmitbtn3MouseClicked
 
+    private void Appointmentbtn1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Appointmentbtn1MouseClicked
+        // TODO add your handling code here:
+        //Remove Panel
+        CardLayoutPanel.removeAll();
+        CardLayoutPanel.repaint();
+        CardLayoutPanel.revalidate();
+
+        //Add Panel
+        CardLayoutPanel.add(appointmentList1);
+        CardLayoutPanel.repaint();
+        CardLayoutPanel.revalidate();
+    }//GEN-LAST:event_Appointmentbtn1MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -847,6 +840,7 @@ public class DashboardReception extends javax.swing.JFrame {
     private javax.swing.JLabel AppointmentListbtn;
     private javax.swing.JLabel AppointmentListbtn1;
     private javax.swing.JLabel Appointmentbtn;
+    private javax.swing.JLabel Appointmentbtn1;
     private javax.swing.JPanel CardLayoutPanel;
     private javax.swing.JLabel DoctorListbtn;
     private javax.swing.JLabel EmployeeListbtn;
@@ -863,7 +857,6 @@ public class DashboardReception extends javax.swing.JFrame {
     private com.algounix.Panel.Reception.AddAppoinment addAppoinment1;
     private com.algounix.Panel.Reception.AddPatientQueList addPatientQueList1;
     private com.algounix.Panel.Doctor.AppointmentList appointmentList1;
-    private com.algounix.Buttons.WindowButton closebtn;
     private com.algounix.Panel.Reception.DashboardReception dashboardReception1;
     private com.algounix.Panel.Doctor.DoctorChanellingList doctorChanellingList1;
     private com.algounix.Panel.DoctorList doctorList1;
@@ -888,7 +881,6 @@ public class DashboardReception extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
-    private com.algounix.Buttons.WindowButton minimizebtn;
     private com.algounix.Panel.Doctor.PatientAdmit patientAdmit1;
     private com.algounix.Panel.Doctor.PatientAdmitList patientAdmitList1;
     private com.algounix.Panel.Doctor.PatientDischarge patientDischarge1;

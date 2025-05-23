@@ -132,7 +132,8 @@ public class OpdList extends javax.swing.JPanel {
             }
 
         } else {
-            JOptionPane.showMessageDialog(this, "No patients available", "Warning", JOptionPane.WARNING_MESSAGE);
+            String dateToday = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+            System.out.println(dateToday);
         }
     }
 
@@ -287,7 +288,7 @@ public class OpdList extends javax.swing.JPanel {
         presDetails.put("doctorID", doctorID);
         presDetails.put("doctorName", doctorName);
 
-//        new Prescription(presDetails, this).setVisible(true);
+        new Prescription(presDetails, this).setVisible(true);
     }
     
     //complete process

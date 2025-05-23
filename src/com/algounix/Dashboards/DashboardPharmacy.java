@@ -86,7 +86,6 @@ public class DashboardPharmacy extends javax.swing.JFrame {
         jLabel39 = new javax.swing.JLabel();
         jLabel38 = new javax.swing.JLabel();
         AdminDashboardbtn1 = new javax.swing.JLabel();
-        AdminDashboardbtn2 = new javax.swing.JLabel();
         AdminDashboardbtn3 = new javax.swing.JLabel();
         StockListbtn1 = new javax.swing.JLabel();
         MenuLogo = new javax.swing.JLabel();
@@ -94,8 +93,6 @@ public class DashboardPharmacy extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
-        minimizebtn = new com.algounix.Buttons.WindowButton();
-        closebtn = new com.algounix.Buttons.WindowButton();
         jLabel3 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         CardLayoutPanel = new javax.swing.JPanel();
@@ -184,14 +181,6 @@ public class DashboardPharmacy extends javax.swing.JFrame {
             }
         });
 
-        AdminDashboardbtn2.setFont(new java.awt.Font("Poppins", 0, 13)); // NOI18N
-        AdminDashboardbtn2.setText("Invoice Re-Print");
-        AdminDashboardbtn2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                AdminDashboardbtn2MouseClicked(evt);
-            }
-        });
-
         AdminDashboardbtn3.setFont(new java.awt.Font("Poppins", 0, 13)); // NOI18N
         AdminDashboardbtn3.setText("Payment History");
         AdminDashboardbtn3.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -222,7 +211,6 @@ public class DashboardPharmacy extends javax.swing.JFrame {
                     .addComponent(AdminDashboardbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel39, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(AdminDashboardbtn1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(AdminDashboardbtn2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(AdminDashboardbtn3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(StockListbtn1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -240,8 +228,6 @@ public class DashboardPharmacy extends javax.swing.JFrame {
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(AdminDashboardbtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(AdminDashboardbtn2, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(AdminDashboardbtn3, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -317,20 +303,6 @@ public class DashboardPharmacy extends javax.swing.JFrame {
         jPanel5.setBackground(new java.awt.Color(160, 233, 255));
         jPanel5.setPreferredSize(new java.awt.Dimension(803, 40));
 
-        minimizebtn.setBackground(new java.awt.Color(255, 204, 51));
-        minimizebtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                minimizebtnActionPerformed(evt);
-            }
-        });
-
-        closebtn.setBackground(new java.awt.Color(255, 51, 51));
-        closebtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                closebtnActionPerformed(evt);
-            }
-        });
-
         jLabel3.setFont(new java.awt.Font("Poppins Light", 3, 18)); // NOI18N
         jLabel3.setText("12 : 30 AM");
 
@@ -346,16 +318,10 @@ public class DashboardPharmacy extends javax.swing.JFrame {
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 721, Short.MAX_VALUE)
-                .addComponent(minimizebtn, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(closebtn, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(22, 22, 22))
+                .addContainerGap(800, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(minimizebtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(closebtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
             .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -380,16 +346,6 @@ public class DashboardPharmacy extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void closebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closebtnActionPerformed
-        // TODO add your handling code here:
-        System.exit(0);
-    }//GEN-LAST:event_closebtnActionPerformed
-
-    private void minimizebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minimizebtnActionPerformed
-        // TODO add your handling code here:
-        this.setState(JFrame.ICONIFIED);
-    }//GEN-LAST:event_minimizebtnActionPerformed
-
     private void AdminDashboardbtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AdminDashboardbtnMouseClicked
         // TODO add your handling code here:
         //Remove Panel
@@ -413,19 +369,6 @@ public class DashboardPharmacy extends javax.swing.JFrame {
         // TODO add your handling code here:
         new PharmacyInvoice().setVisible(true);
     }//GEN-LAST:event_AdminDashboardbtn1MouseClicked
-
-    private void AdminDashboardbtn2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AdminDashboardbtn2MouseClicked
-        // TODO add your handling code here:
-        CardLayoutPanel.removeAll();
-        CardLayoutPanel.repaint();
-        CardLayoutPanel.revalidate();
-
-        //Add Panel
-        CardLayoutPanel.add(invoiceReprint1);
-        CardLayoutPanel.repaint();
-        CardLayoutPanel.revalidate();
-
-    }//GEN-LAST:event_AdminDashboardbtn2MouseClicked
 
     private void AdminDashboardbtn3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AdminDashboardbtn3MouseClicked
         // TODO add your handling code here:
@@ -544,7 +487,6 @@ public class DashboardPharmacy extends javax.swing.JFrame {
     private javax.swing.JLabel AdminDashboardSignOutbtn;
     private javax.swing.JLabel AdminDashboardbtn;
     private javax.swing.JLabel AdminDashboardbtn1;
-    private javax.swing.JLabel AdminDashboardbtn2;
     private javax.swing.JLabel AdminDashboardbtn3;
     private javax.swing.JPanel CardLayoutPanel;
     private javax.swing.JLabel MenuLogo;
@@ -552,7 +494,6 @@ public class DashboardPharmacy extends javax.swing.JFrame {
     private javax.swing.JLabel StockListbtn1;
     private javax.swing.JLabel StockTransferbtn;
     private javax.swing.JLabel Stockbtn;
-    private com.algounix.Buttons.WindowButton closebtn;
     private com.algounix.Panel.Pharmacy.DashboardPharmacy dashboardPharmacy1;
     private com.algounix.Panel.Pharmacy.InvoiceReprint invoiceReprint1;
     private javax.swing.JLabel jLabel1;
@@ -568,7 +509,6 @@ public class DashboardPharmacy extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
-    private com.algounix.Buttons.WindowButton minimizebtn;
     private com.algounix.Panel.Pharmacy.PaymentHistory paymentHistory1;
     private com.algounix.Panel.Pharmacy.PharmacyStock pharmacyStock1;
     private com.algounix.Panel.Pharmacy.PharmacyStockList pharmacyStockList1;
