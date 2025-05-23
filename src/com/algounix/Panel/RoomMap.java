@@ -102,7 +102,7 @@ public class RoomMap extends javax.swing.JPanel {
                     + "WHERE `room`.`id` = '" + roomNo + "';");
 
             if (resultSet.next()) {
-                
+
                 String roomType = resultSet.getString("room_type.name");
                 String roomCharge = resultSet.getString("room_chargers.total_charge");
                 String doctorCharge = resultSet.getString("doctor_has_units.doctor_charges");
@@ -119,6 +119,34 @@ public class RoomMap extends javax.swing.JPanel {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void resetUI() {
+
+//        jPanel3
+        jLabel13.setText("Room Number Here");
+        jLabel15.setText("Room Type Here");
+        jLabel22.setText("Room Charge Here");
+        jLabel26.setText("Doctor Charge Here");
+        jTextArea2.setText("Room description here...");
+
+//        jPanel5
+        jLabel4.setText("Doctor ID Here");
+        jLabel5.setText("Doctor First Name Here");
+        jLabel8.setText("Doctor Last Name Here");
+        jLabel14.setText("Doctor Mobile Here");
+        jLabel16.setText("Doctor Email Here");
+        jLabel18.setText("Doctor Type Here");
+        jLabel20.setText("Doctor Unit Here");
+
+//        jPanel6
+        jLabel35.setText("Patient Admited");
+        jLabel41.setText("Patient ID Here");
+        jLabel42.setText("Patient Name Here");
+        jLabel43.setText("Patient Mobile Here");
+        jLabel44.setText("Patient Email Here");
+        jLabel45.setText("Patient Age Here");
+        jLabel46.setText("Patient Gender Here");
     }
 
     private void displayCharts() {
@@ -722,6 +750,11 @@ public class RoomMap extends javax.swing.JPanel {
 
         jButton1.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
         jButton1.setText("Clear Room Details");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -1032,9 +1065,7 @@ public class RoomMap extends javax.swing.JPanel {
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel26, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel22, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -1566,6 +1597,10 @@ public class RoomMap extends javax.swing.JPanel {
         // TODO add your handling code here:
         printRoomDetails();
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        resetUI();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
