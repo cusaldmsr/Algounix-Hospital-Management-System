@@ -2,16 +2,12 @@ package com.algounix.Panel.Doctor;
 
 import com.algounix.GUI.SignIn;
 import com.algounix.Model.MySQL;
-import com.algounix.Panel.Reception.Invoice;
-import com.mysql.cj.protocol.ResultStreamer;
 import java.awt.Color;
 import java.sql.ResultSet;
-import java.text.SimpleDateFormat;
 import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.Date;
 import java.util.HashMap;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -22,24 +18,37 @@ import javax.swing.JOptionPane;
  */
 public class PatientDischarge extends javax.swing.JPanel {
 
-    public static final int ADMITTED_STATUS_ID = 4;
-    public static final int DISCHARGED_STATUS_ID = 5;
+    HashMap<String, Integer> appoinmentStatusMap;
 
     private boolean isReportAvailable = false;
-    
+
     private String patient_email = "";
-    
+
     private static boolean isPaymentSuccess;
     private static String invoiceId;
 
     public PatientDischarge() {
         initComponents();
+        this.appoinmentStatusMap = new HashMap<>();
+        loadAppoinmentStatus();
         loadAdmittedPatients("");
         jLabel29.setText("Not Upadted");
         jLabel29.setForeground(Color.red);
     }
-    
-    public static void setIsPaymentSuccess(boolean isSuccess,String invoiceId){
+
+    private void loadAppoinmentStatus() {
+        try {
+            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `appoinment_status`");
+
+            while (resultSet.next()) {
+                appoinmentStatusMap.put(resultSet.getString("name"), resultSet.getInt("id"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void setIsPaymentSuccess(boolean isSuccess, String invoiceId) {
         PatientDischarge.isPaymentSuccess = isSuccess;
         PatientDischarge.invoiceId = invoiceId;
     }
@@ -618,90 +627,29 @@ public class PatientDischarge extends javax.swing.JPanel {
         loadAdmittedPatients(jTextField1.getText());
     }//GEN-LAST:event_jTextField1KeyReleased
 
-    //Discharge Patient Button
+    //update status admit to discharge in admit patient table. removed the invoicing part
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
 
         int selectedRow = jTable1.getSelectedRow();
 
         if (selectedRow != -1) {
-
-            Invoice invoice = new Invoice();
-
-            //room details
-            String room_id = jLabel13.getText();
-            String room_type =jLabel15.getText();
-            
-            invoice.setRoomDetailsLabels(room_id, room_type);
-            
-            //doctor details
-            String doctor_id = SignIn.docID;
-            String doctor_name = SignIn.docName;
-            
-            invoice.setDoctorDetailsLabels(doctor_id, doctor_name);
-            
-            //patient details
-            String patient_id = String.valueOf(jTable1.getValueAt(selectedRow, 1));
-            String patient_name = String.valueOf(jTable1.getValueAt(selectedRow, 2));
-            String patient_nic = jLabel19.getText();
-            String patient_email = "";
-            if(!this.patient_email.isEmpty()){
-                patient_email = this.patient_email;
-            }
-            
-            invoice.setPatientDetailsLabels(patient_id, patient_name, patient_nic, patient_email);
-            
-            //spend days
-            String admitted_date = String.valueOf(jTable1.getValueAt(selectedRow, 3));
-            String spend_days = String.valueOf(ChronoUnit.DAYS.between(LocalDate.parse(admitted_date), LocalDate.now()));
-            
-            invoice.setSpendDaysDetailsLabels(admitted_date, spend_days);
-            
-            //prescription
-            String prescription_id = String.valueOf(jTable1.getValueAt(selectedRow, 5));
-            
-            invoice.setPrescription(prescription_id);
-            
-            //charges
-            String unit_id = "";
             try {
-                ResultSet resultSet = MySQL.executeSearch("SELECT `units_id` FROM `doctor_has_units` WHERE `room_id`='"+room_id+"'");
-                if(resultSet.next()){
-                    unit_id = resultSet.getString("units_id");
-                }
+
+                String patientID = String.valueOf(jTable1.getValueAt(selectedRow, 1));
+                String prescriptionID = String.valueOf(jTable1.getValueAt(selectedRow, 5));
+                String roomID = String.valueOf(jTable1.getValueAt(selectedRow, 4));
+                int dischargeStatusID = appoinmentStatusMap.get("Discharge");
+
+                //Update status in admit patien table
+                MySQL.executeIUD("UPDATE `patient_admit` SET `appoinment_status_id`='" + dischargeStatusID + "' "
+                        + "WHERE `patient_id`='" + patientID + "' AND `presciption_id`='" + prescriptionID + "' AND "
+                        + "`room_id`='" + roomID + "'");
+
+                JOptionPane.showMessageDialog(this, "Status updated to discharge successfully", "Info", JOptionPane.INFORMATION_MESSAGE);
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            
-            invoice.setCharges(unit_id);           
-            
-            invoice.setVisible(true);
-            
-            //after doing payment
-            if(PatientDischarge.isPaymentSuccess){
-                
-                try {
-                    
-                    String dateToday = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-                    int spend_hours = Integer.parseInt(spend_days) * 24;
-                    String patient_admit_id = String.valueOf(jTable1.getValueAt(selectedRow, 0));
-                    
-                    //Insert details to discharge patient table
-                    MySQL.executeIUD("INSERT INTO `patient_discharge` (`discharge_date`,`spend_hours`,`patient_admit_id`,`hospital_invoice_id`,`employee_id`) "
-                            + "VALUES ('"+dateToday+"','"+spend_hours+"','"+patient_admit_id+"','"+PatientDischarge.invoiceId+"','"+SignIn.docID+"')");
-                    
-                    //Update status in admit patien table
-                    MySQL.executeIUD("UPDATE `patient_admit` SET `appoinment_status_id`='"+DISCHARGED_STATUS_ID+"' "
-                            + "WHERE `patient_id`='"+patient_id+"' AND `presciption_id`='"+prescription_id+"' AND "
-                                    + "`room_id`='"+room_id+"'");
-                    
-                    JOptionPane.showMessageDialog(this, "Patient Discharged Successfull","Error",JOptionPane.ERROR_MESSAGE);
-                    
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                
-            }
-            
 
         } else {
             JOptionPane.showMessageDialog(this, "Please select the patient first", "Warning", JOptionPane.WARNING_MESSAGE);
@@ -767,7 +715,7 @@ public class PatientDischarge extends javax.swing.JPanel {
                 jLabel12.setText(age);
                 jLabel19.setText(nic);
                 jLabel20.setText(gender);
-                
+
                 this.patient_email = resultSet.getString("patient.email");
             }
 
@@ -791,7 +739,7 @@ public class PatientDischarge extends javax.swing.JPanel {
                 + "INNER JOIN `patient` ON `patient_admit`.`patient_id`=`patient`.`id` "
                 + "INNER JOIN `patient_report` ON `patient_admit`.`patient_report_id`=`patient_report`.`id` "
                 + "INNER JOIN `doctor` ON `patient_report`.`doctor_id`=`doctor`.`id` "
-                + "WHERE `appoinment_status_id`='" + ADMITTED_STATUS_ID + "' AND "
+                + "WHERE `appoinment_status_id`='" + appoinmentStatusMap.get("Admited") + "' AND "
                 + "`patient`.`id` LIKE '%" + searchText + "%'";
 
         String query2 = "SELECT `first_name`,`last_name` FROM `doctor` WHERE `doctor`.`id`='" + SignIn.docID + "'";
