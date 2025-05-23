@@ -21,94 +21,111 @@ import javax.swing.JOptionPane;
  * @author Kusal
  */
 public class PatientRegNew extends javax.swing.JPanel {
-    
-   private static HashMap<String, String> nationalityMap = new HashMap<>();
-   private static HashMap<String, String> bloodGroupMap = new HashMap<>();
-   
-   private static String patientId;
-   
-   public static String getPatientId() {
-      return patientId;
-   }
-   
-   public static void setPatientId (String patientId){
+
+    private static HashMap<String, String> nationalityMap = new HashMap<>();
+    private static HashMap<String, String> bloodGroupMap = new HashMap<>();
+
+    private static String patientId;
+
+    private static String PREFIX = "PAT";
+
+    public static String getPatientId() {
+        return patientId;
+    }
+
+    public static void setPatientId(String patientId) {
         PatientRegNew.patientId = patientId;
-   }
-  
+    }
 
     /**
      * Creates new form PatientReg
      */
     public PatientRegNew() {
         initComponents();
-        GenerateId();
         FlatSVGIcon iconLogo = new FlatSVGIcon("com//algounix//Resources//consultancy.svg", jLabel12.getWidth(), jLabel12.getHeight());
         jLabel12.setIcon(iconLogo);
-       
+        jTextField1.setText(getNextId());
         loadNationality();
         loadBloodGroup();
+        jButton1.setEnabled(false);
+        jButton2.setEnabled(false);
+        jButton7.setEnabled(false);
     }
-    
-    
-    
-    private void GenerateId (){
-        
-        long id = System.currentTimeMillis();
-        jTextField1.setText(String.valueOf(id));
-        
-        String pid = jTextField1.getText();
-        setPatientId(pid);
-    
+
+    private static String getNextId() {
+        String lastID = getLastIdFromDatabase();
+        if (lastID == null) {
+
+            return PREFIX + "00001";
+        }
+
+        String numericPart = lastID.substring(PREFIX.length());
+        int lastNumber = Integer.parseInt(numericPart);
+
+        int nextNumber = lastNumber + 1;
+
+        return String.format("%s%05d", PREFIX, nextNumber);
     }
-    
-     
-    
-    private void loadNationality() {
-    
+
+    private static String getLastIdFromDatabase() {
+        String lastID = null;
         try {
-            
-           ResultSet resultSet =  MySQL.executeSearch("SELECT * FROM `nationality`");
-           
+            ResultSet rs = MySQL.executeSearch("SELECT `id` FROM `patient` WHERE `id` LIKE '" + PREFIX + "%' ORDER BY `id` DESC LIMIT 1");
+            if (rs.next()) {
+                lastID = rs.getString("id");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return lastID;
+    }
+
+    private void loadNationality() {
+
+        try {
+
+            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `nationality`");
+
             Vector<String> vector = new Vector<>();
             vector.add("Select");
-            
-            while(resultSet.next()){
+
+            while (resultSet.next()) {
                 vector.add(resultSet.getString("name"));
                 nationalityMap.put(resultSet.getString("name"), resultSet.getString("id"));
-            
+
             }
-            
+
             DefaultComboBoxModel model = new DefaultComboBoxModel(vector);
             jComboBox1.setModel(model);
-            
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-    
+
     }
-    
-    private void loadBloodGroup(){
-    
+
+    private void loadBloodGroup() {
+
         try {
-            
-           ResultSet resultSet =  MySQL.executeSearch("SELECT * FROM `blood_group`");
-            
-            Vector<String>vector = new Vector<>();
+
+            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `blood_group`");
+
+            Vector<String> vector = new Vector<>();
             vector.add("Select");
-            
-            while(resultSet.next()){
+
+            while (resultSet.next()) {
                 vector.add(resultSet.getString("name"));
                 bloodGroupMap.put(resultSet.getString("name"), resultSet.getString("id"));
-            
+
             }
-            
+
             DefaultComboBoxModel model = new DefaultComboBoxModel(vector);
             jComboBox2.setModel(model);
-            
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-    
+
     }
 
     /**
@@ -147,7 +164,6 @@ public class PatientRegNew extends javax.swing.JPanel {
         jTextField2 = new javax.swing.JTextField();
         jTextField5 = new javax.swing.JTextField();
         jTextField4 = new javax.swing.JTextField();
-        jButton4 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jTextField7 = new javax.swing.JTextField();
         jComboBox1 = new javax.swing.JComboBox<>();
@@ -243,7 +259,6 @@ public class PatientRegNew extends javax.swing.JPanel {
         jLabel2.setText("Patient ID :");
 
         jTextField1.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
-        jTextField1.setText("1733548050871");
         jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 jTextField1KeyReleased(evt);
@@ -271,15 +286,11 @@ public class PatientRegNew extends javax.swing.JPanel {
         });
 
         jTextField2.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
-        jTextField2.setActionCommand(null);
+        jTextField2.setActionCommand("null");
 
         jTextField5.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
 
         jTextField4.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
-
-        jButton4.setBackground(new java.awt.Color(205, 245, 253));
-        jButton4.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
-        jButton4.setText("Find All");
 
         jLabel4.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
         jLabel4.setText("Email :");
@@ -347,10 +358,9 @@ public class PatientRegNew extends javax.swing.JPanel {
                                     .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(12, 12, 12)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jTextField4)
                                     .addComponent(jTextField7)
-                                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jComboBox1, 0, 150, Short.MAX_VALUE)
                                     .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                             .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE))))
@@ -365,8 +375,7 @@ public class PatientRegNew extends javax.swing.JPanel {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4))
+                    .addComponent(jButton3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -508,79 +517,77 @@ public class PatientRegNew extends javax.swing.JPanel {
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
-        
-          String id = jTextField1.getText();
-       String fName = jTextField2.getText();
-       String lName = jTextField4.getText();
-       String email = jTextField3.getText();
-       Date bd = jDateChooser1.getDate();
-       String mobile = jTextField5.getText();
-       String nic = jTextField7.getText();
+
+        String id = jTextField1.getText();
+        String fName = jTextField2.getText();
+        String lName = jTextField4.getText();
+        String email = jTextField3.getText();
+        Date bd = jDateChooser1.getDate();
+        String mobile = jTextField5.getText();
+        String nic = jTextField7.getText();
         ButtonModel gender = buttonGroup1.getSelection();
-        String nationality = String.valueOf(jComboBox1.getSelectedItem()) ;
+        String nationality = String.valueOf(jComboBox1.getSelectedItem());
         String bloodGroup = String.valueOf(jComboBox2.getSelectedItem());
-        
-        if(fName.isEmpty()){
-               JOptionPane.showMessageDialog(this, "Please Enter First Name", "Warning" , JOptionPane.WARNING_MESSAGE);
-        }else if(lName.isEmpty()) {
-             JOptionPane.showMessageDialog(this, "Please Enter Last Name", "Warning" , JOptionPane.WARNING_MESSAGE);
-        }else if(email.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please Enter Email", "Warning" , JOptionPane.WARNING_MESSAGE);
-        }else if (!email.matches("^(?=.{1,64}@)[A-Za-z0-9\\+_-]+(\\.[A-Za-z0-9\\+_-]+)*@"
-                + "[^-][A-Za-z0-9\\+-]+(\\.[A-Za-z0-9\\+-]+)*(\\.[A-Za-z]{2,})$")){
-            JOptionPane.showMessageDialog(this, "Invalid Email", "Warning" , JOptionPane.WARNING_MESSAGE);
-        }else if(bd == null){
-            JOptionPane.showMessageDialog(this, "Please Enter Birth Day", "Warning" , JOptionPane.WARNING_MESSAGE);
-        }else if(mobile.isEmpty()){
-            JOptionPane.showMessageDialog(this, "Please Enter Mobile Number", "Warning" , JOptionPane.WARNING_MESSAGE);
-        }else if (!mobile.matches("^07[01245678]{1}[0-9]{7}$")){
-            JOptionPane.showMessageDialog(this, "Invalid Mobile Number", "Warning" , JOptionPane.WARNING_MESSAGE);
-        }else if (nic.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please Enter  The National Identity Card Number", "Warning" , JOptionPane.WARNING_MESSAGE);
-        }else if (!nic.matches("^(([5,6,7,8,9]{1})([0-9]{1})([0,1,2,3,5,6,7,8]{1})([0-9]{6})([v|V|x|X]))|(([1,2]{1})([0,9]{1})([0-9]{2})([0,1,2,3,5,6,7,8]{1})([0-9]{7}))")) {
-             JOptionPane.showMessageDialog(this, "Invalid National Identity Card Number", "Warning" , JOptionPane.WARNING_MESSAGE);
-        }else if (gender == null){
-             JOptionPane.showMessageDialog(this, "Please Select Gender", "Warning" , JOptionPane.WARNING_MESSAGE);
-        }else if (nationality.equals("Select")){
-            JOptionPane.showMessageDialog(this, "Please Select Nationality", "Warning" , JOptionPane.WARNING_MESSAGE);
-        }else if (bloodGroup.equals("Select")){
-            JOptionPane.showMessageDialog(this, "Please Select Blood Group", "Warning" , JOptionPane.WARNING_MESSAGE);
-        }else {
-            
+
+        if (fName.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter First Name", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (lName.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter Last Name", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (email.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter Email", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (!email.matches("^(?=.{1,64}@)[A-Za-z0-9\\+_-]+(\\.[A-Za-z0-9\\+_-]+)*@"
+                + "[^-][A-Za-z0-9\\+-]+(\\.[A-Za-z0-9\\+-]+)*(\\.[A-Za-z]{2,})$")) {
+            JOptionPane.showMessageDialog(this, "Invalid Email", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (bd == null) {
+            JOptionPane.showMessageDialog(this, "Please Enter Birth Day", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (mobile.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter Mobile Number", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (!mobile.matches("^07[01245678]{1}[0-9]{7}$")) {
+            JOptionPane.showMessageDialog(this, "Invalid Mobile Number", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (nic.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter  The National Identity Card Number", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (!nic.matches("^(([5,6,7,8,9]{1})([0-9]{1})([0,1,2,3,5,6,7,8]{1})([0-9]{6})([v|V|x|X]))|(([1,2]{1})([0,9]{1})([0-9]{2})([0,1,2,3,5,6,7,8]{1})([0-9]{7}))")) {
+            JOptionPane.showMessageDialog(this, "Invalid National Identity Card Number", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (gender == null) {
+            JOptionPane.showMessageDialog(this, "Please Select Gender", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (nationality.equals("Select")) {
+            JOptionPane.showMessageDialog(this, "Please Select Nationality", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (bloodGroup.equals("Select")) {
+            JOptionPane.showMessageDialog(this, "Please Select Blood Group", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else {
+
             String selectGender = gender.getActionCommand();
-            
+
             try {
-                
-              ResultSet resultSet =  MySQL.executeSearch(" SELECT * FROM `patient` WHERE `id` = '"+id+"' OR `nic` = '"+nic+"' ");
-              
-              if (resultSet.next()){
-            
-                  JOptionPane.showMessageDialog(this, "This Patient Already Registered", "Warning" , JOptionPane.WARNING_MESSAGE);
-                  
-              }else {
-         
+
+                ResultSet resultSet = MySQL.executeSearch(" SELECT * FROM `patient` WHERE `id` = '" + id + "' OR `nic` = '" + nic + "' ");
+
+                if (resultSet.next()) {
+
+                    JOptionPane.showMessageDialog(this, "This Patient Already Registered", "Warning", JOptionPane.WARNING_MESSAGE);
+
+                } else {
+
                     Date date = new Date();
-                     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");    
-                     
-                     MySQL.executeIUD(" INSERT INTO `patient` (`id` , `first_name`, `last_name`, `email`, `birthday`, `mobile`, `nic` ,`blood_group_id`,"
-                             + " `Nationality_id` , `gender_id` ,`register_date` , `patient_status_id`) "
-                             + " VALUES ('"+id+"' , '"+fName+"' , '"+lName+"' , '"+email+"' , '"+sdf.format(bd)+"' , '"+mobile+"' , '"+nic+"' , '"+bloodGroupMap.get(bloodGroup)+"' , '"+nationalityMap.get(nationality)+"' ,"
-                                     + " '"+selectGender+"' , '"+sdf.format(date)+"' , '1')");
-                     
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+                    MySQL.executeIUD(" INSERT INTO `patient` (`id` , `first_name`, `last_name`, `email`, `birthday`, `mobile`, `nic` ,`blood_group_id`,"
+                            + " `Nationality_id` , `gender_id` ,`register_date` , `patient_status_id`) "
+                            + " VALUES ('" + id + "' , '" + fName + "' , '" + lName + "' , '" + email + "' , '" + sdf.format(bd) + "' , '" + mobile + "' , '" + nic + "' , '" + bloodGroupMap.get(bloodGroup) + "' , '" + nationalityMap.get(nationality) + "' ,"
+                            + " '" + selectGender + "' , '" + sdf.format(date) + "' , '1')");
+
                     // setPatientId(id);
-                     
-                     
-                                         JOptionPane.showMessageDialog(this, "This Patient Registered Successfully", "Infomation" , JOptionPane.INFORMATION_MESSAGE);
-                                        
-              
-              }
-                
+                    JOptionPane.showMessageDialog(this, "This Patient Registered Successfully", "Infomation", JOptionPane.INFORMATION_MESSAGE);
+                    reset();
+
+                }
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        
+
         }
-        
+
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -615,213 +622,208 @@ public class PatientRegNew extends javax.swing.JPanel {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        
+
         try {
-            
+
             String id = jTextField1.getText();
-            
-           ResultSet resultSet =  MySQL.executeSearch(" SELECT * FROM `patient`"
-                   + "INNER JOIN `nationality` ON `nationality`.`id` = `patient`.`Nationality_id`"
-                   + "INNER JOIN `blood_group` ON `blood_group`.`id` = `patient`.`blood_group_id` "
-                   + "WHERE `patient`.`id` = '"+id+"' ");
-           
-           if (resultSet.next()) {
-               
-               jTextField2.setText(resultSet.getString("first_name"));
-               jTextField4.setText(resultSet.getString("last_name"));
-               jTextField3.setText(resultSet.getString("email"));
-               jDateChooser1.setDate(resultSet.getDate("birthday"));
-               jTextField5.setText(resultSet.getString("mobile"));
-               jTextField7.setText(resultSet.getString("nic"));
-               jComboBox1.setSelectedItem(resultSet.getString("nationality.name"));
-               jComboBox2.setSelectedItem(resultSet.getString("blood_group.name"));
+
+            ResultSet resultSet = MySQL.executeSearch(" SELECT * FROM `patient`"
+                    + "INNER JOIN `nationality` ON `nationality`.`id` = `patient`.`Nationality_id`"
+                    + "INNER JOIN `blood_group` ON `blood_group`.`id` = `patient`.`blood_group_id` "
+                    + "WHERE `patient`.`id` = '" + id + "' ");
+
+            if (resultSet.next()) {
+
+                jTextField2.setText(resultSet.getString("first_name"));
+                jTextField4.setText(resultSet.getString("last_name"));
+                jTextField3.setText(resultSet.getString("email"));
+                jDateChooser1.setDate(resultSet.getDate("birthday"));
+                jTextField5.setText(resultSet.getString("mobile"));
+                jTextField7.setText(resultSet.getString("nic"));
+                jComboBox1.setSelectedItem(resultSet.getString("nationality.name"));
+                jComboBox2.setSelectedItem(resultSet.getString("blood_group.name"));
+
+                String gender = resultSet.getString("gender_id");
+
+                if (gender.equals("1")) {
+                    jRadioButton3.setSelected(true);
+                } else if (gender.equals("2")) {
+                    jRadioButton4.setSelected(true);
+                }
                 
-              
-               
-               
-              String gender = resultSet.getString("gender_id");
-               
-              if(gender.equals("1")){
-                  jRadioButton3.setSelected(true);
-              }else if(gender.equals("2")){
-                  jRadioButton4.setSelected(true);
-              }
-              
-             
-              
-           } else {
-               
-               if(id.isEmpty()){
-               JOptionPane.showMessageDialog(this, "Enter Identity Number ", "Warning" , JOptionPane.WARNING_MESSAGE);
-               }else {
-                JOptionPane.showMessageDialog(this, "There is No Patient Under This Identity Number ", "Warning" , JOptionPane.WARNING_MESSAGE);
-               }
-               
+                jButton1.setEnabled(true);
+                jButton2.setEnabled(true);
+                jButton7.setEnabled(true);
+
+            } else {
+
+                if (id.isEmpty()) {
+                    JOptionPane.showMessageDialog(this, "Enter Identity Number ", "Warning", JOptionPane.WARNING_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(this, "There is No Patient Under This Identity Number ", "Warning", JOptionPane.WARNING_MESSAGE);
+                }
                 
-           
-           }
-            
-            
-            
+                reset();
+
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
-        
-         String id = jTextField1.getText();
-       String fName = jTextField2.getText();
-       String lName = jTextField4.getText();
-       String email = jTextField3.getText();
-       Date bd = jDateChooser1.getDate();
-       String mobile = jTextField5.getText();
-       String nic = jTextField7.getText();
+
+        String id = jTextField1.getText();
+        String fName = jTextField2.getText();
+        String lName = jTextField4.getText();
+        String email = jTextField3.getText();
+        Date bd = jDateChooser1.getDate();
+        String mobile = jTextField5.getText();
+        String nic = jTextField7.getText();
         ButtonModel gender = buttonGroup1.getSelection();
-        String nationality = String.valueOf(jComboBox1.getSelectedItem()) ;
+        String nationality = String.valueOf(jComboBox1.getSelectedItem());
         String bloodGroup = String.valueOf(jComboBox2.getSelectedItem());
-        
-        if(fName.isEmpty()){
-               JOptionPane.showMessageDialog(this, "Please Enter First Name", "Warning" , JOptionPane.WARNING_MESSAGE);
-        }else if(lName.isEmpty()) {
-             JOptionPane.showMessageDialog(this, "Please Enter Last Name", "Warning" , JOptionPane.WARNING_MESSAGE);
-        }else if(email.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please Enter Email", "Warning" , JOptionPane.WARNING_MESSAGE);
-        }else if (!email.matches("^(?=.{1,64}@)[A-Za-z0-9\\+_-]+(\\.[A-Za-z0-9\\+_-]+)*@"
-                + "[^-][A-Za-z0-9\\+-]+(\\.[A-Za-z0-9\\+-]+)*(\\.[A-Za-z]{2,})$")){
-            JOptionPane.showMessageDialog(this, "Invalid Email", "Warning" , JOptionPane.WARNING_MESSAGE);
-        }else if(bd == null){
-            JOptionPane.showMessageDialog(this, "Please Enter Birth Day", "Warning" , JOptionPane.WARNING_MESSAGE);
-        }else if(mobile.isEmpty()){
-            JOptionPane.showMessageDialog(this, "Please Enter Mobile Number", "Warning" , JOptionPane.WARNING_MESSAGE);
-        }else if (!mobile.matches("^07[01245678]{1}[0-9]{7}$")){
-            JOptionPane.showMessageDialog(this, "Invalid Mobile Number", "Warning" , JOptionPane.WARNING_MESSAGE);
-        }else if (nic.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please Enter  The National Identity Card Number", "Warning" , JOptionPane.WARNING_MESSAGE);
-        }else if (!nic.matches("^(([5,6,7,8,9]{1})([0-9]{1})([0,1,2,3,5,6,7,8]{1})([0-9]{6})([v|V|x|X]))|(([1,2]{1})([0,9]{1})([0-9]{2})([0,1,2,3,5,6,7,8]{1})([0-9]{7}))")) {
-             JOptionPane.showMessageDialog(this, "Invalid National Identity Card Number", "Warning" , JOptionPane.WARNING_MESSAGE);
-        }else if (gender == null){
-             JOptionPane.showMessageDialog(this, "Please Select Gender", "Warning" , JOptionPane.WARNING_MESSAGE);
-        }else if (nationality.equals("Select")){
-            JOptionPane.showMessageDialog(this, "Please Select Nationality", "Warning" , JOptionPane.WARNING_MESSAGE);
-        }else if (bloodGroup.equals("Select")){
-            JOptionPane.showMessageDialog(this, "Please Select Blood Group", "Warning" , JOptionPane.WARNING_MESSAGE);
-        }else {
-            
+
+        if (fName.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter First Name", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (lName.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter Last Name", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (email.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter Email", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (!email.matches("^(?=.{1,64}@)[A-Za-z0-9\\+_-]+(\\.[A-Za-z0-9\\+_-]+)*@"
+                + "[^-][A-Za-z0-9\\+-]+(\\.[A-Za-z0-9\\+-]+)*(\\.[A-Za-z]{2,})$")) {
+            JOptionPane.showMessageDialog(this, "Invalid Email", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (bd == null) {
+            JOptionPane.showMessageDialog(this, "Please Enter Birth Day", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (mobile.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter Mobile Number", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (!mobile.matches("^07[01245678]{1}[0-9]{7}$")) {
+            JOptionPane.showMessageDialog(this, "Invalid Mobile Number", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (nic.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter  The National Identity Card Number", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (!nic.matches("^(([5,6,7,8,9]{1})([0-9]{1})([0,1,2,3,5,6,7,8]{1})([0-9]{6})([v|V|x|X]))|(([1,2]{1})([0,9]{1})([0-9]{2})([0,1,2,3,5,6,7,8]{1})([0-9]{7}))")) {
+            JOptionPane.showMessageDialog(this, "Invalid National Identity Card Number", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (gender == null) {
+            JOptionPane.showMessageDialog(this, "Please Select Gender", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (nationality.equals("Select")) {
+            JOptionPane.showMessageDialog(this, "Please Select Nationality", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (bloodGroup.equals("Select")) {
+            JOptionPane.showMessageDialog(this, "Please Select Blood Group", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else {
+
             String selectGender = gender.getActionCommand();
-            
+
             try {
-                 
-          ResultSet resultSet =   MySQL.executeSearch(" SELECT * FROM `patient` WHERE `nic` = '"+nic+"' ");
-          
-            boolean canUpdate = false;
-            
-          if (resultSet.next()) {
-              
-              if(resultSet.getString("id").equals(id)){
-               
-                  canUpdate = true;
-                  
-              }else {
-                 JOptionPane.showMessageDialog(this, "This National Identity Card Number is Already Added ", "Warning" , JOptionPane.WARNING_MESSAGE);
-              }
-          
-          }else {
-              
-              canUpdate = true;
-          
-          }
-          
-          if(canUpdate){
-              
-              
+
+                ResultSet resultSet = MySQL.executeSearch(" SELECT * FROM `patient` WHERE `nic` = '" + nic + "' ");
+
+                boolean canUpdate = false;
+
+                if (resultSet.next()) {
+
+                    if (resultSet.getString("id").equals(id)) {
+
+                        canUpdate = true;
+
+                    } else {
+                        JOptionPane.showMessageDialog(this, "This National Identity Card Number is Already Added ", "Warning", JOptionPane.WARNING_MESSAGE);
+                    }
+
+                } else {
+
+                    canUpdate = true;
+
+                }
+
+                if (canUpdate) {
+
                     Date date = new Date();
-                     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");    
-                     
-              
-              MySQL.executeIUD(" UPDATE `patient` SET `first_name` = '"+fName+"' , `last_name` = '"+lName+"' , `email` = '"+email+"' , "
-                      + "`birthday` = '"+sdf.format(bd)+"' , `mobile` = '"+mobile+"' , `nic` = '"+nic+"' , `blood_group_id` = '"+bloodGroupMap.get(bloodGroup)+"' , "
-                              + "`Nationality_id` = '"+nationalityMap.get(nationality)+"' , `gender_id` = '"+selectGender+"' WHERE `id` = '"+id+"' ");
-              
-              JOptionPane.showMessageDialog(this, "Updated Successfully ", "Warning" , JOptionPane.INFORMATION_MESSAGE);
-              
-              reset();
-          
-          }
-            
-            
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+                    MySQL.executeIUD(" UPDATE `patient` SET `first_name` = '" + fName + "' , `last_name` = '" + lName + "' , `email` = '" + email + "' , "
+                            + "`birthday` = '" + sdf.format(bd) + "' , `mobile` = '" + mobile + "' , `nic` = '" + nic + "' , `blood_group_id` = '" + bloodGroupMap.get(bloodGroup) + "' , "
+                            + "`Nationality_id` = '" + nationalityMap.get(nationality) + "' , `gender_id` = '" + selectGender + "' WHERE `id` = '" + id + "' ");
+
+                    JOptionPane.showMessageDialog(this, "Updated Successfully ", "Warning", JOptionPane.INFORMATION_MESSAGE);
+
+                    reset();
+
+                }
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
-           
-            
-            
+
         }
-        
+
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
-        
+
         reset();
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
         // TODO add your handling code here:
-        
+
         try {
-            
+
             String id = jTextField1.getText();
-            
-           ResultSet resultSet =  MySQL.executeSearch(" SELECT * FROM `patient`"
-                   + "INNER JOIN `nationality` ON `nationality`.`id` = `patient`.`Nationality_id`"
-                   + "INNER JOIN `blood_group` ON `blood_group`.`id` = `patient`.`blood_group_id` "
-                   + "WHERE `patient`.`id` = '"+id+"' ");
-           
-           if (resultSet.next()) {
-               
-               jTextField2.setText(resultSet.getString("first_name"));
-               jTextField4.setText(resultSet.getString("last_name"));
-               jTextField3.setText(resultSet.getString("email"));
-               jDateChooser1.setDate(resultSet.getDate("birthday"));
-               jTextField5.setText(resultSet.getString("mobile"));
-               jTextField7.setText(resultSet.getString("nic"));
-               jComboBox1.setSelectedItem(resultSet.getString("nationality.name"));
-               jComboBox2.setSelectedItem(resultSet.getString("blood_group.name"));
-                
-              
-               
-               
-              String gender = resultSet.getString("gender_id");
-               
-              if(gender.equals("1")){
-                  jRadioButton3.setSelected(true);
-              }else if(gender.equals("2")){
-                  jRadioButton4.setSelected(true);
-              }
-              
-             
-              
-           }else {
-               
-           jTextField2.setText("");
-           jTextField4.setText("");
-           jTextField3.setText("");
-           jTextField5.setText("");
-           jTextField7.setText(" ");
-           jDateChooser1.setDate(null);
-          buttonGroup1.clearSelection();
-           jComboBox1.setSelectedIndex(0);
-           jComboBox2.setSelectedIndex(0);
-           }
-            
+
+            ResultSet resultSet = MySQL.executeSearch(" SELECT * FROM `patient`"
+                    + "INNER JOIN `nationality` ON `nationality`.`id` = `patient`.`Nationality_id`"
+                    + "INNER JOIN `blood_group` ON `blood_group`.`id` = `patient`.`blood_group_id` "
+                    + "WHERE `patient`.`id` = '" + id + "' ");
+
+            if (resultSet.next()) {
+
+                jTextField2.setText(resultSet.getString("first_name"));
+                jTextField4.setText(resultSet.getString("last_name"));
+                jTextField3.setText(resultSet.getString("email"));
+                jDateChooser1.setDate(resultSet.getDate("birthday"));
+                jTextField5.setText(resultSet.getString("mobile"));
+                jTextField7.setText(resultSet.getString("nic"));
+                jComboBox1.setSelectedItem(resultSet.getString("nationality.name"));
+                jComboBox2.setSelectedItem(resultSet.getString("blood_group.name"));
+
+                String gender = resultSet.getString("gender_id");
+
+                if (gender.equals("1")) {
+                    jRadioButton3.setSelected(true);
+                } else if (gender.equals("2")) {
+                    jRadioButton4.setSelected(true);
+                }
+
+                jButton1.setEnabled(true);
+                jButton2.setEnabled(true);
+                jButton7.setEnabled(true);
+
+            } else {
+
+                jTextField2.setText("");
+                jTextField4.setText("");
+                jTextField3.setText("");
+                jTextField5.setText("");
+                jTextField7.setText(" ");
+                jDateChooser1.setDate(null);
+                buttonGroup1.clearSelection();
+                jComboBox1.setSelectedIndex(0);
+                jComboBox2.setSelectedIndex(0);
+
+                jButton1.setEnabled(false);
+                jButton2.setEnabled(false);
+                jButton7.setEnabled(false);
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
-        
+
+
     }//GEN-LAST:event_jTextField1KeyReleased
 
 
@@ -832,7 +834,6 @@ public class PatientRegNew extends javax.swing.JPanel {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
@@ -869,23 +870,21 @@ public class PatientRegNew extends javax.swing.JPanel {
     private com.algounix.Panel.PatientRegGurdianReg patientRegGurdianReg1;
     // End of variables declaration//GEN-END:variables
 
-private void reset(){
-jTextField1.setText("");
-jTextField2.setText("");
-jTextField3.setText("");
-jTextField4.setText("");
-jTextField5.setText("");
-jTextField7.setText("");
-jDateChooser1.setDate(null);
-buttonGroup1.clearSelection();
-jComboBox1.setSelectedIndex(0);
-jComboBox2.setSelectedIndex(0);
-GenerateId();
+    private void reset() {
+        jTextField1.setText("");
+        jTextField2.setText("");
+        jTextField3.setText("");
+        jTextField4.setText("");
+        jTextField5.setText("");
+        jTextField7.setText("");
+        jDateChooser1.setDate(null);
+        buttonGroup1.clearSelection();
+        jComboBox1.setSelectedIndex(0);
+        jComboBox2.setSelectedIndex(0);
+        jTextField1.setText(getNextId());
+        jButton1.setEnabled(false);
+        jButton2.setEnabled(false);
+        jButton7.setEnabled(false);
+    }
 
 }
-
-
-}
-
-
-
