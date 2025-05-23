@@ -6,15 +6,22 @@ import java.sql.ResultSet;
 import java.util.HashMap;
 import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 
 public class DoctorReg extends javax.swing.JPanel {
     
     HashMap<String, String> doctorTypeMap = new HashMap<>();
     HashMap<String, String> doctorUnitsMap = new HashMap<>();
+    
+    private static String PREFIX = "DOC";
+    
+    private DefaultListModel mod;
 
     public DoctorReg() {
         initComponents();
         loadDoctorTypes();
+        setGUI();
+        loadSuggession();
     }
     
     private void loadDoctorTypes() {
@@ -36,13 +43,56 @@ public class DoctorReg extends javax.swing.JPanel {
         }
     }
     
-   
+    private void setGUI(){
+        jComboBox3.setEnabled(false);
+        jComboBox8.setEnabled(false);
+        jComboBox9.setEnabled(false);
+        
+        jFormattedTextField1.setEnabled(false);
+        jFormattedTextField2.setEnabled(false);
+        jFormattedTextField3.setEnabled(false);
+        
+        jButton2.setEnabled(false);
+        jTextField1.setText(getNextId());
+    }
+    
+    private static String getNextId() {
+        String lastID = getLastIdFromDatabase();
+        if (lastID == null) {
+
+            return PREFIX + "00001";
+        }
+
+        String numericPart = lastID.substring(PREFIX.length());
+        int lastNumber = Integer.parseInt(numericPart);
+
+        int nextNumber = lastNumber + 1;
+
+        return String.format("%s%05d", PREFIX, nextNumber);
+    }
+
+    private static String getLastIdFromDatabase() {
+        String lastID = null;
+        try {
+            ResultSet rs = MySQL.executeSearch("SELECT `id` FROM `doctor` WHERE `id` LIKE '" + PREFIX + "%' ORDER BY `id` DESC LIMIT 1");
+            if (rs.next()) {
+                lastID = rs.getString("id");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return lastID;
+    }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
+        jPanel9 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jList1 = new javax.swing.JList<>();
+        jPopupMenu1 = new javax.swing.JPopupMenu();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
@@ -96,6 +146,25 @@ public class DoctorReg extends javax.swing.JPanel {
         jCheckBox1 = new javax.swing.JCheckBox();
         jPanel8 = new javax.swing.JPanel();
 
+        jList1.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+        jList1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jList1MouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jList1);
+
+        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
+        jPanel9.setLayout(jPanel9Layout);
+        jPanel9Layout.setHorizontalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE)
+        );
+        jPanel9Layout.setVerticalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)
+        );
+
         setBackground(new java.awt.Color(160, 233, 255));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -143,6 +212,11 @@ public class DoctorReg extends javax.swing.JPanel {
         jLabel46.setText("Mobile Number");
 
         jTextField1.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField1KeyReleased(evt);
+            }
+        });
 
         jTextField2.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
 
@@ -247,6 +321,7 @@ public class DoctorReg extends javax.swing.JPanel {
                 .addContainerGap(21, Short.MAX_VALUE))
         );
 
+        jRadioButton1.setActionCommand("1");
         jRadioButton2.setActionCommand("2");
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
@@ -255,10 +330,10 @@ public class DoctorReg extends javax.swing.JPanel {
         jLabel31.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel31.setText("CHANELLING DETAILS");
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Unit First" }));
+        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Room" }));
 
         jLabel36.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
-        jLabel36.setText("Related Rooms");
+        jLabel36.setText("Related Room");
 
         jFormattedTextField3.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
         jFormattedTextField3.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
@@ -448,6 +523,11 @@ public class DoctorReg extends javax.swing.JPanel {
 
         jButton3.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
         jButton3.setText("Clear");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton2.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
         jButton2.setText("Update");
@@ -488,14 +568,29 @@ public class DoctorReg extends javax.swing.JPanel {
         jCheckBox3.setBackground(new java.awt.Color(255, 255, 255));
         jCheckBox3.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
         jCheckBox3.setText("Ward Doctor");
+        jCheckBox3.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jCheckBox3ItemStateChanged(evt);
+            }
+        });
 
         jCheckBox2.setBackground(new java.awt.Color(255, 255, 255));
         jCheckBox2.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
         jCheckBox2.setText("OPD Doctor");
+        jCheckBox2.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jCheckBox2ItemStateChanged(evt);
+            }
+        });
 
         jCheckBox1.setBackground(new java.awt.Color(255, 255, 255));
         jCheckBox1.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
         jCheckBox1.setText("Chanelling Doctor");
+        jCheckBox1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jCheckBox1ItemStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -505,7 +600,7 @@ public class DoctorReg extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGap(65, 65, 65)
                 .addComponent(jCheckBox1)
-                .addGap(40, 40, 40)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jCheckBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jCheckBox3)
@@ -585,6 +680,129 @@ public class DoctorReg extends javax.swing.JPanel {
         jRadioButton2.setActionCommand("2");
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jCheckBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBox1ItemStateChanged
+        if(jCheckBox1.isSelected()){
+            jComboBox3.setEnabled(true);
+            jFormattedTextField3.setEnabled(true);
+        }else{
+            jComboBox3.setEnabled(false);
+            jFormattedTextField3.setEnabled(false);
+        }
+    }//GEN-LAST:event_jCheckBox1ItemStateChanged
+
+    private void jCheckBox2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBox2ItemStateChanged
+        if(jCheckBox2.isSelected()){
+            jComboBox9.setEnabled(true);
+            jFormattedTextField2.setEnabled(true);
+        }else{
+            jComboBox9.setEnabled(false);
+            jFormattedTextField2.setEnabled(false);
+        }
+    }//GEN-LAST:event_jCheckBox2ItemStateChanged
+
+    private void jCheckBox3ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBox3ItemStateChanged
+        if(jCheckBox3.isSelected()){
+            jComboBox8.setEnabled(true);
+            jFormattedTextField1.setEnabled(true);
+        }else{
+            jComboBox8.setEnabled(false);
+            jFormattedTextField1.setEnabled(false);
+        }
+    }//GEN-LAST:event_jCheckBox3ItemStateChanged
+
+    private void clearAll(){
+        loadDoctorTypes();
+        setGUI();
+        jCheckBox1.setSelected(false);
+        jCheckBox2.setSelected(false);
+        jCheckBox3.setSelected(false);
+        
+        jLabel2.setText("Type Amount");
+        jLabel3.setText("Type Amount");
+        jLabel4.setText("Type Amount");
+        jLabel49.setText("Room Type");
+        
+        jComboBox1.setSelectedIndex(0);
+        buttonGroup1.clearSelection();
+        
+        jTextField1.setText("");
+        jTextField2.setText("");
+        jTextField3.setText("");
+        jTextField4.setText("");
+        jTextField5.setText("");
+        
+        jComboBox3.setSelectedIndex(0);
+        jComboBox8.setSelectedIndex(0);
+        jComboBox9.setSelectedIndex(0);
+        
+        jFormattedTextField1.setText("");
+        jFormattedTextField2.setText("");
+        jFormattedTextField3.setText("");
+    }
+    
+    //  Set jList for Load Suggession
+    private void loadSuggession() {
+        jPopupMenu1.add(jPanel9);
+        mod = new DefaultListModel();
+        jList1.setModel(mod);
+    }
+    
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        clearAll();
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
+        String docID = jTextField1.getText();
+
+        if (!docID.isBlank()) {
+
+            try {
+                ResultSet resultSet = MySQL.executeSearch("SELECT `id` FROM `doctor` WHERE `id` LIKE '" + docID + "%'");
+
+                if (!resultSet.isBeforeFirst()) {
+                    jPopupMenu1.setVisible(false);
+                    return;
+                }
+
+                jPopupMenu1.show(jTextField1, 0, jTextField1.getHeight());
+                mod.removeAllElements();
+
+                while (resultSet.next()) {
+                    mod.addElement(resultSet.getString("id"));
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            jPopupMenu1.setVisible(false);
+        }
+
+    }//GEN-LAST:event_jTextField1KeyReleased
+
+    private void jList1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jList1MouseClicked
+//         String docID = jList1.getSelectedValue();
+//        jPopupMenu1.setVisible(false);
+//        try {
+//            ResultSet rs = MySQL.executeSearch("SELECT * FROM `doctor` "
+//                    + "INNER JOIN `doctor_has_units` ON `doctor`.`id` = `doctor_has_units`.`doctor_id`"
+//                    + "WHERE `doctor`.`id` ='"+docID+"'");
+//            
+//            if(rs.next()){
+//                jTextField1.setText(rs.getString("doctor.id"));
+//                jTextField2.setText(rs.getString("doctor.first_name"));
+//                jTextField3.setText(rs.getString("doctor.last_name"));
+//                jTextField4.setText(rs.getString("doctor.email"));
+//                jTextField5.setText(rs.getString("doctor.mobile"));
+//            }else{
+//                
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        
+    }//GEN-LAST:event_jList1MouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
@@ -625,6 +843,7 @@ public class DoctorReg extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel52;
     private javax.swing.JLabel jLabel53;
     private javax.swing.JLabel jLabel54;
+    private javax.swing.JList<String> jList1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -633,8 +852,11 @@ public class DoctorReg extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
+    private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
