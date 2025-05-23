@@ -1,20 +1,24 @@
-
 package com.algounix.Panel.Doctor;
 
 import com.algounix.Model.MySQL;
+import java.awt.Color;
 import java.sql.ResultSet;
 import java.util.HashMap;
 import java.util.Vector;
+import javax.swing.ButtonModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 
 public class DoctorReg extends javax.swing.JPanel {
-    
+
     HashMap<String, String> doctorTypeMap = new HashMap<>();
-    HashMap<String, String> doctorUnitsMap = new HashMap<>();
-    
+    HashMap<String, String> chanellingRoomsMap = new HashMap<>();
+    HashMap<String, String> opdRoomsMap = new HashMap<>();
+    HashMap<String, String> wardRoomsMap = new HashMap<>();
+
     private static String PREFIX = "DOC";
-    
+
     private DefaultListModel mod;
 
     public DoctorReg() {
@@ -22,8 +26,11 @@ public class DoctorReg extends javax.swing.JPanel {
         loadDoctorTypes();
         setGUI();
         loadSuggession();
+        loadChanellingRooms();
+        loadOPDRooms();
+        loadWardRooms();
     }
-    
+
     private void loadDoctorTypes() {
         try {
             ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `doctor_type`");
@@ -42,20 +49,77 @@ public class DoctorReg extends javax.swing.JPanel {
             e.printStackTrace();
         }
     }
-    
-    private void setGUI(){
+
+    private void loadChanellingRooms() {
+        try {
+            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `room` WHERE `room_type_id` = '6'");
+
+            Vector<String> vector = new Vector();
+            vector.add("Select");
+
+            while (resultSet.next()) {
+                vector.add(resultSet.getString("id"));
+                chanellingRoomsMap.put(resultSet.getString("discription"), resultSet.getString("id"));
+            }
+
+            DefaultComboBoxModel model = new DefaultComboBoxModel(vector);
+            jComboBox3.setModel(model);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loadOPDRooms() {
+        try {
+            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `room` WHERE `room_type_id` = '5'");
+
+            Vector<String> vector = new Vector();
+            vector.add("Select");
+
+            while (resultSet.next()) {
+                vector.add(resultSet.getString("id"));
+                opdRoomsMap.put(resultSet.getString("discription"), resultSet.getString("id"));
+            }
+
+            DefaultComboBoxModel model = new DefaultComboBoxModel(vector);
+            jComboBox9.setModel(model);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loadWardRooms() {
+        try {
+            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `room` WHERE `room_type_id` IN (1, 2, 3, 4)");
+
+            Vector<String> vector = new Vector();
+            vector.add("Select");
+
+            while (resultSet.next()) {
+                vector.add(resultSet.getString("id"));
+                wardRoomsMap.put(resultSet.getString("discription"), resultSet.getString("id"));
+            }
+
+            DefaultComboBoxModel model = new DefaultComboBoxModel(vector);
+            jComboBox8.setModel(model);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void setGUI() {
         jComboBox3.setEnabled(false);
         jComboBox8.setEnabled(false);
         jComboBox9.setEnabled(false);
-        
+
         jFormattedTextField1.setEnabled(false);
         jFormattedTextField2.setEnabled(false);
         jFormattedTextField3.setEnabled(false);
-        
+
         jButton2.setEnabled(false);
         jTextField1.setText(getNextId());
     }
-    
+
     private static String getNextId() {
         String lastID = getLastIdFromDatabase();
         if (lastID == null) {
@@ -83,7 +147,7 @@ public class DoctorReg extends javax.swing.JPanel {
         }
         return lastID;
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -112,6 +176,9 @@ public class DoctorReg extends javax.swing.JPanel {
         jLabel48 = new javax.swing.JLabel();
         jRadioButton1 = new javax.swing.JRadioButton();
         jRadioButton2 = new javax.swing.JRadioButton();
+        jLabel42 = new javax.swing.JLabel();
+        jButton4 = new javax.swing.JButton();
+        jPasswordField1 = new javax.swing.JPasswordField();
         jPanel5 = new javax.swing.JPanel();
         jLabel31 = new javax.swing.JLabel();
         jComboBox3 = new javax.swing.JComboBox<>();
@@ -245,6 +312,18 @@ public class DoctorReg extends javax.swing.JPanel {
         jRadioButton2.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
         jRadioButton2.setText("Female");
 
+        jLabel42.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
+        jLabel42.setText("Password");
+
+        jButton4.setText("View");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        jPasswordField1.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -254,24 +333,6 @@ public class DoctorReg extends javax.swing.JPanel {
                 .addGap(30, 30, 30)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jLabel47, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel40, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-                            .addComponent(jLabel45, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(6, 6, 6)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel3Layout.createSequentialGroup()
-                                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(jLabel48, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(jRadioButton1)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
-                                    .addComponent(jRadioButton2))
-                                .addComponent(jTextField4))
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel34, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -280,10 +341,38 @@ public class DoctorReg extends javax.swing.JPanel {
                             .addComponent(jLabel46, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel41, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
-                            .addComponent(jTextField5))))
-                .addGap(14, 14, 14))
+                        .addComponent(jTextField5, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel42, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jLabel47, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel40, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                                .addComponent(jLabel45, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(6, 6, 6)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextField4)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(124, 124, 124)
+                                .addComponent(jTextField3))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jPasswordField1)
+                                    .addComponent(jComboBox1, 0, 165, Short.MAX_VALUE))
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jLabel48, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jRadioButton1)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jRadioButton2))
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jButton4)
+                                        .addGap(0, 0, Short.MAX_VALUE)))))))
+                .addGap(30, 30, 30))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -318,7 +407,12 @@ public class DoctorReg extends javax.swing.JPanel {
                     .addComponent(jLabel48)
                     .addComponent(jRadioButton2)
                     .addComponent(jRadioButton1))
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel42)
+                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         jRadioButton1.setActionCommand("1");
@@ -337,6 +431,11 @@ public class DoctorReg extends javax.swing.JPanel {
 
         jFormattedTextField3.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
         jFormattedTextField3.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+        jFormattedTextField3.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jFormattedTextField3KeyReleased(evt);
+            }
+        });
 
         jLabel54.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
         jLabel54.setText("Doctor Charges");
@@ -399,6 +498,11 @@ public class DoctorReg extends javax.swing.JPanel {
 
         jFormattedTextField2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
         jFormattedTextField2.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+        jFormattedTextField2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jFormattedTextField2KeyReleased(evt);
+            }
+        });
 
         jLabel53.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
         jLabel53.setText("Charge For Day");
@@ -468,6 +572,11 @@ public class DoctorReg extends javax.swing.JPanel {
 
         jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
         jFormattedTextField1.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+        jFormattedTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jFormattedTextField1KeyReleased(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -534,6 +643,11 @@ public class DoctorReg extends javax.swing.JPanel {
 
         jButton1.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
         jButton1.setText("Add Doctor");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -616,7 +730,7 @@ public class DoctorReg extends javax.swing.JPanel {
                     .addComponent(jCheckBox2)
                     .addComponent(jCheckBox3)
                     .addComponent(jCheckBox1))
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel8.setBackground(new java.awt.Color(255, 255, 255));
@@ -648,8 +762,8 @@ public class DoctorReg extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPanel7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, 577, Short.MAX_VALUE)
-                            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 577, Short.MAX_VALUE)
+                            .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, 552, Short.MAX_VALUE)
+                            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 552, Short.MAX_VALUE)
                             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
@@ -663,17 +777,17 @@ public class DoctorReg extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -681,72 +795,72 @@ public class DoctorReg extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jCheckBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBox1ItemStateChanged
-        if(jCheckBox1.isSelected()){
+        if (jCheckBox1.isSelected()) {
             jComboBox3.setEnabled(true);
             jFormattedTextField3.setEnabled(true);
-        }else{
+        } else {
             jComboBox3.setEnabled(false);
             jFormattedTextField3.setEnabled(false);
         }
     }//GEN-LAST:event_jCheckBox1ItemStateChanged
 
     private void jCheckBox2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBox2ItemStateChanged
-        if(jCheckBox2.isSelected()){
+        if (jCheckBox2.isSelected()) {
             jComboBox9.setEnabled(true);
             jFormattedTextField2.setEnabled(true);
-        }else{
+        } else {
             jComboBox9.setEnabled(false);
             jFormattedTextField2.setEnabled(false);
         }
     }//GEN-LAST:event_jCheckBox2ItemStateChanged
 
     private void jCheckBox3ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBox3ItemStateChanged
-        if(jCheckBox3.isSelected()){
+        if (jCheckBox3.isSelected()) {
             jComboBox8.setEnabled(true);
             jFormattedTextField1.setEnabled(true);
-        }else{
+        } else {
             jComboBox8.setEnabled(false);
             jFormattedTextField1.setEnabled(false);
         }
     }//GEN-LAST:event_jCheckBox3ItemStateChanged
 
-    private void clearAll(){
+    private void clearAll() {
         loadDoctorTypes();
         setGUI();
         jCheckBox1.setSelected(false);
         jCheckBox2.setSelected(false);
         jCheckBox3.setSelected(false);
-        
+
         jLabel2.setText("Type Amount");
         jLabel3.setText("Type Amount");
         jLabel4.setText("Type Amount");
         jLabel49.setText("Room Type");
-        
+
         jComboBox1.setSelectedIndex(0);
         buttonGroup1.clearSelection();
-        
+
         jTextField1.setText("");
         jTextField2.setText("");
         jTextField3.setText("");
         jTextField4.setText("");
         jTextField5.setText("");
-        
+
         jComboBox3.setSelectedIndex(0);
         jComboBox8.setSelectedIndex(0);
         jComboBox9.setSelectedIndex(0);
-        
+
         jFormattedTextField1.setText("");
         jFormattedTextField2.setText("");
         jFormattedTextField3.setText("");
     }
-    
+
     //  Set jList for Load Suggession
     private void loadSuggession() {
         jPopupMenu1.add(jPanel9);
         mod = new DefaultListModel();
         jList1.setModel(mod);
     }
-    
+
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         clearAll();
     }//GEN-LAST:event_jButton3ActionPerformed
@@ -803,12 +917,157 @@ public class DoctorReg extends javax.swing.JPanel {
 //        
     }//GEN-LAST:event_jList1MouseClicked
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String docID = jTextField1.getText();
+        String fname = jTextField2.getText();
+        String lname = jTextField3.getText();
+        String email = jTextField4.getText();
+        String mobile = jTextField5.getText();
+        String docType = String.valueOf(jComboBox1.getSelectedItem());
+        ButtonModel gender = buttonGroup1.getSelection();
+        String password = String.valueOf(jPasswordField1.getPassword());
+
+        String unitsID;
+        String roomNo;
+        String charges;
+
+        if (docID.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter Doctor ID ", "Warning", JOptionPane.INFORMATION_MESSAGE);
+        } else if (fname.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter Doctor First Name ", "Warning", JOptionPane.INFORMATION_MESSAGE);
+        } else if (lname.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter Doctor Last Name ", "Warning", JOptionPane.INFORMATION_MESSAGE);
+        } else if (email.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter Doctor Email", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (!email.matches("^(?=.{1,64}@)[A-Za-z0-9\\+_-]+(\\.[A-Za-z0-9\\+_-]+)*@"
+                + "[^-][A-Za-z0-9\\+-]+(\\.[A-Za-z0-9\\+-]+)*(\\.[A-Za-z]{2,})$")) {
+            JOptionPane.showMessageDialog(this, "Invalid Email", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (mobile.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter Doctor Mobile Number", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (!mobile.matches("^07[01245678]{1}[0-9]{7}$")) {
+            JOptionPane.showMessageDialog(this, "Please Enter Valid Mobile Number", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (gender == null) {
+            JOptionPane.showMessageDialog(this, "Please Select Gender", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (docType.equals("Select")) {
+            JOptionPane.showMessageDialog(this, "Please Select Doctor Type", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (password.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter Password for Login", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (!jCheckBox1.isSelected() && !jCheckBox2.isSelected() && !jCheckBox3.isSelected()) {
+            JOptionPane.showMessageDialog(this, "Please Select Least One Service Details", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else {
+            String selectGender = gender.getActionCommand();
+            try {
+                ResultSet rs = MySQL.executeSearch("SELECT * FROM `doctor` WHERE `id` = '" + docID + "' OR `email` = '" + email + "'");
+                if (rs.next()) {
+                    JOptionPane.showMessageDialog(this, "Doctor Already Added", "Warning", JOptionPane.WARNING_MESSAGE);
+                } else {
+                    MySQL.executeIUD("INSERT INTO `doctor` VALUES('" + docID + "','" + fname + "','" + lname + "','" + email + "','" + mobile + "','" + doctorTypeMap.get(docType) + "','" + selectGender + "','" + password + "','1')");
+                    if (jCheckBox1.isSelected()) {
+                        unitsID = "2";
+                        roomNo = String.valueOf(jComboBox3.getSelectedItem());
+                        charges = jFormattedTextField3.getText();
+                        if (roomNo.equals("Select")) {
+                            JOptionPane.showMessageDialog(this, "Pleasse Select Room for Register", "Warning", JOptionPane.WARNING_MESSAGE);
+                        } else if (charges.isEmpty()) {
+                            JOptionPane.showMessageDialog(this, "Please Enter Doctor Charge Amount", "Warning", JOptionPane.WARNING_MESSAGE);
+                        } else {
+                            MySQL.executeIUD("INSERT INTO `doctor_has_units` (`doctor_id`,`units_id`,`doctor_charges`,`room_id`)"
+                                    + "VALUES ('" + docID + "','" + unitsID + "','" + charges + "','" + roomNo + "')");
+                        }
+                    }
+                    if (jCheckBox2.isSelected()) {
+                        unitsID = "1";
+                        roomNo = String.valueOf(jComboBox9.getSelectedItem());
+                        charges = jFormattedTextField2.getText();
+                        if (roomNo.equals("Select")) {
+                            JOptionPane.showMessageDialog(this, "Pleasse Select Room for Register", "Warning", JOptionPane.WARNING_MESSAGE);
+                        } else if (charges.isEmpty()) {
+                            JOptionPane.showMessageDialog(this, "Please Enter Doctor Charge Amount", "Warning", JOptionPane.WARNING_MESSAGE);
+                        } else {
+                            MySQL.executeIUD("INSERT INTO `doctor_has_units` (`doctor_id`,`units_id`,`doctor_charges`,`room_id`)"
+                                    + "VALUES ('" + docID + "','" + unitsID + "','" + charges + "','" + roomNo + "')");
+                        }
+                    }
+                    if (jCheckBox3.isSelected()) {
+                        unitsID = "3";
+                        roomNo = String.valueOf(jComboBox8.getSelectedItem());
+                        charges = jFormattedTextField1.getText();
+                        if (roomNo.equals("Select")) {
+                            JOptionPane.showMessageDialog(this, "Pleasse Select Room for Register", "Warning", JOptionPane.WARNING_MESSAGE);
+                        } else if (charges.isEmpty()) {
+                            JOptionPane.showMessageDialog(this, "Please Enter Doctor Charge Amount", "Warning", JOptionPane.WARNING_MESSAGE);
+                        } else {
+                            MySQL.executeIUD("INSERT INTO `doctor_has_units` (`doctor_id`,`units_id`,`doctor_charges`,`room_id`)"
+                                    + "VALUES ('" + docID + "','" + unitsID + "','" + charges + "','" + roomNo + "')");
+                        }
+                    }
+                    JOptionPane.showMessageDialog(this, "Doctor Added Successfully", "Success", JOptionPane.WARNING_MESSAGE);
+                    clearAll();
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jFormattedTextField3KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jFormattedTextField3KeyReleased
+        String amount = jFormattedTextField3.getText();
+        if (amount.isEmpty()) {
+            jLabel4.setText("Type Amount");
+            jLabel4.setForeground(Color.black);
+        } else if (amount.matches("^(0|[1-9]\\d*)?(\\.\\d+)?(?<=\\d)$")) {
+            jLabel4.setText("Valid Amount");
+            jLabel4.setForeground(Color.green);
+        } else {
+            jLabel4.setText("Invalid Amount");
+            jLabel4.setForeground(Color.red);
+        }
+    }//GEN-LAST:event_jFormattedTextField3KeyReleased
+
+    private void jFormattedTextField2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jFormattedTextField2KeyReleased
+        String amount = jFormattedTextField2.getText();
+        if (amount.isEmpty()) {
+            jLabel3.setText("Type Amount");
+            jLabel3.setForeground(Color.black);
+        } else if (amount.matches("^(0|[1-9]\\d*)?(\\.\\d+)?(?<=\\d)$")) {
+            jLabel3.setText("Valid Amount");
+            jLabel3.setForeground(Color.green);
+        } else {
+            jLabel3.setText("Invalid Amount");
+            jLabel3.setForeground(Color.red);
+        }
+    }//GEN-LAST:event_jFormattedTextField2KeyReleased
+
+    private void jFormattedTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jFormattedTextField1KeyReleased
+        String amount = jFormattedTextField2.getText();
+        if (amount.isEmpty()) {
+            jLabel2.setText("Type Amount");
+            jLabel2.setForeground(Color.black);
+        } else if (amount.matches("^(0|[1-9]\\d*)?(\\.\\d+)?(?<=\\d)$")) {
+            jLabel2.setText("Valid Amount");
+            jLabel2.setForeground(Color.green);
+        } else {
+            jLabel2.setText("Invalid Amount");
+            jLabel2.setForeground(Color.red);
+        }
+    }//GEN-LAST:event_jFormattedTextField1KeyReleased
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        if (jPasswordField1.getEchoChar() == '\u0000') {
+            jPasswordField1.setEchoChar('\u2022');
+        } else {
+            jPasswordField1.setEchoChar('\u0000');
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JCheckBox jCheckBox2;
     private javax.swing.JCheckBox jCheckBox3;
@@ -831,6 +1090,7 @@ public class DoctorReg extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel40;
     private javax.swing.JLabel jLabel41;
+    private javax.swing.JLabel jLabel42;
     private javax.swing.JLabel jLabel43;
     private javax.swing.JLabel jLabel44;
     private javax.swing.JLabel jLabel45;
@@ -853,6 +1113,7 @@ public class DoctorReg extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;
