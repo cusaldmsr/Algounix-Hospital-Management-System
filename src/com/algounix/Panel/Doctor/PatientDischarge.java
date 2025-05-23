@@ -585,7 +585,7 @@ public class PatientDischarge extends javax.swing.JPanel {
         jLabel29.setText("Not Upadted");
         jLabel29.setForeground(Color.red);
 
-        if (clickedCount == 2) {
+        if (clickedCount == 1) {
             int selectedRow = jTable1.getSelectedRow();
             String room_id = String.valueOf(jTable1.getValueAt(selectedRow, 4));
             String patient_id = String.valueOf(jTable1.getValueAt(selectedRow, 1));

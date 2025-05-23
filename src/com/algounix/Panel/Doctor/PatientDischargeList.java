@@ -13,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Vector;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -27,9 +28,15 @@ import net.sf.jasperreports.view.JasperViewer;
  * @author sadee
  */
 public class PatientDischargeList extends javax.swing.JPanel {
+    
+    HashMap<String, Integer> appoinmentStatusMap;
+    
+    private boolean isPaymentSuccess;
 
     public PatientDischargeList() {
         initComponents();
+        this.appoinmentStatusMap = new HashMap();
+        loadAppoinmentStatus();
         loadPatients();
         loadGUI();
     }
@@ -39,13 +46,26 @@ public class PatientDischargeList extends javax.swing.JPanel {
     String doctorHasUnitID;
     String admitedID;
     String invoiceID;
+    
+    //load appoinment statuses to hashmap
+    private void loadAppoinmentStatus() {
+        try {
+            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `appoinment_status`");
+
+            while (resultSet.next()) {
+                appoinmentStatusMap.put(resultSet.getString("name"), resultSet.getInt("id"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     //  Load discharged Patients to Table and Filter with Search
     private void loadPatients() {
         try {
             String query = "SELECT * FROM `patient_admit` INNER JOIN `patient` ON `patient_admit`.`patient_id` = `patient`.`id`"
                     + "INNER JOIN `doctor_has_units` ON `patient_admit`.`doctor_has_units_id` = `doctor_has_units`.`id`"
-                    + "INNER JOIN `doctor` ON `doctor_has_units`.`doctor_id` = `doctor`.`id` WHERE `patient_admit`.`appoinment_status_id` = '5'";
+                    + "INNER JOIN `doctor` ON `doctor_has_units`.`doctor_id` = `doctor`.`id` WHERE `patient_admit`.`appoinment_status_id` = '"+appoinmentStatusMap.get("Discharge")+"'";
 
             String name = jTextField1.getText();
             query += "AND (`patient`.`first_name` LIKE '" + name + "%' OR `patient`.`last_name` LIKE '" + name + "%')  ";
@@ -943,8 +963,6 @@ public class PatientDischargeList extends javax.swing.JPanel {
                 MySQL.executeIUD("INSERT INTO `patient_discharge` (`discharge_date`,`spend_days`,`patient_admit_id`,`hospital_invoice_id`,`employee_id`)"
                         + "VALUES ('" + date + "','" + spendDays + "','" + this.admitedID + "','" + this.invoiceID + "','" + SignIn.empID + "')");
 
-                //  3 is Complete Status
-                MySQL.executeIUD("UPDATE `patient_admit` SET `appoinment_status_id` = '3' WHERE `id` = '" + this.admitedID + "'");
 
                 JOptionPane.showMessageDialog(this, "Patient Discharged Complete", "Succeess", JOptionPane.INFORMATION_MESSAGE);
                 clearLabels();
