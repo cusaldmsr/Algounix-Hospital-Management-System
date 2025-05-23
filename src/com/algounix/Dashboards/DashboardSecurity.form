@@ -114,9 +114,11 @@
                               <Component id="jLabel39" alignment="1" min="-2" pref="228" max="-2" attributes="0"/>
                               <Component id="AdminDashboardbtn1" alignment="1" min="-2" pref="228" max="-2" attributes="0"/>
                               <Component id="jLabel40" alignment="1" min="-2" pref="228" max="-2" attributes="0"/>
-                              <Component id="StockListbtn" alignment="1" max="32767" attributes="0"/>
-                              <Component id="Stockbtn" alignment="1" pref="264" max="32767" attributes="0"/>
-                              <Component id="StockTransferbtn" alignment="1" max="32767" attributes="0"/>
+                              <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="Stockbtn" alignment="1" pref="228" max="32767" attributes="0"/>
+                                  <Component id="StockTransferbtn" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="StockListbtn" alignment="1" max="32767" attributes="0"/>
+                              </Group>
                           </Group>
                       </Group>
                   </Group>

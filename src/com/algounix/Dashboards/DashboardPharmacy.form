@@ -113,12 +113,13 @@
                               <Component id="AdminDashboardbtn" alignment="1" min="-2" pref="228" max="-2" attributes="0"/>
                               <Component id="jLabel39" alignment="1" min="-2" pref="228" max="-2" attributes="0"/>
                               <Component id="AdminDashboardbtn1" alignment="1" min="-2" pref="228" max="-2" attributes="0"/>
-                              <Component id="AdminDashboardbtn2" alignment="1" min="-2" pref="228" max="-2" attributes="0"/>
                               <Component id="AdminDashboardbtn3" alignment="1" min="-2" pref="228" max="-2" attributes="0"/>
-                              <Component id="StockListbtn1" alignment="1" max="32767" attributes="0"/>
-                              <Component id="StockListbtn" alignment="1" max="32767" attributes="0"/>
-                              <Component id="StockTransferbtn" alignment="1" pref="264" max="32767" attributes="0"/>
-                              <Component id="Stockbtn" alignment="1" max="32767" attributes="0"/>
+                              <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="StockListbtn1" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="StockListbtn" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="StockTransferbtn" alignment="1" pref="228" max="32767" attributes="0"/>
+                                  <Component id="Stockbtn" alignment="1" max="32767" attributes="0"/>
+                              </Group>
                           </Group>
                       </Group>
                   </Group>
@@ -133,8 +134,6 @@
                           <Component id="jLabel2" min="-2" pref="44" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="AdminDashboardbtn1" min="-2" pref="44" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="AdminDashboardbtn2" min="-2" pref="44" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="AdminDashboardbtn3" min="-2" pref="44" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -265,17 +264,6 @@
                   </Properties>
                   <Events>
                     <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="AdminDashboardbtn1MouseClicked"/>
-                  </Events>
-                </Component>
-                <Component class="javax.swing.JLabel" name="AdminDashboardbtn2">
-                  <Properties>
-                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Poppins" size="13" style="0"/>
-                    </Property>
-                    <Property name="text" type="java.lang.String" value="Invoice Re-Print"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="AdminDashboardbtn2MouseClicked"/>
                   </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="AdminDashboardbtn3">

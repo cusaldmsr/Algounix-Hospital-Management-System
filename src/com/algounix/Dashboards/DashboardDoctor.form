@@ -119,8 +119,10 @@
                               <Component id="EmployeeRegbtn3" alignment="1" min="-2" pref="228" max="-2" attributes="0"/>
                               <Component id="EmployeeRegbtn1" alignment="1" min="-2" pref="228" max="-2" attributes="0"/>
                               <Component id="EmployeeRegbtn4" alignment="1" min="-2" pref="228" max="-2" attributes="0"/>
-                              <Component id="PatientListbtn" alignment="1" max="32767" attributes="0"/>
-                              <Component id="PatientReportbtn" alignment="1" pref="228" max="32767" attributes="0"/>
+                              <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="PatientReportbtn" alignment="1" pref="228" max="32767" attributes="0"/>
+                                  <Component id="PatientListbtn" alignment="1" max="32767" attributes="0"/>
+                              </Group>
                           </Group>
                       </Group>
                   </Group>

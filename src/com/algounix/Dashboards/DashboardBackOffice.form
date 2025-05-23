@@ -112,19 +112,23 @@
                               <Component id="jLabel1" alignment="1" pref="264" max="32767" attributes="0"/>
                               <Component id="BackOfficeDashboard" alignment="1" min="-2" pref="228" max="-2" attributes="0"/>
                               <Component id="jLabel39" alignment="1" min="-2" pref="228" max="-2" attributes="0"/>
-                              <Component id="EmployeeReportbtn2" alignment="1" max="32767" attributes="0"/>
-                              <Component id="AddProduct" alignment="1" max="32767" attributes="0"/>
-                              <Component id="EmployeeReportbtn" alignment="1" max="32767" attributes="0"/>
-                              <Component id="Stock" alignment="1" max="32767" attributes="0"/>
-                              <Component id="GRNbtn" alignment="1" max="32767" attributes="0"/>
-                              <Component id="GRNbtn1" alignment="1" max="32767" attributes="0"/>
-                              <Component id="EmployeeReportbtn1" alignment="1" pref="264" max="32767" attributes="0"/>
-                              <Component id="EmployeeReportbtn3" alignment="1" max="32767" attributes="0"/>
-                              <Component id="Stock1" alignment="1" max="32767" attributes="0"/>
-                              <Component id="BrandReg" alignment="1" max="32767" attributes="0"/>
-                              <Component id="CompanyReg" alignment="1" pref="264" max="32767" attributes="0"/>
-                              <Component id="SupplierList" alignment="1" max="32767" attributes="0"/>
-                              <Component id="SupplierReg" alignment="1" max="32767" attributes="0"/>
+                              <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="EmployeeReportbtn3" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="EmployeeReportbtn2" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="AddProduct" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="EmployeeReportbtn1" alignment="1" pref="228" max="32767" attributes="0"/>
+                                  <Component id="EmployeeReportbtn" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="Stock1" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="Stock" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="GRNbtn1" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="GRNbtn" alignment="1" max="32767" attributes="0"/>
+                              </Group>
+                              <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="BrandReg" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="CompanyReg" alignment="1" pref="228" max="32767" attributes="0"/>
+                                  <Component id="SupplierList" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="SupplierReg" alignment="1" max="32767" attributes="0"/>
+                              </Group>
                           </Group>
                       </Group>
                   </Group>
@@ -205,7 +209,7 @@
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/com/algounix/MenuIcons/Report.png"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Supplier"/>
+                    <Property name="text" type="java.lang.String" value="Outsiders"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="BackOfficeDashboard">
