@@ -642,7 +642,7 @@ public class PatientDischarge extends javax.swing.JPanel {
 
                 //Update status in admit patien table
                 MySQL.executeIUD("UPDATE `patient_admit` SET `appoinment_status_id`='" + dischargeStatusID + "' "
-                        + "WHERE `patient_id`='" + patientID + "' AND `presciption_id`='" + prescriptionID + "' AND "
+                        + "WHERE `patient_id`='" + patientID + "' AND `prescription_id`='" + prescriptionID + "' AND "
                         + "`room_id`='" + roomID + "'");
 
                 JOptionPane.showMessageDialog(this, "Status updated to discharge successfully", "Info", JOptionPane.INFORMATION_MESSAGE);
