@@ -11,6 +11,7 @@ import java.util.Vector;
 import java.sql.ResultSet;
 import java.util.HashMap;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
@@ -28,18 +29,19 @@ public class EmployeeList extends javax.swing.JPanel {
 
     private static HashMap<String, String> empType = new HashMap<>();
     private static HashMap<String, String> unit = new HashMap<>();
+    private static HashMap<String, String> empStatusMap = new HashMap<>();
 
     public EmployeeList() {
         initComponents();
         loadDeatails();
-        loadEmpType();
+        loadEmpStatus();
     }
 
-    private void loadEmpType() {
+    private void loadEmpStatus() {
 
         try {
 
-            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `employee_type`");
+            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `employee_status`");
 
             Vector<String> vector = new Vector();
             vector.add("Select");
@@ -47,7 +49,7 @@ public class EmployeeList extends javax.swing.JPanel {
             while (resultSet.next()) {
 
                 vector.add(resultSet.getString("name"));
-                empType.put(resultSet.getString("name"), resultSet.getString("id"));
+                empStatusMap.put(resultSet.getString("name"), resultSet.getString("id"));
 
             }
 
@@ -76,7 +78,6 @@ public class EmployeeList extends javax.swing.JPanel {
 
             }
 
-           
             ResultSet rs = MySQL.executeSearch(query);
 
             DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
@@ -119,6 +120,8 @@ public class EmployeeList extends javax.swing.JPanel {
         jLabel4 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
         jTextField1 = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -173,6 +176,18 @@ public class EmployeeList extends javax.swing.JPanel {
             }
         });
 
+        jLabel5.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setText("Employee Status");
+
+        jButton2.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+        jButton2.setText("Change Employee Status");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -182,11 +197,15 @@ public class EmployeeList extends javax.swing.JPanel {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(84, 84, 84)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jTextField1)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 254, Short.MAX_VALUE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(30, 30, 30))
+                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 234, Short.MAX_VALUE))
+                .addGap(21, 21, 21))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -194,11 +213,13 @@ public class EmployeeList extends javax.swing.JPanel {
                 .addGap(15, 15, 15)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jLabel4))
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2))
                 .addGap(15, 15, 15))
         );
 
@@ -221,6 +242,11 @@ public class EmployeeList extends javax.swing.JPanel {
             }
         });
         jTable1.getTableHeader().setReorderingAllowed(false);
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -320,7 +346,7 @@ public class EmployeeList extends javax.swing.JPanel {
 
     private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
         // TODO add your handling code here:
-       loadDeatails();
+        loadDeatails();
 
     }//GEN-LAST:event_jTextField1KeyReleased
 
@@ -331,13 +357,48 @@ public class EmployeeList extends javax.swing.JPanel {
 
     }//GEN-LAST:event_jComboBox1ItemStateChanged
 
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        int row = jTable1.getSelectedRow();
+        String status = String.valueOf(jTable1.getValueAt(row, 8));
+        jLabel5.setText(status);
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        int row = jTable1.getSelectedRow();
+        if (row != -1) {
+            String empID = String.valueOf(jTable1.getValueAt(row, 0));
+            try {
+                ResultSet rs = MySQL.executeSearch("SELECT * FROM `employee` WHERE `id` = '" + empID + "'");
+                if (rs.next()) {
+                    if (jLabel5.getText().equals("Active - Access Allow") || jLabel5.getText().equals("Active")) {
+                        MySQL.executeIUD("UPDATE `employee` SET `employee_status_id`='2' WHERE `id`='" + empID + "'");
+                        JOptionPane.showMessageDialog(this, "Employee Status Changed", "Success", JOptionPane.WARNING_MESSAGE);
+                    } else {
+                        MySQL.executeIUD("UPDATE `employee` SET `employee_status_id`='0' WHERE `id`='" + empID + "'");
+                        JOptionPane.showMessageDialog(this, "Employee Status Changed", "Success", JOptionPane.WARNING_MESSAGE);
+                    }
+                    loadDeatails();
+                    jLabel5.setText("Employee Status");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Something Went Wrong. Please Try Again Later", "Warning", JOptionPane.WARNING_MESSAGE);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Please Select a Row First", "Warning", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
