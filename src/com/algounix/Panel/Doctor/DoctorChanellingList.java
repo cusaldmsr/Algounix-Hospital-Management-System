@@ -9,10 +9,13 @@ import com.algounix.Model.MySQL;
 import java.io.InputStream;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -30,11 +33,14 @@ public class DoctorChanellingList extends javax.swing.JPanel {
     HashMap<String, String> unitsMap = new HashMap<>();
     HashMap<String, String> statusMap = new HashMap<>();
 
+    String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+
     public DoctorChanellingList() {
         initComponents();
         loadDoctors();
         loadStatus();
         loadAppoinmentDetails();
+        jButton1.setEnabled(false);
     }
 
     //  Load Available Doctors for ComboBox
@@ -102,6 +108,10 @@ public class DoctorChanellingList extends javax.swing.JPanel {
         jLabel39 = new javax.swing.JLabel();
         jLabel38 = new javax.swing.JLabel();
         jLabel43 = new javax.swing.JLabel();
+        jLabel45 = new javax.swing.JLabel();
+        jLabel44 = new javax.swing.JLabel();
+        jLabel49 = new javax.swing.JLabel();
+        jLabel48 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel30 = new javax.swing.JLabel();
         jLabel31 = new javax.swing.JLabel();
@@ -109,11 +119,8 @@ public class DoctorChanellingList extends javax.swing.JPanel {
         jComboBox1 = new javax.swing.JComboBox<>();
         jComboBox2 = new javax.swing.JComboBox<>();
         jPanel7 = new javax.swing.JPanel();
-        jLabel44 = new javax.swing.JLabel();
-        jLabel45 = new javax.swing.JLabel();
-        jLabel48 = new javax.swing.JLabel();
-        jLabel49 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(160, 233, 255));
 
@@ -160,6 +167,11 @@ public class DoctorChanellingList extends javax.swing.JPanel {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(jTable1);
@@ -365,10 +377,10 @@ public class DoctorChanellingList extends javax.swing.JPanel {
         jLabel42.setText("Room Type");
 
         jLabel37.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
-        jLabel37.setText("Patient Blood Group Here");
+        jLabel37.setText("Doctor Name Here");
 
         jLabel41.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
-        jLabel41.setText("Patient NIC Here");
+        jLabel41.setText("Room No Here");
 
         jLabel36.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
         jLabel36.setText("Doctor Name");
@@ -377,38 +389,58 @@ public class DoctorChanellingList extends javax.swing.JPanel {
         jLabel40.setText("Room No");
 
         jLabel35.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
-        jLabel35.setText("Patient Name Here");
+        jLabel35.setText("Doctor ID Here");
 
         jLabel39.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
-        jLabel39.setText("Patient Age Here");
+        jLabel39.setText("Doctor Mobile Number Here");
 
         jLabel38.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
         jLabel38.setText("Doctor Mobile");
 
         jLabel43.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
-        jLabel43.setText("Gender Here");
+        jLabel43.setText("Room Type Here");
+
+        jLabel45.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+        jLabel45.setText("Time Slot Here");
+
+        jLabel44.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
+        jLabel44.setText("Time Slot");
+
+        jLabel49.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
+        jLabel49.setText("Appoinment Date");
+
+        jLabel48.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+        jLabel48.setText("Date Here");
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel29, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addGap(30, 30, 30)
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jLabel42, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel34, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel36, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel38, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel40, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jLabel41, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel39, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel37, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 435, Short.MAX_VALUE)
-                    .addComponent(jLabel35, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel43, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addComponent(jLabel49)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel48, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jLabel42, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel34, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel36, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel38, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel40, javax.swing.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE)
+                            .addComponent(jLabel44, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(26, 26, 26)
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel37, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel39, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 421, Short.MAX_VALUE)
+                            .addComponent(jLabel41, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel43, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel45, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel35, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(jLabel29, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -437,7 +469,15 @@ public class DoctorChanellingList extends javax.swing.JPanel {
                         .addComponent(jLabel41)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel43)))
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel44)
+                    .addComponent(jLabel45))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel49)
+                    .addComponent(jLabel48))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
@@ -502,52 +542,41 @@ public class DoctorChanellingList extends javax.swing.JPanel {
 
         jPanel7.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel44.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
-        jLabel44.setText("Time Slot");
-
-        jLabel45.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
-        jLabel45.setText("Patient Name Here");
-
-        jLabel48.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
-        jLabel48.setText("Patient Name Here");
-
-        jLabel49.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
-        jLabel49.setText("Appoinment Date");
-
         jButton1.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
         jButton1.setText("Cancle Appoinment");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
+        jButton3.setText("Clear All");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(jLabel44, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel45, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel49)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel48, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(79, 79, 79)
+                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(195, 195, 195))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel7Layout.createSequentialGroup()
-                .addGap(24, 24, 24)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                .addContainerGap(16, Short.MAX_VALUE)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel44)
-                    .addComponent(jLabel45)
-                    .addComponent(jLabel49)
-                    .addComponent(jLabel48))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18))
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(15, 15, 15))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -579,9 +608,9 @@ public class DoctorChanellingList extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -653,6 +682,23 @@ public class DoctorChanellingList extends javax.swing.JPanel {
         Vector<String> emptyComboBox = new Vector<>();
         emptyComboBox.add("Select");
         jComboBox3.setModel(new DefaultComboBoxModel<>(emptyComboBox));
+
+        jTextField1.setText("");
+        jLabel10.setText("Patient Name Here");
+        jLabel12.setText("Patient Blood Group Here");
+        jLabel14.setText("Patient Age Here");
+        jLabel19.setText("Patient NIC Here");
+        jLabel20.setText("Gender Here");
+
+        jLabel35.setText("Doctor ID Here");
+        jLabel37.setText("Doctor Name Here");
+        jLabel39.setText("Doctor Mobile Number Here");
+        jLabel41.setText("Room No Here");
+        jLabel43.setText("Room Type Here");
+        jLabel46.setText("Time Slot Here");
+        jLabel48.setText("Date Here");
+
+        jButton1.setEnabled(false);
     }
 
     //  Change Loaded Details in Unit ComboBox
@@ -695,8 +741,6 @@ public class DoctorChanellingList extends javax.swing.JPanel {
     //  Load data of All Appoinments in today
     private void loadAppoinmentDetails() {
         try {
-
-            String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 
             String query = "SELECT * FROM `appoinment` "
                     + "INNER JOIN `doctor_has_units` ON `appoinment`.`doctor_has_units_id` = `doctor_has_units`.`id`"
@@ -777,10 +821,109 @@ public class DoctorChanellingList extends javax.swing.JPanel {
         loadAppoinmentDetails();
     }//GEN-LAST:event_jComboBox3ItemStateChanged
 
+    //  Search and Set Patient Details to Labels
+    private void searchPatient(String id) {
+        try {
+            ResultSet rs = MySQL.executeSearch("SELECT * FROM `patient` "
+                    + "INNER JOIN `blood_group` ON `patient`.`blood_group_id` = `blood_group`.`id`"
+                    + "INNER JOIN `gender` ON `patient`.`gender_id` = `gender`.`id` WHERE `patient`.`id` = '" + id + "'");
+            if (rs.next()) {
+                jTextField1.setText(id);
+                jLabel10.setText(rs.getString("first_name") + " " + rs.getString("last_name"));
+                jLabel12.setText(rs.getString("blood_group.name"));
+                jLabel14.setText(calculateAge(rs.getString("patient.birthday")));
+                jLabel19.setText(rs.getString("patient.nic"));
+                jLabel20.setText(rs.getString("gender.name"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    //calculate age
+    private String calculateAge(String birthDay) {
+        LocalDate today = LocalDate.now();
+        LocalDate birthDate = LocalDate.parse(birthDay);
+
+        return String.valueOf(ChronoUnit.YEARS.between(birthDate, today));
+    }
+
+    //  Search and Set Appoinment Details to Labels
+    private void searchAppoinmentDetails(String queNum, String timeSlot) {
+        try {
+            ResultSet rs = MySQL.executeSearch("SELECT * FROM `appoinment` "
+                    + "INNER JOIN `doctor_has_units` ON `appoinment`.`doctor_has_units_id` = `doctor_has_units`.`id`"
+                    + "INNER JOIN `doctor` ON `doctor_has_units`.`doctor_id` = `doctor`.`id`"
+                    + "INNER JOIN `room` ON `doctor_has_units`.`room_id` = `room`.`id`"
+                    + "INNER JOIN `room_type` ON `room`.`room_type_id` = `room_type`.`id`"
+                    + "WHERE `date` = '" + date + "' AND `que_number` = '" + queNum + "'");
+            if (rs.next()) {
+                jLabel35.setText(rs.getString("doctor_has_units.doctor_id"));
+                jLabel37.setText(rs.getString("doctor.first_name") + " " + rs.getString("doctor.last_name"));
+                jLabel39.setText(rs.getString("doctor.mobile"));
+                jLabel41.setText(rs.getString("room.id"));
+                jLabel43.setText(rs.getString("room_type.name"));
+                jLabel45.setText(timeSlot);
+                jLabel48.setText(date);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    //  Set Selected Appoinment Details to Labels
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        int row = jTable1.getSelectedRow();
+        if (row != -1) {
+            String patientId = String.valueOf(jTable1.getValueAt(row, 0));
+            String queNum = String.valueOf(jTable1.getValueAt(row, 5));
+            String timeSlot = String.valueOf(jTable1.getValueAt(row, 4));
+            searchPatient(patientId);
+            searchAppoinmentDetails(queNum, timeSlot);
+            jButton1.setEnabled(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "Please Select a Row First", "Warning", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    //  Cancle Appoinments
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        int row = jTable1.getSelectedRow();
+        if (row != -1) {
+            String queNum = String.valueOf(jTable1.getValueAt(row, 5));
+            try {
+                ResultSet rs = MySQL.executeSearch("SELECT `id` FROM `appoinment` WHERE `date` = '" + date + "' "
+                        + "AND `que_number` = '" + queNum + "' AND `appoinment_status_id` = '1'");
+                if (rs.next()) {
+                    String appoinmentId = rs.getString("id");
+                    int showConfirm = JOptionPane.showConfirmDialog(this, "Do you Want to Cancle Appoinment " + appoinmentId + "?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+
+                    if (showConfirm == JOptionPane.YES_OPTION) {
+                        MySQL.executeIUD("UPDATE `appoinment` SET `appoinment_status_id` = '6' WHERE `id`='"+appoinmentId+"'");
+                        JOptionPane.showMessageDialog(this, "Appoinment Cancled", "Success", JOptionPane.INFORMATION_MESSAGE);
+                        clearAll();
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "You Can not Cancle Ongoing, Pending and Already Cancled Appoinments.", "Warning", JOptionPane.WARNING_MESSAGE);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Please Select a Row First", "Warning", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    //  Clear GUI
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        clearAll();
+    }//GEN-LAST:event_jButton3ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;
