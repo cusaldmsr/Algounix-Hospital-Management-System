@@ -1,190 +1,14 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
+
 package com.algounix.Panel.Doctor;
 
-import com.algounix.Model.MySQL;
-import com.formdev.flatlaf.extras.FlatSVGIcon;
 import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Vector;
-import javax.swing.ButtonModel;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JOptionPane;
 
-/**
- *
- * @author kusal
- */
 public class DoctorReg extends javax.swing.JPanel {
 
-    private static HashMap<String, String> dTpeLoad = new HashMap<>();
-    private static HashMap<String, String> selectRoomNo = new HashMap<>();
-    private static HashMap<String, String> selectUnit = new HashMap<>();
-    private static HashMap<String, String> RelatedRoomChanelling = new HashMap<>();
-    private static HashMap<String, String> OPDChanelling = new HashMap<>();
-
-    /**
-     * Creates new form DoctorReg
-     */
     public DoctorReg() {
         initComponents();
-        //        FlatSVGIcon iconLogo = new FlatSVGIcon("com//algounix//Resources//DoctorReg.svg", jLabel3.getWidth(), jLabel3.getHeight());
-        //        jLabel3.setIcon(iconLogo);
-        panelclear();
-        dTpeLoad();
-        selectRoomNo();
-        selectUnit();
-        RelatedRoomChanelling();
-        OPDChanelling();
-
     }
-
-    private ArrayList<Integer> serviceDetailList = new ArrayList<>();
-
-    private void dTpeLoad() {
-        try {
-            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `doctor_type` ");
-
-            Vector<String> vector = new Vector<>();
-            vector.add("SELECT");
-
-            while (resultSet.next()) {
-                vector.add(resultSet.getString("name"));
-                dTpeLoad.put(resultSet.getString("name"), resultSet.getString("id"));
-            }
-
-            DefaultComboBoxModel model = new DefaultComboBoxModel(vector);
-            jComboBox1.setModel(model);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    private void selectRoomNo() {
-        try {
-            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `room` WHERE `room_type_id` IN (5, 6)");
-
-            Vector<String> vector = new Vector<>();
-            vector.add("SELECT");
-
-            while (resultSet.next()) {
-                vector.add(resultSet.getString("discription"));
-                selectRoomNo.put(resultSet.getString("discription"), resultSet.getString("id"));
-            }
-
-            DefaultComboBoxModel model = new DefaultComboBoxModel(vector);
-            jComboBox8.setModel(model);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    private void selectUnit() {
-        try {
-            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `units` ");
-
-            Vector<String> vector = new Vector<>();
-            vector.add("SELECT");
-
-            while (resultSet.next()) {
-                vector.add(resultSet.getString("name"));
-                selectUnit.put(resultSet.getString("name"), resultSet.getString("id"));
-            }
-
-            DefaultComboBoxModel model = new DefaultComboBoxModel(vector);
-            jComboBox2.setModel(model);
-            jComboBox4.setModel(model);
-            jComboBox6.setModel(model);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    private void RelatedRoomChanelling() {
-        try {
-            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `room` WHERE `room_type_id` IN (5)");
-
-            Vector<String> vector = new Vector<>();
-            vector.add("SELECT");
-
-            while (resultSet.next()) {
-                vector.add(resultSet.getString("discription"));
-                RelatedRoomChanelling.put(resultSet.getString("discription"), resultSet.getString("id"));
-            }
-
-            DefaultComboBoxModel model = new DefaultComboBoxModel(vector);
-            jComboBox3.setModel(model);
-            jComboBox5.setModel(model);
-            jComboBox7.setModel(model);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    private void OPDChanelling() {
-        try {
-            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `room` WHERE `room_type_id` IN (5)");
-
-            Vector<String> vector = new Vector<>();
-            vector.add("SELECT");
-
-            while (resultSet.next()) {
-                vector.add(resultSet.getString("discription"));
-                OPDChanelling.put(resultSet.getString("discription"), resultSet.getString("id"));
-            }
-
-            DefaultComboBoxModel model = new DefaultComboBoxModel(vector);
-            jComboBox9.setModel(model);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    private void panelclear() {
-
-        //WARD DETAILS
-        jComboBox8.setEnabled(false);
-        jFormattedTextField1.setEnabled(false);
-
-        //CHANELLING DETAILS
-        jFormattedTextField2.setEnabled(false);
-        jFormattedTextField3.setEnabled(false);
-        jFormattedTextField3.setEditable(false);
-        jComboBox2.setEnabled(false);
-        jComboBox3.setEnabled(false);
-        jComboBox4.setEnabled(false);
-        jComboBox5.setEnabled(false);
-        jFormattedTextField4.setEnabled(false);
-        jComboBox6.setEnabled(false);
-        jComboBox7.setEnabled(false);
-        jFormattedTextField5.setEnabled(false);
-
-     
-
-        //OPD DETAILS
-        jComboBox9.setEnabled(false);
-        jFormattedTextField2.setEnabled(false);
-
-    }
-
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -301,6 +125,11 @@ public class DoctorReg extends javax.swing.JPanel {
         jLabel46.setText("Mobile Number");
 
         jTextField1.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField1KeyReleased(evt);
+            }
+        });
 
         jTextField2.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
 
@@ -823,122 +652,24 @@ public class DoctorReg extends javax.swing.JPanel {
 
     private void jCheckBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBox1ItemStateChanged
 
-        if (jCheckBox1.isSelected()) {
-
-            jFormattedTextField2.setEnabled(true);
-            jFormattedTextField3.setEnabled(true);
-            jFormattedTextField3.setEditable(true);
-            jComboBox2.setEnabled(true);
-            jComboBox3.setEnabled(true);
-            jComboBox4.setEnabled(true);
-            jComboBox5.setEnabled(true);
-            jFormattedTextField4.setEnabled(true);
-            jComboBox6.setEnabled(true);
-            jComboBox7.setEnabled(true);
-            jFormattedTextField5.setEnabled(true);
-
-
-        } else {
-            panelclear();
-
-        }
-
     }//GEN-LAST:event_jCheckBox1ItemStateChanged
 
     private void jCheckBox2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBox2ItemStateChanged
-        // TODO add your handling code here:
-
-        if (jCheckBox2.isSelected()) {
-
-            jComboBox9.setEnabled(true);
-            jFormattedTextField2.setEnabled(true);
-
-        } else {
-            panelclear();
-
-        }
+       
     }//GEN-LAST:event_jCheckBox2ItemStateChanged
 
     private void jCheckBox3ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBox3ItemStateChanged
 
-        if (jCheckBox3.isSelected()) {
-
-            jComboBox8.setEnabled(true);
-            jFormattedTextField1.setEnabled(true);
-
-        } else {
-            panelclear();
-
-        }
     }//GEN-LAST:event_jCheckBox3ItemStateChanged
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
-        try {
-            String dId = jTextField1.getText();
-            String firstName = jTextField2.getText();
-            String lastName = jTextField3.getText();
-            String email = jTextField4.getText();
-            String mobile = jTextField5.getText();
-            String dType = String.valueOf(jComboBox1.getSelectedItem());
-            ButtonModel gender = buttonGroup1.getSelection();
-
-            if (dId.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Please Enter Doctor ID", "Warning", JOptionPane.WARNING_MESSAGE);
-
-            } else if (firstName.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Please Enter First Name", "Warning", JOptionPane.WARNING_MESSAGE);
-
-            } else if (lastName.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Please Enter Last Name", "Warning", JOptionPane.WARNING_MESSAGE);
-
-            } else if (email.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Please Enter Email", "Warning", JOptionPane.WARNING_MESSAGE);
-
-            } else if (!email.matches("^(?=.{1,64}@)[A-Za-z0-9\\+_-]+(\\.[A-Za-z0-9\\+_-]+)*@[^-][A-Za-z0-9\\+-]+"
-                    + "(\\.[A-Za-z0-9\\+-]+)*(\\.[A-Za-z]{2,})$")) {
-
-                JOptionPane.showMessageDialog(this, "Email Is Invalid", "Warning", JOptionPane.WARNING_MESSAGE);
-
-            } else if (mobile.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Enter mobile", "Warning", JOptionPane.WARNING_MESSAGE);
-
-            } else if (!mobile.matches("^07[01245678]{1}[0-9]{7}$")) {
-
-                JOptionPane.showMessageDialog(this, "Mobile Number Is Invalid", "Warning", JOptionPane.WARNING_MESSAGE);
-
-            } else if (dType.equals("SELECT")) {
-                JOptionPane.showMessageDialog(this, "Select Doctor Type", "Warning", JOptionPane.WARNING_MESSAGE);
-
-            } else if (gender == null) {
-                JOptionPane.showMessageDialog(this, "Select Doctor Gender", "Warning", JOptionPane.WARNING_MESSAGE);
-
-            } else if (getSelectedServiceDetails().isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Select Service Details", "Warning", JOptionPane.WARNING_MESSAGE);
-            } else {
-                String SelectedGender = gender.getActionCommand();
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    //get selected service details
-    private ArrayList<Integer> getSelectedServiceDetails() {
+    private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
 
-        if (jCheckBox1.isSelected()) {
-            serviceDetailList.add(1);
-        }
-        if (jCheckBox2.isSelected()) {
-            serviceDetailList.add(2);
-        }
-        if (jCheckBox3.isSelected()) {
-            serviceDetailList.add(3);
-        }
+    }//GEN-LAST:event_jTextField1KeyReleased
 
-        return serviceDetailList;
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
