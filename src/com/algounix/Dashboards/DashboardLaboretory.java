@@ -104,6 +104,7 @@ public class DashboardLaboretory extends javax.swing.JFrame {
         testList1 = new com.algounix.Laboretory.TestList();
         patientReportAndPrescription1 = new com.algounix.Panel.Doctor.PatientReportAndPrescription();
         patientList1 = new com.algounix.Panel.Doctor.PatientList();
+        doctorList1 = new com.algounix.Panel.DoctorList();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -320,7 +321,7 @@ public class DashboardLaboretory extends javax.swing.JFrame {
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 721, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 751, Short.MAX_VALUE)
                 .addComponent(minimizebtn, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(closebtn, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -344,6 +345,7 @@ public class DashboardLaboretory extends javax.swing.JFrame {
         CardLayoutPanel.add(testList1, "card5");
         CardLayoutPanel.add(patientReportAndPrescription1, "card6");
         CardLayoutPanel.add(patientList1, "card7");
+        CardLayoutPanel.add(doctorList1, "card8");
 
         jPanel4.add(CardLayoutPanel, java.awt.BorderLayout.CENTER);
 
@@ -433,7 +435,7 @@ public class DashboardLaboretory extends javax.swing.JFrame {
         CardLayoutPanel.revalidate();
 
         //Add Panel
-        CardLayoutPanel.add(registerTests1);
+        CardLayoutPanel.add(doctorList1);
         CardLayoutPanel.repaint();
         CardLayoutPanel.revalidate();
     }//GEN-LAST:event_doctorListLabelMouseClicked
@@ -493,6 +495,7 @@ public class DashboardLaboretory extends javax.swing.JFrame {
     private com.algounix.Laboretory.AddReportToTest addReportToTest1;
     private com.algounix.Buttons.WindowButton closebtn;
     private com.algounix.Laboretory.DashboardLaboretory dashboardLaboretory1;
+    private com.algounix.Panel.DoctorList doctorList1;
     private javax.swing.JLabel doctorListLabel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
