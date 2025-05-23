@@ -371,7 +371,7 @@ public class DoctorReg extends javax.swing.JPanel {
                                     .addGroup(jPanel3Layout.createSequentialGroup()
                                         .addGap(18, 18, 18)
                                         .addComponent(jButton4)
-                                        .addGap(0, 0, Short.MAX_VALUE)))))))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))))
                 .addGap(30, 30, 30))
         );
         jPanel3Layout.setVerticalGroup(
@@ -557,6 +557,11 @@ public class DoctorReg extends javax.swing.JPanel {
         jLabel33.setText("WARD DETAILS");
 
         jComboBox8.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox8.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBox8ItemStateChanged(evt);
+            }
+        });
 
         jLabel43.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
         jLabel43.setText("Select Room No");
@@ -640,6 +645,11 @@ public class DoctorReg extends javax.swing.JPanel {
 
         jButton2.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
         jButton2.setText("Update");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton1.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
         jButton1.setText("Add Doctor");
@@ -844,6 +854,8 @@ public class DoctorReg extends javax.swing.JPanel {
         jTextField3.setText("");
         jTextField4.setText("");
         jTextField5.setText("");
+        jPasswordField1.setText("");
+        jTextField1.setEditable(true);
 
         jComboBox3.setSelectedIndex(0);
         jComboBox8.setSelectedIndex(0);
@@ -852,6 +864,8 @@ public class DoctorReg extends javax.swing.JPanel {
         jFormattedTextField1.setText("");
         jFormattedTextField2.setText("");
         jFormattedTextField3.setText("");
+
+        jTextField1.setText(getNextId());
     }
 
     //  Set jList for Load Suggession
@@ -895,26 +909,44 @@ public class DoctorReg extends javax.swing.JPanel {
     }//GEN-LAST:event_jTextField1KeyReleased
 
     private void jList1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jList1MouseClicked
-//         String docID = jList1.getSelectedValue();
-//        jPopupMenu1.setVisible(false);
-//        try {
-//            ResultSet rs = MySQL.executeSearch("SELECT * FROM `doctor` "
-//                    + "INNER JOIN `doctor_has_units` ON `doctor`.`id` = `doctor_has_units`.`doctor_id`"
-//                    + "WHERE `doctor`.`id` ='"+docID+"'");
-//            
-//            if(rs.next()){
-//                jTextField1.setText(rs.getString("doctor.id"));
-//                jTextField2.setText(rs.getString("doctor.first_name"));
-//                jTextField3.setText(rs.getString("doctor.last_name"));
-//                jTextField4.setText(rs.getString("doctor.email"));
-//                jTextField5.setText(rs.getString("doctor.mobile"));
-//            }else{
-//                
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        
+        String docID = jList1.getSelectedValue();
+        jPopupMenu1.setVisible(false);
+        try {
+            ResultSet rs = MySQL.executeSearch("SELECT * FROM `doctor` "
+                    + "WHERE `doctor`.`id` ='" + docID + "'");
+
+            if (rs.next()) {
+                jTextField1.setText(rs.getString("doctor.id"));
+                jTextField2.setText(rs.getString("doctor.first_name"));
+                jTextField3.setText(rs.getString("doctor.last_name"));
+                jTextField4.setText(rs.getString("doctor.email"));
+                jTextField5.setText(rs.getString("doctor.mobile"));
+                jComboBox1.setSelectedIndex(rs.getInt("doctor.doctor_type_id"));
+                if (rs.getString("doctor.gender_id").equals("1")) {
+                    jRadioButton1.setSelected(true);
+                    jRadioButton2.setSelected(false);
+                } else {
+                    jRadioButton2.setSelected(true);
+                    jRadioButton1.setSelected(false);
+                }
+                jPasswordField1.setEnabled(false);
+                jTextField1.setEditable(false);
+                jButton2.setEnabled(true);
+            } else {
+                jTextField1.setText("");
+                jTextField2.setText("");
+                jTextField3.setText("");
+                jTextField4.setText("");
+                jTextField5.setText("");
+                jComboBox1.setSelectedIndex(0);
+                buttonGroup1.clearSelection();
+                jPasswordField1.setEnabled(true);
+                jTextField1.setEditable(true);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }//GEN-LAST:event_jList1MouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -1060,6 +1092,63 @@ public class DoctorReg extends javax.swing.JPanel {
             jPasswordField1.setEchoChar('\u0000');
         }
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jComboBox8ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox8ItemStateChanged
+        String room = String.valueOf(jComboBox8.getSelectedItem());
+        if (!room.equals("Select")) {
+            try {
+                ResultSet rs = MySQL.executeSearch("SELECT * FROM `room` INNER JOIN `room_type` ON `room`.`room_type_id` = `room`.`id` WHERE `room`.`id` = '" + room + "'");
+                if (rs.next()) {
+                    jLabel49.setText(rs.getString("room_type.name"));
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            jLabel49.setText("Room Type");
+        }
+    }//GEN-LAST:event_jComboBox8ItemStateChanged
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        String docID = jTextField1.getText();
+        String fname = jTextField2.getText();
+        String lname = jTextField3.getText();
+        String email = jTextField4.getText();
+        String mobile = jTextField5.getText();
+        String docType = String.valueOf(jComboBox1.getSelectedItem());
+
+        if (docID.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter Doctor ID ", "Warning", JOptionPane.INFORMATION_MESSAGE);
+        } else if (fname.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter Doctor First Name ", "Warning", JOptionPane.INFORMATION_MESSAGE);
+        } else if (lname.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter Doctor Last Name ", "Warning", JOptionPane.INFORMATION_MESSAGE);
+        } else if (email.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter Doctor Email", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (!email.matches("^(?=.{1,64}@)[A-Za-z0-9\\+_-]+(\\.[A-Za-z0-9\\+_-]+)*@"
+                + "[^-][A-Za-z0-9\\+-]+(\\.[A-Za-z0-9\\+-]+)*(\\.[A-Za-z]{2,})$")) {
+            JOptionPane.showMessageDialog(this, "Invalid Email", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (mobile.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter Doctor Mobile Number", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (!mobile.matches("^07[01245678]{1}[0-9]{7}$")) {
+            JOptionPane.showMessageDialog(this, "Please Enter Valid Mobile Number", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else {
+            try {
+                ResultSet rs = MySQL.executeSearch("SELECT * FROM `doctor` WHERE `id` = '" + docID + "'");
+                if (rs.next()) {
+                    MySQL.executeIUD("UPDATE `doctor` SET `first_name` = '" + fname + "',`last_name` = '" + lname + "',`email` = '" + email + "',`mobile` = '" + mobile + "'"
+                            + "WHERE `doctor`.`id` = '" + docID + "'");
+                    JOptionPane.showMessageDialog(this, "Doctor Updated Successfully", "Success", JOptionPane.WARNING_MESSAGE);
+                    clearAll();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Please Check Doctor ID Again", "Warning", JOptionPane.WARNING_MESSAGE);
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
