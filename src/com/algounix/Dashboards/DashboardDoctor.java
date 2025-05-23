@@ -89,6 +89,7 @@ public class DashboardDoctor extends javax.swing.JFrame {
         EmployeeRegbtn2 = new javax.swing.JLabel();
         EmployeeRegbtn3 = new javax.swing.JLabel();
         EmployeeRegbtn1 = new javax.swing.JLabel();
+        EmployeeRegbtn4 = new javax.swing.JLabel();
         MenuLogo = new javax.swing.JLabel();
         AdminDashboardSignOutbtn = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -215,6 +216,14 @@ public class DashboardDoctor extends javax.swing.JFrame {
             }
         });
 
+        EmployeeRegbtn4.setFont(new java.awt.Font("Poppins", 0, 13)); // NOI18N
+        EmployeeRegbtn4.setText("Discharge Patient");
+        EmployeeRegbtn4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                EmployeeRegbtn4MouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -234,9 +243,10 @@ public class DashboardDoctor extends javax.swing.JFrame {
                     .addComponent(EmployeeRegbtn2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(EmployeeRegbtn3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(EmployeeRegbtn1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(EmployeeRegbtn4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(PatientReportbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)
-                        .addComponent(PatientListbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(PatientListbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(PatientReportbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE))))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -254,6 +264,8 @@ public class DashboardDoctor extends javax.swing.JFrame {
                 .addComponent(EmployeeRegbtn2, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(EmployeeRegbtn3, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(EmployeeRegbtn4, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -518,6 +530,19 @@ public class DashboardDoctor extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_EmployeeRegbtn1MouseClicked
 
+    private void EmployeeRegbtn4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EmployeeRegbtn4MouseClicked
+        // TODO add your handling code here:
+        //Remove Panel
+        CardLayoutPanel.removeAll();
+        CardLayoutPanel.repaint();
+        CardLayoutPanel.revalidate();
+
+        //Add Panel
+        CardLayoutPanel.add(patientDischarge1);
+        CardLayoutPanel.repaint();
+        CardLayoutPanel.revalidate();
+    }//GEN-LAST:event_EmployeeRegbtn4MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -562,6 +587,7 @@ public class DashboardDoctor extends javax.swing.JFrame {
     private javax.swing.JLabel EmployeeRegbtn1;
     private javax.swing.JLabel EmployeeRegbtn2;
     private javax.swing.JLabel EmployeeRegbtn3;
+    private javax.swing.JLabel EmployeeRegbtn4;
     private javax.swing.JLabel MenuLogo;
     private javax.swing.JLabel PatientListbtn;
     private javax.swing.JLabel PatientReportbtn;

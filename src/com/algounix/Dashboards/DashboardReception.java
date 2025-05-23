@@ -84,7 +84,6 @@ public class DashboardReception extends javax.swing.JFrame {
         AdminDashboardbtn = new javax.swing.JLabel();
         EmployeeListbtn = new javax.swing.JLabel();
         PatientListbtn = new javax.swing.JLabel();
-        PatientAdmitbtn = new javax.swing.JLabel();
         DoctorListbtn = new javax.swing.JLabel();
         PatientReportbtn = new javax.swing.JLabel();
         jLabel25 = new javax.swing.JLabel();
@@ -100,7 +99,6 @@ public class DashboardReception extends javax.swing.JFrame {
         AdminDashboardbtn2 = new javax.swing.JLabel();
         AdminDashboardbtn3 = new javax.swing.JLabel();
         StockListbtn1 = new javax.swing.JLabel();
-        PatientAdmitbtn1 = new javax.swing.JLabel();
         PatientRegbtn1 = new javax.swing.JLabel();
         AppointmentListbtn1 = new javax.swing.JLabel();
         PatientAdmitbtn2 = new javax.swing.JLabel();
@@ -195,14 +193,6 @@ public class DashboardReception extends javax.swing.JFrame {
         PatientListbtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 PatientListbtnMouseClicked(evt);
-            }
-        });
-
-        PatientAdmitbtn.setFont(new java.awt.Font("Poppins", 0, 13)); // NOI18N
-        PatientAdmitbtn.setText("Patient Admit");
-        PatientAdmitbtn.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                PatientAdmitbtnMouseClicked(evt);
             }
         });
 
@@ -310,14 +300,6 @@ public class DashboardReception extends javax.swing.JFrame {
             }
         });
 
-        PatientAdmitbtn1.setFont(new java.awt.Font("Poppins", 0, 13)); // NOI18N
-        PatientAdmitbtn1.setText("Patient Discharge");
-        PatientAdmitbtn1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                PatientAdmitbtn1MouseClicked(evt);
-            }
-        });
-
         PatientRegbtn1.setFont(new java.awt.Font("Poppins", 0, 13)); // NOI18N
         PatientRegbtn1.setText("Patient Registration New");
         PatientRegbtn1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -380,9 +362,7 @@ public class DashboardReception extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(PatientReportbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)
                         .addComponent(PatientAdmitbtn3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(PatientAdmitbtn1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(PatientAdmitbtn2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(PatientAdmitbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(PatientListbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(PatientRegbtn1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -413,24 +393,20 @@ public class DashboardReception extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(PatientListbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(PatientAdmitbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(PatientAdmitbtn2, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(PatientAdmitbtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(PatientAdmitbtn3, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(PatientReportbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(DoctorListbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(13, 13, 13)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(RoomPapbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(13, 13, 13)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(StockListbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -540,7 +516,7 @@ public class DashboardReception extends javax.swing.JFrame {
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 676, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 721, Short.MAX_VALUE)
                 .addComponent(minimizebtn, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(closebtn, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -749,18 +725,6 @@ public class DashboardReception extends javax.swing.JFrame {
         CardLayoutPanel.revalidate();
     }//GEN-LAST:event_StockListbtn1MouseClicked
 
-    private void PatientAdmitbtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PatientAdmitbtnMouseClicked
-        // TODO add your handling code here:
-        CardLayoutPanel.removeAll();
-        CardLayoutPanel.repaint();
-        CardLayoutPanel.revalidate();
-
-        //Add Panel
-        CardLayoutPanel.add(patientAdmit1);
-        CardLayoutPanel.repaint();
-        CardLayoutPanel.revalidate();
-    }//GEN-LAST:event_PatientAdmitbtnMouseClicked
-
     private void AppointmentListbtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AppointmentListbtnMouseClicked
         // TODO add your handling code here:
         //Remove Panel
@@ -786,19 +750,6 @@ public class DashboardReception extends javax.swing.JFrame {
         CardLayoutPanel.repaint();
         CardLayoutPanel.revalidate();
     }//GEN-LAST:event_jLabel39MouseClicked
-
-    private void PatientAdmitbtn1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PatientAdmitbtn1MouseClicked
-        // TODO add your handling code here:
-        //Remove Panel
-        CardLayoutPanel.removeAll();
-        CardLayoutPanel.repaint();
-        CardLayoutPanel.revalidate();
-
-        //Add Panel
-        CardLayoutPanel.add(patientDischarge1);
-        CardLayoutPanel.repaint();
-        CardLayoutPanel.revalidate();
-    }//GEN-LAST:event_PatientAdmitbtn1MouseClicked
 
     private void PatientRegbtn1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PatientRegbtn1MouseClicked
         // TODO add your handling code here:
@@ -900,8 +851,6 @@ public class DashboardReception extends javax.swing.JFrame {
     private javax.swing.JLabel DoctorListbtn;
     private javax.swing.JLabel EmployeeListbtn;
     private javax.swing.JLabel MenuLogo;
-    private javax.swing.JLabel PatientAdmitbtn;
-    private javax.swing.JLabel PatientAdmitbtn1;
     private javax.swing.JLabel PatientAdmitbtn2;
     private javax.swing.JLabel PatientAdmitbtn3;
     private javax.swing.JLabel PatientListbtn;
