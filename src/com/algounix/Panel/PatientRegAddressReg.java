@@ -454,7 +454,7 @@ public class PatientRegAddressReg extends javax.swing.JPanel {
                                                       +"('"+aId+"' , '"+line1+"' , '"+line2+"' , '"+cityMap.get(city)+"' , '"+districMap.get(district)+"' , '"+pid+"') ");
                     
                     JOptionPane.showMessageDialog(this, "This Patient Address Registered Successfully", "Infomation" , JOptionPane.INFORMATION_MESSAGE);
-                
+                    reset();
                 }
                 
             } catch (Exception e) {

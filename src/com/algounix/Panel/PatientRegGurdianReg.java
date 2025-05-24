@@ -486,6 +486,7 @@ public class PatientRegGurdianReg extends javax.swing.JPanel {
                              + "VALUES ('"+pid+"' , '"+gid+"')");
                      
                      JOptionPane.showMessageDialog(this, "Guardian  Registered Successfully", "Warning" , JOptionPane.INFORMATION_MESSAGE);
+                     reset();
                  
                  }
                  
