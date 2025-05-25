@@ -67,6 +67,8 @@ public class QRGenerator extends javax.swing.JFrame {
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // <editor-fold defaultstate="collapsed" desc="Generated
     // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -76,7 +78,6 @@ public class QRGenerator extends javax.swing.JFrame {
         windowButton1 = new com.algounix.Buttons.WindowButton();
         jPanel2 = new javax.swing.JPanel();
         lblQRCode = new javax.swing.JLabel();
-        btnGenerate = new javax.swing.JButton();
         txtInput = new javax.swing.JTextField();
         btnPrintQR = new javax.swing.JButton();
 
@@ -127,15 +128,6 @@ public class QRGenerator extends javax.swing.JFrame {
 
         lblQRCode.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/algounix/Resources/QRanimation.gif"))); // NOI18N
 
-        btnGenerate.setBackground(new java.awt.Color(205, 245, 253));
-        btnGenerate.setFont(new java.awt.Font("Poppins", 1, 13)); // NOI18N
-        btnGenerate.setText("Generate QR");
-        btnGenerate.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGenerateActionPerformed(evt);
-            }
-        });
-
         txtInput.setFont(new java.awt.Font("Poppins Light", 1, 14)); // NOI18N
         txtInput.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtInput.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -158,19 +150,15 @@ public class QRGenerator extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
                 jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addContainerGap(212, Short.MAX_VALUE)
                                 .addGroup(jPanel2Layout
                                         .createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                         .addComponent(lblQRCode, javax.swing.GroupLayout.DEFAULT_SIZE, 368,
                                                 Short.MAX_VALUE)
-                                        .addGroup(jPanel2Layout
-                                                .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                .addComponent(btnGenerate, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(txtInput)
-                                                .addComponent(btnPrintQR, javax.swing.GroupLayout.DEFAULT_SIZE, 368,
-                                                        Short.MAX_VALUE)))
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+                                        .addComponent(txtInput, javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(btnPrintQR, javax.swing.GroupLayout.Alignment.LEADING,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE, 368, Short.MAX_VALUE))
+                                .addContainerGap(213, Short.MAX_VALUE)));
         jPanel2Layout.setVerticalGroup(
                 jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel2Layout.createSequentialGroup()
@@ -181,9 +169,7 @@ public class QRGenerator extends javax.swing.JFrame {
                                         javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(txtInput, javax.swing.GroupLayout.PREFERRED_SIZE, 30,
                                         javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnGenerate)
-                                .addGap(18, 18, 18)
+                                .addGap(18, 18, Short.MAX_VALUE)
                                 .addComponent(btnPrintQR)
                                 .addGap(40, 40, 40)));
 
@@ -298,7 +284,6 @@ public class QRGenerator extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnGenerate;
     private javax.swing.JButton btnPrintQR;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
