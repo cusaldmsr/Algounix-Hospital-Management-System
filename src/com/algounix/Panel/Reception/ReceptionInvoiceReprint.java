@@ -36,6 +36,8 @@ public class ReceptionInvoiceReprint extends javax.swing.JPanel {
     
     double prescriptionTotal = 0;
 
+    double prescriptionTotal = 0;
+
     public ReceptionInvoiceReprint() {
         initComponents();
         loadmethod();
@@ -73,20 +75,22 @@ public class ReceptionInvoiceReprint extends javax.swing.JPanel {
                     + "INNER JOIN `payment_method` ON "
                     + "`hospital_invoice`.`payment_method_id`=`payment_method`.`id`";
 
-            String id = jTextField1.getText();
-//            String date = new SimpleDateFormat("yyyy-MM-dd").format(jDateChooser1.getDate());
-            String method = String.valueOf(jComboBox1.getSelectedIndex());
-//            
+            String id = jTextField1.getText();          
             if (!id.isEmpty()) {
                 query += " WHERE `hospital_invoice`.`id`='" + id + "'";
             }
-//            
-//            if (date != null && query.contains("WHERE")) {
-//                query+=" AND `hospital_invoice`.`date` LIKE '"+date+"'%";
-//            }else if(date != null){
-//                query+=" WHERE `hospital_invoice`.`date` LIKE '"+date+"'%";
-//            }
 
+            Date Date = null;
+
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+            if (jDateChooser1.getDate() != null) {
+                Date = jDateChooser1.getDate();
+
+                query += " AND `hospital_invoice`.`date` = '" + sdf.format(Date) + "'";
+            }
+
+            String method = String.valueOf(jComboBox1.getSelectedIndex());
             if (!method.equals("0") && query.contains("WHERE")) {
                 query += " AND `hospital_invoice`.`payment_method_id`='" + method + "'";
             } else if (!method.equals("0")) {
@@ -184,6 +188,43 @@ public class ReceptionInvoiceReprint extends javax.swing.JPanel {
             }
 
         }
+    }
+    
+    private void resetUI() {
+
+        jLabel11.setText("0");
+        DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+        model.setRowCount(0);
+        jLabel10.setText("...................");
+        jLabel12.setText("...................");
+        jLabel13.setText("...................");
+        jLabel16.setText("...................................................");
+        jLabel18.setText("...................................................");
+        jLabel21.setText("...................................................");
+        jLabel23.setText("...................................................");
+        jLabel29.setText("..................................................");
+        jLabel30.setText("..................................................");
+        jLabel31.setText("...................................................");
+        jLabel32.setText("..................................................");
+        jLabel35.setText(".......................................................................");
+        jLabel37.setText(".......................................................................");
+        jLabel39.setText(".......................................................................");
+        jLabel42.setText("..............................................................................");
+        jLabel44.setText("..............................................................................");
+        jLabel46.setText("..............................................................................");
+        jLabel49.setText("......................................................");
+        jLabel51.setText("......................................................");
+        jLabel53.setText("......................................................");
+        jLabel55.setText("......................................................");
+        jLabel63.setText("......................................................");
+        jLabel64.setText("......................................................");
+        jLabel65.setText("......................................................");
+        jLabel66.setText("......................................................");
+        jLabel67.setText("......................................................");
+        jLabel72.setText("......................................................");
+        jLabel68.setText("......................................................");
+        jLabel70.setText("......................................................");
+
     }
 
     @SuppressWarnings("unchecked")
@@ -1076,20 +1117,14 @@ public class ReceptionInvoiceReprint extends javax.swing.JPanel {
     }//GEN-LAST:event_jDateChooser1PropertyChange
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        resetUI() ;
         try {
 
             int row = jTable1.getSelectedRow();
 
             String invoiceID = String.valueOf(jTable1.getValueAt(row, 0));
 //            System.out.println(invoiceID);
-            ResultSet resultSet = MySQL.executeSearch("SELECT `patient`.`id`,`patient`.`first_name`,`patient`.`last_name`,`patient`.`nic`,`patient`.`email`,"
-                    + "`room`.`id`,`room_type`.`name`,"
-                    + "`doctor`.`id`,`doctor`.`first_name`,`doctor`.`last_name`,"
-                    + "`prescription`.`id`,`prescription`.`date`,`prescription`.`duration_from_days`,"
-                    + "`patient_admit`.`admit_date`,`patient_discharge`.`discharge_date`,"
-                    + "`doctor_has_units`.`doctor_charges`,`room_chargers`.`total_charge`,"
-                    + "`hospital_invoice`.`payer_nic`,`hospital_invoice`.`total_amount`,`payment_method`.`name`,`hospital_invoice`.`payment`,`hospital_invoice`.`balance` "
-                    + "FROM `hospital_invoice` "
+            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `hospital_invoice` "
                     + "INNER JOIN `patient` ON `hospital_invoice`.`patient_id`=`patient`.`id` "
                     + "INNER JOIN `patient_admit` ON `patient`.`id`=`patient_admit`.`patient_id` "
                     + "INNER JOIN `prescription` ON `patient_admit`.`prescription_id`=`prescription`.`id` "
@@ -1124,7 +1159,7 @@ public class ReceptionInvoiceReprint extends javax.swing.JPanel {
                 jLabel21.setText(resultSet.getString("doctor.id"));
                 String dfname = resultSet.getString("doctor.first_name");
                 String dlname = resultSet.getString("doctor.last_name");
-                jLabel23.setText(dfname + " " + dlname);
+                jLabel23.setText("Dr. " + dfname + " " + dlname);
 
 //                Prescription Details 
                 prescriptionID = resultSet.getString("prescription.id");
@@ -1136,17 +1171,18 @@ public class ReceptionInvoiceReprint extends javax.swing.JPanel {
 //              Admited Details 
                 jLabel35.setText(resultSet.getString("patient_admit.admit_date"));
                 jLabel37.setText(resultSet.getString("patient_discharge.discharge_date"));
-//                jLabel39.setText(resultSet.getString("patient_discharge.spend_days"));
+                jLabel39.setText(resultSet.getString("patient_discharge.spend_days"));
 
 //              Charges For Days
                 jLabel42.setText(resultSet.getString("doctor_has_units.doctor_charges"));
-                jLabel44.setText("Rs. " + String.valueOf(prescriptionTotal)); 
-//                jLabel46.setText(("room_chargers.total_charge"));
+                jLabel44.setText("Rs. " + String.valueOf(prescriptionTotal));
+                jLabel46.setText(resultSet.getString("room_chargers.total_charge"));
 
 //                Total Charges
                 jLabel49.setText(resultSet.getString("doctor_has_units.doctor_charges"));
-                jLabel51.setText("Rs. " + String.valueOf(prescriptionTotal)); 
-                jLabel53.setText(("room_chargers.total_charge"));
+                jLabel51.setText("Rs. " + String.valueOf(prescriptionTotal));
+                jLabel53.setText(resultSet.getString("room_chargers.total_charge"));
+
                 jLabel55.setText(resultSet.getString("hospital_invoice.total_amount"));
 
 //                Payment Details 
@@ -1155,12 +1191,16 @@ public class ReceptionInvoiceReprint extends javax.swing.JPanel {
                 jLabel65.setText(resultSet.getString("hospital_invoice.total_amount"));
                 jLabel66.setText(resultSet.getString("payment_method.name"));
                 jLabel67.setText(resultSet.getString("hospital_invoice.payment"));
-//                jLabel72.setText(resultSet.getString("hospital_invoice.insurance_claim"));
+                jLabel72.setText(resultSet.getString("hospital_invoice.insurance_claim"));
                 jLabel68.setText(resultSet.getString("hospital_invoice.balance"));
-//                jLabel70.setText(resultSet.getString("employee.id"));
+                String efname = resultSet.getString("employee.first_name");
+                String elname = resultSet.getString("employee.last_name");
+                String eid = resultSet.getString("employee.id");
+                jLabel70.setText(eid + " - " + efname + " " + elname);
             }
 
-//            jTable2 Loading
+////            jTable2 Loading
+
             ResultSet resultSet1 = MySQL.executeSearch("SELECT * FROM `prescription` INNER JOIN `prescription_item` "
                     + "ON `prescription`.`id` = `prescription_item`.`prescription_id` "
                     + "INNER JOIN `medicine` ON `medicine`.`id`= `prescription_item`.`medicine_id`"
@@ -1181,12 +1221,12 @@ public class ReceptionInvoiceReprint extends javax.swing.JPanel {
                 vector.add(price);
                 double total = Double.parseDouble(qty) * Double.parseDouble(price);
                 vector.add(String.valueOf(total));
-                
-                prescriptionTotal += total;
+
+                prescriptionTotal = total;
+
 
                 model.addRow(vector);
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
