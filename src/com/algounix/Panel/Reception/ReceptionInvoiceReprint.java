@@ -73,20 +73,22 @@ public class ReceptionInvoiceReprint extends javax.swing.JPanel {
                     + "INNER JOIN `payment_method` ON "
                     + "`hospital_invoice`.`payment_method_id`=`payment_method`.`id`";
 
-            String id = jTextField1.getText();
-//            String date = new SimpleDateFormat("yyyy-MM-dd").format(jDateChooser1.getDate());
-            String method = String.valueOf(jComboBox1.getSelectedIndex());
-//            
+            String id = jTextField1.getText();          
             if (!id.isEmpty()) {
                 query += " WHERE `hospital_invoice`.`id`='" + id + "'";
             }
-//            
-//            if (date != null && query.contains("WHERE")) {
-//                query+=" AND `hospital_invoice`.`date` LIKE '"+date+"'%";
-//            }else if(date != null){
-//                query+=" WHERE `hospital_invoice`.`date` LIKE '"+date+"'%";
+
+//            Date startDate = null;
+//
+//            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//
+//            if (jDateChooser1.getDate() != null) {
+//                startDate = jDateChooser1.getDate();
+//
+//                query += " AND `hospital_invoice`.`date` = '" + sdf.format(startDate) + "'";
 //            }
 
+            String method = String.valueOf(jComboBox1.getSelectedIndex());
             if (!method.equals("0") && query.contains("WHERE")) {
                 query += " AND `hospital_invoice`.`payment_method_id`='" + method + "'";
             } else if (!method.equals("0")) {
@@ -1076,6 +1078,7 @@ public class ReceptionInvoiceReprint extends javax.swing.JPanel {
     }//GEN-LAST:event_jDateChooser1PropertyChange
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+
         try {
 
             int row = jTable1.getSelectedRow();
@@ -1117,7 +1120,7 @@ public class ReceptionInvoiceReprint extends javax.swing.JPanel {
                 jLabel21.setText(resultSet.getString("doctor.id"));
                 String dfname = resultSet.getString("doctor.first_name");
                 String dlname = resultSet.getString("doctor.last_name");
-                jLabel23.setText(dfname + " " + dlname);
+                jLabel23.setText("Dr. " + dfname + " " + dlname);
 
 //                Prescription Details 
                 prescriptionID = resultSet.getString("prescription.id");
@@ -1153,7 +1156,7 @@ public class ReceptionInvoiceReprint extends javax.swing.JPanel {
                 String efname = resultSet.getString("employee.first_name");
                 String elname = resultSet.getString("employee.last_name");
                 String eid = resultSet.getString("employee.id");
-                jLabel70.setText(eid+ " - " +efname + " " + elname);
+                jLabel70.setText(eid + " - " + efname + " " + elname);
             }
 
 ////            jTable2 Loading
@@ -1178,7 +1181,7 @@ public class ReceptionInvoiceReprint extends javax.swing.JPanel {
                 double total = Double.parseDouble(qty) * Double.parseDouble(price);
                 vector.add(String.valueOf(total));
 
-                prescriptionTotal += total;
+                prescriptionTotal = total;
 
                 model.addRow(vector);
             }
