@@ -627,6 +627,29 @@ public class PatientDischarge extends javax.swing.JPanel {
         loadAdmittedPatients(jTextField1.getText());
     }//GEN-LAST:event_jTextField1KeyReleased
 
+    private void clear() {
+        jTextField1.setText("");
+
+        jLabel13.setText("Room Number Here");
+        jLabel15.setText("RoomType Here");
+        jLabel17.setText("Doctor Name Here");
+        jLabel22.setText("Charge For Day Here");
+        jLabel33.setText("Employee Name Here");
+
+        jTextArea1.setText("........................................................................");
+        jTextArea2.setText("........................................................................");
+
+        jTextField1.setText("");
+        jLabel10.setText("Patient Name Here");
+        jLabel11.setText("Blood Group Here");
+        jLabel12.setText("Patient Age Here");
+        jLabel19.setText("Patient NIC Here");
+        jLabel20.setText("Gender Here");
+        
+        jLabel27.setText("ID Here");
+        jLabel30.setText("Report Status Here");
+    }
+
     //update status admit to discharge in admit patient table. removed the invoicing part
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
 
@@ -644,9 +667,11 @@ public class PatientDischarge extends javax.swing.JPanel {
                 MySQL.executeIUD("UPDATE `patient_admit` SET `appoinment_status_id`='" + dischargeStatusID + "' "
                         + "WHERE `patient_id`='" + patientID + "' AND `prescription_id`='" + prescriptionID + "' AND "
                         + "`room_id`='" + roomID + "'");
+                
+                MySQL.executeIUD("UPDATE `room` SET `room_status_id` = '1' WHERE `id` = '"+roomID+"'");
 
                 JOptionPane.showMessageDialog(this, "Status updated to discharge successfully", "Info", JOptionPane.INFORMATION_MESSAGE);
-
+                clear();
             } catch (Exception e) {
                 e.printStackTrace();
             }
