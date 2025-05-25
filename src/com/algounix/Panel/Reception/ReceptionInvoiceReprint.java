@@ -33,6 +33,8 @@ public class ReceptionInvoiceReprint extends javax.swing.JPanel {
      */
     String prescriptionID;
     HashMap<String, String> methodMap = new HashMap<>();
+    
+    double prescriptionTotal = 0;
 
     double prescriptionTotal = 0;
 
@@ -125,7 +127,7 @@ public class ReceptionInvoiceReprint extends javax.swing.JPanel {
         String payerNIC = jLabel63.getText();
         String insuranceClaim = jLabel72.getText();
         String prescriptionId = jLabel29.getText();
-        String doctorName = jLabel23.getText();
+        String doctorName = jLabel32.getText();
         String patientName = jLabel10.getText();
         String admittedDate = jLabel35.getText();
         String dischargedDate = jLabel37.getText();
@@ -687,7 +689,7 @@ public class ReceptionInvoiceReprint extends javax.swing.JPanel {
                             .addComponent(jLabel25, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel30, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE)
+                            .addComponent(jLabel30, javax.swing.GroupLayout.PREFERRED_SIZE, 131, Short.MAX_VALUE)
                             .addComponent(jLabel31, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel32, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel29, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
@@ -1180,6 +1182,7 @@ public class ReceptionInvoiceReprint extends javax.swing.JPanel {
                 jLabel49.setText(resultSet.getString("doctor_has_units.doctor_charges"));
                 jLabel51.setText("Rs. " + String.valueOf(prescriptionTotal));
                 jLabel53.setText(resultSet.getString("room_chargers.total_charge"));
+
                 jLabel55.setText(resultSet.getString("hospital_invoice.total_amount"));
 
 //                Payment Details 
@@ -1197,6 +1200,7 @@ public class ReceptionInvoiceReprint extends javax.swing.JPanel {
             }
 
 ////            jTable2 Loading
+
             ResultSet resultSet1 = MySQL.executeSearch("SELECT * FROM `prescription` INNER JOIN `prescription_item` "
                     + "ON `prescription`.`id` = `prescription_item`.`prescription_id` "
                     + "INNER JOIN `medicine` ON `medicine`.`id`= `prescription_item`.`medicine_id`"
@@ -1219,6 +1223,7 @@ public class ReceptionInvoiceReprint extends javax.swing.JPanel {
                 vector.add(String.valueOf(total));
 
                 prescriptionTotal = total;
+
 
                 model.addRow(vector);
             }

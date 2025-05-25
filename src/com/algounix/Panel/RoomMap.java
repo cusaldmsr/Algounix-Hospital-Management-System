@@ -847,7 +847,7 @@ public class RoomMap extends javax.swing.JPanel {
         jLabel27.setBackground(new java.awt.Color(255, 51, 51));
         jLabel27.setFont(new java.awt.Font("Poppins Light", 2, 10)); // NOI18N
         jLabel27.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel27.setText("In Active Rooms");
+        jLabel27.setText("Reserved Rooms");
         jLabel27.setOpaque(true);
 
         jLabel28.setBackground(java.awt.Color.gray);

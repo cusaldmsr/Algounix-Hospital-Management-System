@@ -81,9 +81,9 @@ public class AddPatientQueList extends javax.swing.JPanel {
 
             String roomNo = String.valueOf(jComboBox2.getSelectedItem());
             if (roomNo.equals("OPD Room 01")) {
-                query += "AND `doctor_has_units`.`room_id` = '1'";
+                query += "AND `doctor_has_units`.`room_id` = '37'";
             } else if (roomNo.equals("OPD Room 02")) {
-                query += "AND `doctor_has_units`.`room_id` = '2'";
+                query += "AND `doctor_has_units`.`room_id` = '38'";
             }
 
             ResultSet rs = MySQL.executeSearch(query);
@@ -909,9 +909,9 @@ public class AddPatientQueList extends javax.swing.JPanel {
             String today = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 
             if (jCheckBox1.isSelected()) {
-                roomNo = "1";
+                roomNo = "37";
             } else if (jCheckBox2.isSelected()) {
-                roomNo = "2";
+                roomNo = "38";
             } else {
                 roomNo = null;
             }
@@ -1033,7 +1033,7 @@ public class AddPatientQueList extends javax.swing.JPanel {
     private static String getLastIdFromDatabase() {
         String lastID = null;
         try {
-            ResultSet rs = MySQL.executeSearch("SELECT `id` FROM `hospital_invoice` ORDER BY `id` DESC LIMIT 1");
+            ResultSet rs = MySQL.executeSearch("SELECT `id` FROM `hospital_invoice` WHERE `id` LIKE '"+PREFIX+"%' ORDER BY `id` DESC LIMIT 1");
             if (rs.next()) {
                 lastID = rs.getString("id");
             }
@@ -1135,7 +1135,7 @@ public class AddPatientQueList extends javax.swing.JPanel {
 
             if (patientID.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Please Select Patient First.", "Warning", JOptionPane.WARNING_MESSAGE);
-            } else if (patientID.length() != 9) {
+            } else if (patientID.length() != 8) {
                 JOptionPane.showMessageDialog(this, "Please Select Valid Patient First.", "Warning", JOptionPane.WARNING_MESSAGE);
             } else if (payerNIC.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Please Enter payer NIC Number.", "Warning", JOptionPane.WARNING_MESSAGE);

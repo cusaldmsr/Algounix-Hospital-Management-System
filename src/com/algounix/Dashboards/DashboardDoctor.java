@@ -189,7 +189,7 @@ public class DashboardDoctor extends javax.swing.JFrame {
         jLabel38.setText("Reports");
 
         EmployeeRegbtn2.setFont(new java.awt.Font("Poppins", 0, 13)); // NOI18N
-        EmployeeRegbtn2.setText("OPD List");
+        EmployeeRegbtn2.setText("OPD");
         EmployeeRegbtn2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 EmployeeRegbtn2MouseClicked(evt);
