@@ -36,8 +36,6 @@ public class ReceptionInvoiceReprint extends javax.swing.JPanel {
     
     double prescriptionTotal = 0;
 
-    double prescriptionTotal = 0;
-
     public ReceptionInvoiceReprint() {
         initComponents();
         loadmethod();
