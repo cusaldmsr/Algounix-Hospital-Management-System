@@ -79,10 +79,9 @@ public class Prescription extends javax.swing.JFrame {
         jTextField1.setText(generatePrescriptionID());
         validateSpinner1();
         validateSpinner2();
-        clearAll();      
+        clearAll();
     }
-    
-    
+
     public Prescription(HashMap<String, String> presDetails, OpdList opdList) {
         initComponents();
         loadUI();
@@ -93,9 +92,8 @@ public class Prescription extends javax.swing.JFrame {
         jTextField1.setText(generatePrescriptionID());
         validateSpinner1();
         validateSpinner2();
-        clearAll();      
+        clearAll();
     }
-
 
     private void loadUI() {
         Image icon = new ImageIcon(this.getClass().getResource("/com/algounix/Resources/HMS-Logo.png")).getImage();
@@ -802,28 +800,27 @@ public class Prescription extends javax.swing.JFrame {
         String patientID = jLabel36.getText();
 
         try {
-            
-            if(this.isDischarge){
-                
+
+            if (this.isDischarge) {
+
                 String dateToday = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
                 String dateCount = String.valueOf(jSpinner1.getValue());
                 String prescriptionId = this.presDetails.get("prescriptionID");
-                
-                String query = "UPDATE `prescription` SET `date`='"+dateToday+"',`duration_from_days`='"+dateCount+"' "
-                        + "WHERE `id`='"+prescriptionId+"'";
-                MySQL.executeIUD(query);               
-                
+
+                String query = "UPDATE `prescription` SET `date`='" + dateToday + "',`duration_from_days`='" + dateCount + "' "
+                        + "WHERE `id`='" + prescriptionId + "'";
+                MySQL.executeIUD(query);
+
                 JOptionPane.showMessageDialog(this, "Prescription updated successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
-                
+
                 this.patientDischarge.getUpdateStatusLabel().setText("Updated");
                 this.patientDischarge.getUpdateStatusLabel().setForeground(Color.green);
-                
-            }else{
-                
+
+            } else {
+
                 //Insert to Prescription
                 MySQL.executeIUD("INSERT INTO `prescription` VALUES ('" + presID + "','" + date + "','" + SignIn.docID + "','" + duration + "','" + patientID + "')");
             }
-            
 
             //Insert to Prescription Item
             for (int i = 0; i < rowCount; i++) {
@@ -846,15 +843,19 @@ public class Prescription extends javax.swing.JFrame {
                 patientAdmit.getPrescriptionStatusLabel().setForeground(Color.GREEN);
                 patientAdmit = null;
             }
-            
-            if(opdList != null){
+
+            if (opdList != null) {
                 opdList.getPrescriptionStatusLabel().setText("Added");
                 opdList.getPrescriptionStatusLabel().setForeground(Color.GREEN);
                 opdList = null;
             }
             this.dispose();
-            
+
             this.isDischarge = false;
+            
+            if(this.opdList != null){
+                opdList.isPrescriptionAdded = true;
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
