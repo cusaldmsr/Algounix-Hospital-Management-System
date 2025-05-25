@@ -145,9 +145,9 @@ public class ReceptionInvoiceReprint extends javax.swing.JPanel {
                 params.put("Parameter3", payerNIC);
                 params.put("Parameter4", prescriptionId);
                 params.put("Parameter5", emplID);
-                params.put("Parameter6", doctorName);
+                params.put("Parameter6", admittedDate);
                 params.put("Parameter7", patientName);
-                params.put("Parameter8", admittedDate);
+                params.put("Parameter8", doctorName);
                 params.put("Parameter9", dischargedDate);
                 params.put("Parameter10", doctorCharge);
                 params.put("Parameter11", prescriptionCharge);
