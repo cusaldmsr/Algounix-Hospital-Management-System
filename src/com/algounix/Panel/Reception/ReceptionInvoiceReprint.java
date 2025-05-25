@@ -78,15 +78,15 @@ public class ReceptionInvoiceReprint extends javax.swing.JPanel {
                 query += " WHERE `hospital_invoice`.`id`='" + id + "'";
             }
 
-//            Date startDate = null;
-//
-//            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-//
-//            if (jDateChooser1.getDate() != null) {
-//                startDate = jDateChooser1.getDate();
-//
-//                query += " AND `hospital_invoice`.`date` = '" + sdf.format(startDate) + "'";
-//            }
+            Date Date = null;
+
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+            if (jDateChooser1.getDate() != null) {
+                Date = jDateChooser1.getDate();
+
+                query += " AND `hospital_invoice`.`date` = '" + sdf.format(Date) + "'";
+            }
 
             String method = String.valueOf(jComboBox1.getSelectedIndex());
             if (!method.equals("0") && query.contains("WHERE")) {
@@ -186,6 +186,43 @@ public class ReceptionInvoiceReprint extends javax.swing.JPanel {
             }
 
         }
+    }
+    
+    private void resetUI() {
+
+        jLabel11.setText("0");
+        DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+        model.setRowCount(0);
+        jLabel10.setText("...................");
+        jLabel12.setText("...................");
+        jLabel13.setText("...................");
+        jLabel16.setText("...................................................");
+        jLabel18.setText("...................................................");
+        jLabel21.setText("...................................................");
+        jLabel23.setText("...................................................");
+        jLabel29.setText("..................................................");
+        jLabel30.setText("..................................................");
+        jLabel31.setText("...................................................");
+        jLabel32.setText("..................................................");
+        jLabel35.setText(".......................................................................");
+        jLabel37.setText(".......................................................................");
+        jLabel39.setText(".......................................................................");
+        jLabel42.setText("..............................................................................");
+        jLabel44.setText("..............................................................................");
+        jLabel46.setText("..............................................................................");
+        jLabel49.setText("......................................................");
+        jLabel51.setText("......................................................");
+        jLabel53.setText("......................................................");
+        jLabel55.setText("......................................................");
+        jLabel63.setText("......................................................");
+        jLabel64.setText("......................................................");
+        jLabel65.setText("......................................................");
+        jLabel66.setText("......................................................");
+        jLabel67.setText("......................................................");
+        jLabel72.setText("......................................................");
+        jLabel68.setText("......................................................");
+        jLabel70.setText("......................................................");
+
     }
 
     @SuppressWarnings("unchecked")
@@ -1078,7 +1115,7 @@ public class ReceptionInvoiceReprint extends javax.swing.JPanel {
     }//GEN-LAST:event_jDateChooser1PropertyChange
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
-
+        resetUI() ;
         try {
 
             int row = jTable1.getSelectedRow();
