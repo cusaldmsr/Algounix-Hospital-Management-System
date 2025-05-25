@@ -825,6 +825,7 @@ public class OpdList extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     public JLabel getPrescriptionStatusLabel(){
+        isPrescriptionAdded = true;
         return this.jLabel29;
     }
 

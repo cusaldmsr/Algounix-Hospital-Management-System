@@ -846,6 +846,12 @@ public class Prescription extends javax.swing.JFrame {
                 patientAdmit.getPrescriptionStatusLabel().setForeground(Color.GREEN);
                 patientAdmit = null;
             }
+            
+            if(opdList != null){
+                opdList.getPrescriptionStatusLabel().setText("Added");
+                opdList.getPrescriptionStatusLabel().setForeground(Color.GREEN);
+                opdList = null;
+            }
             this.dispose();
             
             this.isDischarge = false;
