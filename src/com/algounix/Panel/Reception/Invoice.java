@@ -459,6 +459,7 @@ public class Invoice extends javax.swing.JFrame {
         });
 
         jFormattedTextField2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
+        jFormattedTextField2.setText("0");
         jFormattedTextField2.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
         jFormattedTextField2.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -1239,9 +1240,6 @@ public class Invoice extends javax.swing.JFrame {
         } else if (totalRoomCharges == 0) {
             JOptionPane.showMessageDialog(this, "Something Went Wrong. Please Try Again Later", "Warning", JOptionPane.WARNING_MESSAGE);
             this.dispose();
-        } else if (prescriptionTotal == 0) {
-            JOptionPane.showMessageDialog(this, "Something Went Wrong. Please Try Again Later", "Warning", JOptionPane.WARNING_MESSAGE);
-            this.dispose();
         } else {
             totalAmount = totalDoctorCharges + totalRoomCharges + prescriptionTotal;
             jLabel56.setText("LKR. " + String.valueOf(totalAmount));
@@ -1354,6 +1352,7 @@ public class Invoice extends javax.swing.JFrame {
     private double getInsurance() {
 
         double insuranceClaim;
+        double total = Double.parseDouble(jTextField2.getText());
 
         if (jCheckBox1.isSelected()) {
             //  Insurance is Claimed
@@ -1366,6 +1365,9 @@ public class Invoice extends javax.swing.JFrame {
                 insuranceClaim = Double.parseDouble(claimValue);
                 jLabel20.setText("Valid Amount");
                 jLabel20.setForeground(Color.green);
+                if(insuranceClaim >= total){
+                    jFormattedTextField1.setText(String.valueOf(insuranceClaim));
+                }
             } else {
                 insuranceClaim = 0;
                 jLabel20.setText("Invalid Amount");
@@ -1540,9 +1542,7 @@ public class Invoice extends javax.swing.JFrame {
                 timer.setRepeats(false); // Ensure the timer only runs once
                 timer.start();
 
-//                dischargeList.confirmPayment(invoiceID);
-
-                PatientDischarge.setIsPaymentSuccess(true, invoiceID);
+               dischargeList.confirmPayment(invoiceID);
 
                 JOptionPane.showMessageDialog(this, " This Window Close Automatically After 10 Seconds.", "Warning", JOptionPane.WARNING_MESSAGE);
 
