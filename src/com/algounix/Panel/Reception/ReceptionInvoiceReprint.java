@@ -6,10 +6,6 @@ package com.algounix.Panel.Reception;
 
 import com.algounix.GUI.SignIn;
 import com.algounix.Model.MySQL;
-import com.algounix.Panel.Doctor.PatientDischarge;
-import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.sql.ResultSet;
@@ -19,7 +15,6 @@ import java.util.HashMap;
 import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
-import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -134,7 +129,6 @@ public class ReceptionInvoiceReprint extends javax.swing.JPanel {
         String prescriptionCharge = jLabel44.getText();
         String roomCharge = jLabel46.getText();
 
-        
         if (patientID.equals("0")) {
             JOptionPane.showMessageDialog(this, "Please select a valid Invoice.", "Warning", JOptionPane.WARNING_MESSAGE);
         } else {
@@ -491,13 +485,13 @@ public class ReceptionInvoiceReprint extends javax.swing.JPanel {
         jLabel15.setText("Roon Number ");
 
         jLabel16.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
-        jLabel16.setText("jLabel16");
+        jLabel16.setText("...................................................");
 
         jLabel17.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
         jLabel17.setText("Room Type");
 
         jLabel18.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
-        jLabel18.setText("jLabel18");
+        jLabel18.setText("...................................................");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -539,13 +533,13 @@ public class ReceptionInvoiceReprint extends javax.swing.JPanel {
         jLabel20.setText("Doctor ID");
 
         jLabel21.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
-        jLabel21.setText("jLabel21");
+        jLabel21.setText("...................................................");
 
         jLabel22.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
         jLabel22.setText("Doctor Name");
 
         jLabel23.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
-        jLabel23.setText("jLabel23");
+        jLabel23.setText("...................................................");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -598,16 +592,16 @@ public class ReceptionInvoiceReprint extends javax.swing.JPanel {
         jLabel28.setText("Issued Doctor ");
 
         jLabel29.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
-        jLabel29.setText("jLabel29");
+        jLabel29.setText("..................................................");
 
         jLabel30.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
-        jLabel30.setText("jLabel30");
+        jLabel30.setText("..................................................");
 
         jLabel31.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
-        jLabel31.setText("jLabel31");
+        jLabel31.setText("..................................................");
 
         jLabel32.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
-        jLabel32.setText("jLabel32");
+        jLabel32.setText("..................................................");
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -702,19 +696,19 @@ public class ReceptionInvoiceReprint extends javax.swing.JPanel {
         jLabel34.setText("Admited Date");
 
         jLabel35.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
-        jLabel35.setText("jLabel35");
+        jLabel35.setText(".......................................................................");
 
         jLabel36.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
         jLabel36.setText("Discharge Date ");
 
         jLabel37.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
-        jLabel37.setText("jLabel37");
+        jLabel37.setText(".......................................................................");
 
         jLabel38.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
         jLabel38.setText("Spend Days ");
 
         jLabel39.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
-        jLabel39.setText("jLabel39");
+        jLabel39.setText(".......................................................................");
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -762,19 +756,19 @@ public class ReceptionInvoiceReprint extends javax.swing.JPanel {
         jLabel41.setText("Doctor Charges");
 
         jLabel42.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
-        jLabel42.setText("jLabel42");
+        jLabel42.setText("..............................................................................");
 
         jLabel43.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
         jLabel43.setText("Prescription Charges");
 
         jLabel44.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
-        jLabel44.setText("jLabel44");
+        jLabel44.setText("..............................................................................");
 
         jLabel45.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
         jLabel45.setText("Room Charges");
 
         jLabel46.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
-        jLabel46.setText("jLabel46");
+        jLabel46.setText("..............................................................................");
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -822,25 +816,25 @@ public class ReceptionInvoiceReprint extends javax.swing.JPanel {
         jLabel48.setText("Doctor Charges");
 
         jLabel49.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
-        jLabel49.setText("jLabel49");
+        jLabel49.setText("......................................................");
 
         jLabel50.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
         jLabel50.setText("Prescription Charges ");
 
         jLabel51.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
-        jLabel51.setText("jLabel51");
+        jLabel51.setText("......................................................");
 
         jLabel52.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
         jLabel52.setText("Room Charges");
 
         jLabel53.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
-        jLabel53.setText("jLabel53");
+        jLabel53.setText("......................................................");
 
         jLabel54.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
         jLabel54.setText("Total Amount ");
 
         jLabel55.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
-        jLabel55.setText("jLabel55");
+        jLabel55.setText("......................................................");
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
@@ -908,34 +902,34 @@ public class ReceptionInvoiceReprint extends javax.swing.JPanel {
         jLabel62.setText("Balance ");
 
         jLabel63.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
-        jLabel63.setText("jLabel63");
+        jLabel63.setText("......................................................");
 
         jLabel64.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
-        jLabel64.setText("jLabel64");
+        jLabel64.setText("......................................................");
 
         jLabel65.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
-        jLabel65.setText("jLabel65");
+        jLabel65.setText("......................................................");
 
         jLabel66.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
-        jLabel66.setText("jLabel66");
+        jLabel66.setText("......................................................");
 
         jLabel67.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
-        jLabel67.setText("jLabel67");
+        jLabel67.setText("......................................................");
 
         jLabel68.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
-        jLabel68.setText("jLabel68");
+        jLabel68.setText("......................................................");
 
         jLabel69.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
         jLabel69.setText("Employee");
 
         jLabel70.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
-        jLabel70.setText("jLabel70");
+        jLabel70.setText("......................................................");
 
         jLabel71.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
         jLabel71.setText("Insurance claimed");
 
         jLabel72.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
-        jLabel72.setText("jLabel67");
+        jLabel72.setText("......................................................");
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
@@ -1107,82 +1101,64 @@ public class ReceptionInvoiceReprint extends javax.swing.JPanel {
                     + "INNER JOIN `payment_method` ON `hospital_invoice`.`payment_method_id`=`payment_method`.`id` "
                     + "INNER JOIN `room_type` ON `room`.`room_type_id`=`room_type`.`id` "
                     + "INNER JOIN `room_chargers` ON `room_type`.`room_chargers_id`=`room_chargers`.`id` "
+                    + "INNER JOIN `employee` ON `employee`.`id`=`hospital_invoice`.`employee_id` "
                     + "WHERE `hospital_invoice`.`id`='" + invoiceID + "'");
 
             if (resultSet.next()) {
+
+//                Patient Details 
                 jLabel11.setText(resultSet.getString("patient.id"));
-//                System.out.println(resultSet.getString("patient.id"));
                 String fname = resultSet.getString("patient.first_name");
                 String lname = resultSet.getString("patient.last_name");
                 jLabel10.setText(fname + " " + lname);
                 jLabel12.setText(resultSet.getString("patient.nic"));
                 jLabel13.setText(resultSet.getString("patient.email"));
 
+//                Room Details
                 jLabel16.setText(resultSet.getString("room.id"));
                 jLabel18.setText(resultSet.getString("room_type.name"));
 
+//                Doctor Details
                 jLabel21.setText(resultSet.getString("doctor.id"));
                 String dfname = resultSet.getString("doctor.first_name");
                 String dlname = resultSet.getString("doctor.last_name");
                 jLabel23.setText(dfname + " " + dlname);
 
+//                Prescription Details 
                 prescriptionID = resultSet.getString("prescription.id");
                 jLabel29.setText(prescriptionID);
                 jLabel30.setText(resultSet.getString("prescription.date"));
                 jLabel31.setText(resultSet.getString("prescription.duration_from_days"));
                 jLabel32.setText(dfname + " " + dlname);
 
-//                DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
-//                model.setRowCount(0);
-//            
-//                while (resultSet.next()) {
-//                    Vector<String> vector = new Vector<>();
-//                    vector.add(resultSet.getString("medicine.id"));
-//                    vector.add(resultSet.getString("medicine.name"));
-//                    vector.add(resultSet.getString("prescription_item.qty"));
-//                    vector.add(resultSet.getString("prescription.duration_from_days"));
-//                    vector.add(resultSet.getString("main_stock.selling_price"));
-//                    vector.add(resultSet.getString("prescription.duration_from_days"));
-//                    
-//                    model.addRow(vector);
-//                }
+//              Admited Details 
                 jLabel35.setText(resultSet.getString("patient_admit.admit_date"));
                 jLabel37.setText(resultSet.getString("patient_discharge.discharge_date"));
-//                String days = resultSet.getString("patient_discharge.spend_hours");
-//                jLabel39.setText(days);
+                jLabel39.setText(resultSet.getString("patient_discharge.spend_days"));
 
-                String dcharge = resultSet.getString("doctor_has_units.doctor_charges");
-                jLabel42.setText(dcharge);
-//                jLabel44.setText("");
-                String roomCharge = resultSet.getString("room_chargers.total_charge");
-                jLabel46.setText(roomCharge);
+//              Charges For Days
+                jLabel42.setText(resultSet.getString("doctor_has_units.doctor_charges"));
+                jLabel44.setText("");
+                jLabel46.setText(("room_chargers.total_charge"));
 
-//                int days1 = Integer.parseInt(days);
-//                int dcharge1 = Integer.parseInt(dcharge);
-//                String totalDCharge = String.valueOf(days1 * dcharge1);
-//                jLabel49.setText(totalDCharge);
-//                int roomCharge1 = Integer.parseInt(roomCharge);
-//                String totalRoomCharge = String.valueOf(days1 * roomCharge1);
-//                jLabel53.setText(totalRoomCharge);
+//                Total Charges
+                jLabel49.setText(resultSet.getString("doctor_has_units.doctor_charges"));
+                jLabel51.setText(""); //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                jLabel53.setText(("room_chargers.total_charge"));
                 jLabel55.setText(resultSet.getString("hospital_invoice.total_amount"));
 
+//                Payment Details 
                 jLabel63.setText(resultSet.getString("hospital_invoice.payer_nic"));
                 jLabel64.setText(invoiceID);
                 jLabel65.setText(resultSet.getString("hospital_invoice.total_amount"));
                 jLabel66.setText(resultSet.getString("payment_method.name"));
                 jLabel67.setText(resultSet.getString("hospital_invoice.payment"));
+                jLabel72.setText(resultSet.getString("hospital_invoice.insurance_claim"));
                 jLabel68.setText(resultSet.getString("hospital_invoice.balance"));
+                jLabel70.setText(resultSet.getString("employee.id"));
             }
 
-//            ResultSet resultSet1 = MySQL.executeSearch("SELECT * FROM `hospital_invoice` "
-//                    + "INNER JOIN `patient_discharge` ON `hospital_invoice`.`id`=`patient_discharge`.`hospital_invoice_id` "
-//                    + "INNER JOIN `patient_admit` ON `patient_discharge`.`patient_admit_id`=`patient_admit`.`id` "
-//                    + "INNER JOIN `patient` ON `patient_admit`.`patient_id`=`patient`.`id` "
-//                    + "INNER JOIN `prescription` ON `patient`.`id`=`prescription`.`patient_id` "
-//                    + "INNER JOIN `prescription_item` ON `prescription`.`id`=`prescription_item`.`prescription_id` "
-//                    + "INNER JOIN `medicine` ON `prescription_item`.`medicine_id`=`medicine`.`id` "
-//                    + "INNER JOIN `main_stock` ON `medicine`.`id`=`main_stock`.`medicine_id` "
-//                    + "WHERE `prescription`.`id`='" + prescriptionID + "'");
+//            jTable2 Loading
             ResultSet resultSet1 = MySQL.executeSearch("SELECT * FROM `prescription` INNER JOIN `prescription_item` "
                     + "ON `prescription`.`id` = `prescription_item`.`prescription_id` "
                     + "INNER JOIN `medicine` ON `medicine`.`id`= `prescription_item`.`medicine_id`"
@@ -1199,7 +1175,16 @@ public class ReceptionInvoiceReprint extends javax.swing.JPanel {
                 vector.add(resultSet1.getString("prescription_item.qty"));
                 vector.add(resultSet1.getString("prescription.duration_from_days"));
                 vector.add(resultSet1.getString("main_stock.selling_price"));
-                vector.add(resultSet1.getString("prescription.duration_from_days"));
+
+                //Wrong!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//                int qty = Integer.parseInt(resultSet1.getString("prescription_item.qty"));
+//                double price = Double.parseDouble(resultSet1.getString("main_stock.selling_price"));
+//                double total = qty * price;
+//
+//                
+//                vector.add(total);
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                vector.add(resultSet1.getString("hospital_invoice.total_amount"));
 
                 model.addRow(vector);
             }

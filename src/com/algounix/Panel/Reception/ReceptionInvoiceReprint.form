@@ -502,7 +502,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Poppins" size="12" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="jLabel16"/>
+            <Property name="text" type="java.lang.String" value="..................................................."/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel17">
@@ -518,7 +518,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Poppins" size="12" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="jLabel18"/>
+            <Property name="text" type="java.lang.String" value="..................................................."/>
           </Properties>
         </Component>
       </SubComponents>
@@ -591,7 +591,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Poppins" size="12" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="jLabel21"/>
+            <Property name="text" type="java.lang.String" value="..................................................."/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel22">
@@ -607,7 +607,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Poppins" size="12" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="jLabel23"/>
+            <Property name="text" type="java.lang.String" value="..................................................."/>
           </Properties>
         </Component>
       </SubComponents>
@@ -736,7 +736,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Poppins" size="12" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="jLabel29"/>
+            <Property name="text" type="java.lang.String" value=".................................................."/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel30">
@@ -744,7 +744,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Poppins" size="12" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="jLabel30"/>
+            <Property name="text" type="java.lang.String" value=".................................................."/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel31">
@@ -752,7 +752,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Poppins" size="12" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="jLabel31"/>
+            <Property name="text" type="java.lang.String" value=".................................................."/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel32">
@@ -760,7 +760,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Poppins" size="12" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="jLabel32"/>
+            <Property name="text" type="java.lang.String" value=".................................................."/>
           </Properties>
         </Component>
         <Container class="javax.swing.JScrollPane" name="jScrollPane2">
@@ -909,7 +909,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Poppins" size="12" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="jLabel35"/>
+            <Property name="text" type="java.lang.String" value="......................................................................."/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel36">
@@ -925,7 +925,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Poppins" size="12" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="jLabel37"/>
+            <Property name="text" type="java.lang.String" value="......................................................................."/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel38">
@@ -941,7 +941,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Poppins" size="12" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="jLabel39"/>
+            <Property name="text" type="java.lang.String" value="......................................................................."/>
           </Properties>
         </Component>
       </SubComponents>
@@ -1016,7 +1016,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Poppins" size="12" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="jLabel42"/>
+            <Property name="text" type="java.lang.String" value=".............................................................................."/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel43">
@@ -1032,7 +1032,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Poppins" size="12" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="jLabel44"/>
+            <Property name="text" type="java.lang.String" value=".............................................................................."/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel45">
@@ -1048,7 +1048,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Poppins" size="12" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="jLabel46"/>
+            <Property name="text" type="java.lang.String" value=".............................................................................."/>
           </Properties>
         </Component>
       </SubComponents>
@@ -1128,7 +1128,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Poppins" size="12" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="jLabel49"/>
+            <Property name="text" type="java.lang.String" value="......................................................"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel50">
@@ -1144,7 +1144,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Poppins" size="12" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="jLabel51"/>
+            <Property name="text" type="java.lang.String" value="......................................................"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel52">
@@ -1160,7 +1160,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Poppins" size="12" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="jLabel53"/>
+            <Property name="text" type="java.lang.String" value="......................................................"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel54">
@@ -1176,7 +1176,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Poppins" size="12" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="jLabel55"/>
+            <Property name="text" type="java.lang.String" value="......................................................"/>
           </Properties>
         </Component>
       </SubComponents>
@@ -1336,7 +1336,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Poppins" size="12" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="jLabel63"/>
+            <Property name="text" type="java.lang.String" value="......................................................"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel64">
@@ -1344,7 +1344,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Poppins" size="12" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="jLabel64"/>
+            <Property name="text" type="java.lang.String" value="......................................................"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel65">
@@ -1352,7 +1352,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Poppins" size="12" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="jLabel65"/>
+            <Property name="text" type="java.lang.String" value="......................................................"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel66">
@@ -1360,7 +1360,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Poppins" size="12" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="jLabel66"/>
+            <Property name="text" type="java.lang.String" value="......................................................"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel67">
@@ -1368,7 +1368,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Poppins" size="12" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="jLabel67"/>
+            <Property name="text" type="java.lang.String" value="......................................................"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel68">
@@ -1376,7 +1376,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Poppins" size="12" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="jLabel68"/>
+            <Property name="text" type="java.lang.String" value="......................................................"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel69">
@@ -1392,7 +1392,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Poppins" size="12" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="jLabel70"/>
+            <Property name="text" type="java.lang.String" value="......................................................"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel71">
@@ -1408,7 +1408,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Poppins" size="12" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="jLabel67"/>
+            <Property name="text" type="java.lang.String" value="......................................................"/>
           </Properties>
         </Component>
       </SubComponents>
