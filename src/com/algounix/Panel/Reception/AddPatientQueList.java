@@ -81,9 +81,9 @@ public class AddPatientQueList extends javax.swing.JPanel {
 
             String roomNo = String.valueOf(jComboBox2.getSelectedItem());
             if (roomNo.equals("OPD Room 01")) {
-                query += "AND `doctor_has_units`.`room_id` = '1'";
+                query += "AND `doctor_has_units`.`room_id` = '37'";
             } else if (roomNo.equals("OPD Room 02")) {
-                query += "AND `doctor_has_units`.`room_id` = '2'";
+                query += "AND `doctor_has_units`.`room_id` = '38'";
             }
 
             ResultSet rs = MySQL.executeSearch(query);
