@@ -41,7 +41,7 @@ public class EmployeeList extends javax.swing.JPanel {
 
         try {
 
-            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `employee_status`");
+            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `employee_type`");
 
             Vector<String> vector = new Vector();
             vector.add("Select");

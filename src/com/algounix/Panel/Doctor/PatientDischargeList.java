@@ -28,9 +28,9 @@ import net.sf.jasperreports.view.JasperViewer;
  * @author sadee
  */
 public class PatientDischargeList extends javax.swing.JPanel {
-    
+
     HashMap<String, Integer> appoinmentStatusMap;
-    
+
     private boolean isPaymentSuccess;
 
     public PatientDischargeList() {
@@ -40,13 +40,15 @@ public class PatientDischargeList extends javax.swing.JPanel {
         loadPatients();
         loadGUI();
     }
+    
+    
 
     String prescriptionID;
     String reportID;
     String doctorHasUnitID;
     String admitedID;
     String invoiceID;
-    
+
     //load appoinment statuses to hashmap
     private void loadAppoinmentStatus() {
         try {
@@ -65,7 +67,7 @@ public class PatientDischargeList extends javax.swing.JPanel {
         try {
             String query = "SELECT * FROM `patient_admit` INNER JOIN `patient` ON `patient_admit`.`patient_id` = `patient`.`id`"
                     + "INNER JOIN `doctor_has_units` ON `patient_admit`.`doctor_has_units_id` = `doctor_has_units`.`id`"
-                    + "INNER JOIN `doctor` ON `doctor_has_units`.`doctor_id` = `doctor`.`id` WHERE `patient_admit`.`appoinment_status_id` = '"+appoinmentStatusMap.get("Discharge")+"'";
+                    + "INNER JOIN `doctor` ON `doctor_has_units`.`doctor_id` = `doctor`.`id` WHERE `patient_admit`.`appoinment_status_id` = '" + appoinmentStatusMap.get("Discharge") + "'";
 
             String name = jTextField1.getText();
             query += "AND (`patient`.`first_name` LIKE '" + name + "%' OR `patient`.`last_name` LIKE '" + name + "%')  ";
@@ -162,9 +164,6 @@ public class PatientDischargeList extends javax.swing.JPanel {
         jLabel63 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jLabel65 = new javax.swing.JLabel();
-        jPanel6 = new javax.swing.JPanel();
-        jCheckBox1 = new javax.swing.JCheckBox();
-        jCheckBox4 = new javax.swing.JCheckBox();
 
         setBackground(new java.awt.Color(160, 233, 255));
 
@@ -616,7 +615,7 @@ public class PatientDischargeList extends javax.swing.JPanel {
                 .addComponent(jLabel64)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel14)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel8.setBackground(new java.awt.Color(255, 255, 255));
@@ -733,35 +732,6 @@ public class PatientDischargeList extends javax.swing.JPanel {
                 .addGap(22, 22, 22))
         );
 
-        jPanel6.setBackground(new java.awt.Color(255, 255, 255));
-
-        jCheckBox1.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
-        jCheckBox1.setText("Print Prescription");
-
-        jCheckBox4.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
-        jCheckBox4.setText("Print Report");
-
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jCheckBox1)
-                .addGap(18, 18, 18)
-                .addComponent(jCheckBox4)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jCheckBox1)
-                    .addComponent(jCheckBox4))
-                .addGap(14, 14, 14))
-        );
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -778,9 +748,7 @@ public class PatientDischargeList extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
@@ -801,11 +769,8 @@ public class PatientDischargeList extends javax.swing.JPanel {
                         .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -833,19 +798,15 @@ public class PatientDischargeList extends javax.swing.JPanel {
             String admitedDate = String.valueOf(jTable1.getValueAt(row, 5));
             String spendDays = jLabel15.getText();
 
-            if (patientID.length() == 9) {
-                com.algounix.Panel.Reception.Invoice invoice = new com.algounix.Panel.Reception.Invoice();
-                invoice.setPatientDischrageList(this);
-                invoice.setRoomDetailsLabels(roomID, roomType);
-                invoice.setDoctorDetailsLabels(doctorID, doctorName);
-                invoice.setPatientDetailsLabels(patientID, patientName, patientNIC, patientEmail);
-                invoice.setSpendDaysDetailsLabels(admitedDate, spendDays);
-                invoice.setPrescription(prescriptionID);
-                invoice.setCharges(doctorHasUnitID);
-                invoice.setVisible(true);
-            } else {
-                JOptionPane.showMessageDialog(this, "Update Patient Details First", "Succeess", JOptionPane.WARNING_MESSAGE);
-            }
+            com.algounix.Panel.Reception.Invoice invoice = new com.algounix.Panel.Reception.Invoice();
+            invoice.setPatientDischrageList(this);
+            invoice.setRoomDetailsLabels(roomID, roomType);
+            invoice.setDoctorDetailsLabels(doctorID, doctorName);
+            invoice.setPatientDetailsLabels(patientID, patientName, patientNIC, patientEmail);
+            invoice.setSpendDaysDetailsLabels(admitedDate, spendDays);
+            invoice.setPrescription(prescriptionID);
+            invoice.setCharges(doctorHasUnitID);
+            invoice.setVisible(true);
 
         }
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -899,32 +860,34 @@ public class PatientDischargeList extends javax.swing.JPanel {
                 jLabel54.setText(roomRs.getString("room_chargers.total_charge"));
                 jTextArea3.setText(roomRs.getString("room.discription"));
             }
-
-            ResultSet patientRs = MySQL.executeSearch("SELECT * FROM `patient` INNER JOIN `patient_has_guardian` ON `patient`.`id` = `patient_has_guardian`.`patient_id`"
-                    + "INNER JOIN `patient_address` ON `patient`.`id` = `patient_address`.`patient_id` "
-                    + "INNER JOIN `guardian` ON `patient_has_guardian`.`guardian_id` = `guardian`.`id` "
-                    + "INNER JOIN `city` ON `patient_address`.`city_id` = `city`.`id` WHERE `patient`.`id` = '" + patientID + "'");
+            
+            ResultSet patientRs = MySQL.executeSearch("SELECT * FROM `patient` WHERE `patient`.`id` = '" + patientID + "'");
             if (patientRs.next()) {
                 jLabel3.setText(patientID);
                 jLabel4.setText(patientName);
                 jLabel5.setText(patientRs.getString("patient.nic"));
                 jLabel6.setText(patientRs.getString("patient.mobile"));
                 jLabel14.setText(patientRs.getString("patient.email"));
-
-                jLabel7.setText(patientRs.getString("guardian.first_name") + " " + patientRs.getString("guardian.last_name"));
-                jLabel8.setText(patientRs.getString("guardian.mobile"));
-
-                jLabel9.setText(patientRs.getString("patient_address.line1"));
-                jLabel12.setText(patientRs.getString("patient_address.line2"));
-                jLabel13.setText(patientRs.getString("city.name"));
             } else {
-                JOptionPane.showMessageDialog(this, "Patient have't Guradian or Address. Please Update Details First", "Succeess", JOptionPane.WARNING_MESSAGE);
                 jLabel3.setText("Patient ID Here");
                 jLabel4.setText("Patient Name Here");
                 jLabel5.setText("NIC Here");
                 jLabel6.setText("Mobile Here");
                 jLabel14.setText("Email Here");
+            }
+            
+            ResultSet rs = MySQL.executeSearch("SELECT * FROM `patient` INNER JOIN `patient_has_guardian` ON `patient`.`id` = `patient_has_guardian`.`patient_id`"
+                    + "INNER JOIN `patient_address` ON `patient`.`id` = `patient_address`.`patient_id` "
+                    + "INNER JOIN `guardian` ON `patient_has_guardian`.`guardian_id` = `guardian`.`id` "
+                    + "INNER JOIN `city` ON `patient_address`.`city_id` = `city`.`id` WHERE `patient`.`id` = '"+patientID+"'");
+            if(rs.next()){
+                jLabel7.setText(rs.getString("guardian.first_name") + " " + rs.getString("guardian.last_name"));
+                jLabel8.setText(rs.getString("guardian.mobile"));
 
+                jLabel9.setText(rs.getString("patient_address.line1"));
+                jLabel12.setText(rs.getString("patient_address.line2"));
+                jLabel13.setText(rs.getString("city.name"));
+            }else{
                 jLabel7.setText("Name Here");
                 jLabel8.setText("Mobile Here");
 
@@ -950,19 +913,10 @@ public class PatientDischargeList extends javax.swing.JPanel {
 
             try {
 
-                if (jCheckBox1.isSelected()) {
-                    //  Related Codes to Print Prescription
-                    System.out.println(prescriptionID);
-                }
-
-                if (jCheckBox4.isSelected()) {
-                    //  Related codes to Print Report
-                    System.out.println(reportID);
-                }
-
                 MySQL.executeIUD("INSERT INTO `patient_discharge` (`discharge_date`,`spend_days`,`patient_admit_id`,`hospital_invoice_id`,`employee_id`)"
                         + "VALUES ('" + date + "','" + spendDays + "','" + this.admitedID + "','" + this.invoiceID + "','" + SignIn.empID + "')");
-
+                
+                MySQL.executeIUD("UPDATE `patient_admit` SET `appoinment_status_id` = '6' WHERE `id` = '"+this.admitedID+"'");
 
                 JOptionPane.showMessageDialog(this, "Patient Discharged Complete", "Succeess", JOptionPane.INFORMATION_MESSAGE);
                 clearLabels();
@@ -1024,10 +978,6 @@ public class PatientDischargeList extends javax.swing.JPanel {
         jButton1.setEnabled(false);
         jButton2.setEnabled(false);
         jLabel16.setText("");
-        jCheckBox1.setSelected(false);
-        jCheckBox4.setSelected(false);
-        jCheckBox1.setEnabled(false);
-        jCheckBox4.setEnabled(false);
     }
 
     //  Disable Button and Set Label After Complete Payment
@@ -1035,8 +985,6 @@ public class PatientDischargeList extends javax.swing.JPanel {
         jButton1.setEnabled(false);
         jLabel16.setText("Payment Complete");
         jButton2.setEnabled(true);
-        jCheckBox1.setEnabled(true);
-        jCheckBox4.setEnabled(true);
         jButton2.grabFocus();
         this.invoiceID = id;
     }
@@ -1081,8 +1029,6 @@ public class PatientDischargeList extends javax.swing.JPanel {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JCheckBox jCheckBox4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1137,7 +1083,6 @@ public class PatientDischargeList extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
