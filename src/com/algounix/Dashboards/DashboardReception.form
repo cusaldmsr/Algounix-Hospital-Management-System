@@ -126,15 +126,19 @@
                               <Component id="EmployeeListbtn" alignment="1" min="-2" pref="228" max="-2" attributes="0"/>
                               <Component id="DoctorListbtn" alignment="1" min="-2" pref="228" max="-2" attributes="0"/>
                               <Component id="RoomPapbtn" alignment="1" min="-2" pref="228" max="-2" attributes="0"/>
-                              <Component id="PatientReportbtn" alignment="1" pref="264" max="32767" attributes="0"/>
-                              <Component id="PatientAdmitbtn3" alignment="1" max="32767" attributes="0"/>
-                              <Component id="PatientAdmitbtn2" alignment="1" max="32767" attributes="0"/>
-                              <Component id="PatientListbtn" alignment="1" max="32767" attributes="0"/>
-                              <Component id="PatientRegbtn1" alignment="1" max="32767" attributes="0"/>
-                              <Component id="AppointmentListbtn1" alignment="1" max="32767" attributes="0"/>
-                              <Component id="AppointmentListbtn" alignment="1" max="32767" attributes="0"/>
-                              <Component id="Appointmentbtn" alignment="1" max="32767" attributes="0"/>
-                              <Component id="Appointmentbtn1" alignment="1" pref="264" max="32767" attributes="0"/>
+                              <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="PatientReportbtn" alignment="1" pref="228" max="32767" attributes="0"/>
+                                  <Component id="PatientAdmitbtn3" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="PatientAdmitbtn2" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="PatientListbtn" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="PatientRegbtn1" alignment="1" max="32767" attributes="0"/>
+                              </Group>
+                              <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="AppointmentListbtn1" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="AppointmentListbtn" alignment="1" pref="228" max="32767" attributes="0"/>
+                                  <Component id="Appointmentbtn1" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="Appointmentbtn" alignment="1" max="32767" attributes="0"/>
+                              </Group>
                           </Group>
                       </Group>
                   </Group>
