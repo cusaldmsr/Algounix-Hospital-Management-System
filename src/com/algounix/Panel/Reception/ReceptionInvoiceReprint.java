@@ -33,7 +33,7 @@ public class ReceptionInvoiceReprint extends javax.swing.JPanel {
      */
     String prescriptionID;
     HashMap<String, String> methodMap = new HashMap<>();
-    
+
     double prescriptionTotal = 0;
 
     public ReceptionInvoiceReprint() {
@@ -1082,14 +1082,7 @@ public class ReceptionInvoiceReprint extends javax.swing.JPanel {
 
             String invoiceID = String.valueOf(jTable1.getValueAt(row, 0));
 //            System.out.println(invoiceID);
-            ResultSet resultSet = MySQL.executeSearch("SELECT `patient`.`id`,`patient`.`first_name`,`patient`.`last_name`,`patient`.`nic`,`patient`.`email`,"
-                    + "`room`.`id`,`room_type`.`name`,"
-                    + "`doctor`.`id`,`doctor`.`first_name`,`doctor`.`last_name`,"
-                    + "`prescription`.`id`,`prescription`.`date`,`prescription`.`duration_from_days`,"
-                    + "`patient_admit`.`admit_date`,`patient_discharge`.`discharge_date`,"
-                    + "`doctor_has_units`.`doctor_charges`,`room_chargers`.`total_charge`,"
-                    + "`hospital_invoice`.`payer_nic`,`hospital_invoice`.`total_amount`,`payment_method`.`name`,`hospital_invoice`.`payment`,`hospital_invoice`.`balance` "
-                    + "FROM `hospital_invoice` "
+            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `hospital_invoice` "
                     + "INNER JOIN `patient` ON `hospital_invoice`.`patient_id`=`patient`.`id` "
                     + "INNER JOIN `patient_admit` ON `patient`.`id`=`patient_admit`.`patient_id` "
                     + "INNER JOIN `prescription` ON `patient_admit`.`prescription_id`=`prescription`.`id` "
@@ -1140,13 +1133,13 @@ public class ReceptionInvoiceReprint extends javax.swing.JPanel {
 
 //              Charges For Days
                 jLabel42.setText(resultSet.getString("doctor_has_units.doctor_charges"));
-                jLabel44.setText("Rs. " + String.valueOf(prescriptionTotal)); 
-                jLabel46.setText(("room_chargers.total_charge"));
+                jLabel44.setText("Rs. " + String.valueOf(prescriptionTotal));
+                jLabel46.setText(resultSet.getString("room_chargers.total_charge"));
 
 //                Total Charges
                 jLabel49.setText(resultSet.getString("doctor_has_units.doctor_charges"));
-                jLabel51.setText("Rs. " + String.valueOf(prescriptionTotal)); 
-                jLabel53.setText(("room_chargers.total_charge"));
+                jLabel51.setText("Rs. " + String.valueOf(prescriptionTotal));
+                jLabel53.setText(resultSet.getString("room_chargers.total_charge"));
                 jLabel55.setText(resultSet.getString("hospital_invoice.total_amount"));
 
 //                Payment Details 
@@ -1157,10 +1150,13 @@ public class ReceptionInvoiceReprint extends javax.swing.JPanel {
                 jLabel67.setText(resultSet.getString("hospital_invoice.payment"));
                 jLabel72.setText(resultSet.getString("hospital_invoice.insurance_claim"));
                 jLabel68.setText(resultSet.getString("hospital_invoice.balance"));
-                jLabel70.setText(resultSet.getString("employee.id"));
+                String efname = resultSet.getString("employee.first_name");
+                String elname = resultSet.getString("employee.last_name");
+                String eid = resultSet.getString("employee.id");
+                jLabel70.setText(eid+ " - " +efname + " " + elname);
             }
 
-//            jTable2 Loading
+////            jTable2 Loading
             ResultSet resultSet1 = MySQL.executeSearch("SELECT * FROM `prescription` INNER JOIN `prescription_item` "
                     + "ON `prescription`.`id` = `prescription_item`.`prescription_id` "
                     + "INNER JOIN `medicine` ON `medicine`.`id`= `prescription_item`.`medicine_id`"
@@ -1181,12 +1177,11 @@ public class ReceptionInvoiceReprint extends javax.swing.JPanel {
                 vector.add(price);
                 double total = Double.parseDouble(qty) * Double.parseDouble(price);
                 vector.add(String.valueOf(total));
-                
+
                 prescriptionTotal += total;
 
                 model.addRow(vector);
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
