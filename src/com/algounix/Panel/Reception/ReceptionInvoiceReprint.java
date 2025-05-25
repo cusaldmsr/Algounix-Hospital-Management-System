@@ -1138,7 +1138,7 @@ public class ReceptionInvoiceReprint extends javax.swing.JPanel {
 
 //              Charges For Days
                 jLabel42.setText(resultSet.getString("doctor_has_units.doctor_charges"));
-                jLabel44.setText("");
+                jLabel44.setText(""); //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 jLabel46.setText(("room_chargers.total_charge"));
 
 //                Total Charges
