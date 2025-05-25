@@ -101,7 +101,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Poppins" size="20" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Doctor Chanelling List"/>
+            <Property name="text" type="java.lang.String" value="Appoinment Cancalation"/>
           </Properties>
         </Component>
       </SubComponents>
