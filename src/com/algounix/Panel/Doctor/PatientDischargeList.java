@@ -916,7 +916,7 @@ public class PatientDischargeList extends javax.swing.JPanel {
                 MySQL.executeIUD("INSERT INTO `patient_discharge` (`discharge_date`,`spend_days`,`patient_admit_id`,`hospital_invoice_id`,`employee_id`)"
                         + "VALUES ('" + date + "','" + spendDays + "','" + this.admitedID + "','" + this.invoiceID + "','" + SignIn.empID + "')");
                 
-                MySQL.executeIUD("UPDATE `patient_admit` SET `appoinment_status_id` = '6' WHERE `id` = '"+this.admitedID+"'");
+                MySQL.executeIUD("UPDATE `patient_admit` SET `appoinment_status_id` = '7' WHERE `id` = '"+this.admitedID+"'");
 
                 JOptionPane.showMessageDialog(this, "Patient Discharged Complete", "Succeess", JOptionPane.INFORMATION_MESSAGE);
                 clearLabels();
