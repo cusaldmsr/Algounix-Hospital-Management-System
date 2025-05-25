@@ -762,7 +762,7 @@ public class DoctorChanellingList extends javax.swing.JPanel {
                 }
             }
 
-            String selectedUnitId = unitsMap.get(String.valueOf(jComboBox2.getSelectedItem()));
+            String selectedUnitId = unitsMap.get(String.valueOf(jComboBox2.getSelectedIndex()));
             if (selectedUnitId != null) {
                 if (!selectedUnitId.equals("Select a Doctor First")) {
                     query += "AND `doctor_has_units`.`units_id` = '" + selectedUnitId + "'";

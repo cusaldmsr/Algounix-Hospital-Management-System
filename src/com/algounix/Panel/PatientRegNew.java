@@ -47,8 +47,6 @@ public class PatientRegNew extends javax.swing.JPanel {
         jTextField1.setText(getNextId());
         loadNationality();
         loadBloodGroup();
-        jButton1.setEnabled(false);
-        jButton2.setEnabled(false);
         jButton7.setEnabled(false);
     }
 
@@ -651,8 +649,6 @@ public class PatientRegNew extends javax.swing.JPanel {
                     jRadioButton4.setSelected(true);
                 }
                 
-                jButton1.setEnabled(true);
-                jButton2.setEnabled(true);
                 jButton7.setEnabled(true);
 
             } else {
@@ -798,8 +794,6 @@ public class PatientRegNew extends javax.swing.JPanel {
                     jRadioButton4.setSelected(true);
                 }
 
-                jButton1.setEnabled(true);
-                jButton2.setEnabled(true);
                 jButton7.setEnabled(true);
 
             } else {
@@ -814,8 +808,6 @@ public class PatientRegNew extends javax.swing.JPanel {
                 jComboBox1.setSelectedIndex(0);
                 jComboBox2.setSelectedIndex(0);
 
-                jButton1.setEnabled(false);
-                jButton2.setEnabled(false);
                 jButton7.setEnabled(false);
             }
 
@@ -882,8 +874,6 @@ public class PatientRegNew extends javax.swing.JPanel {
         jComboBox1.setSelectedIndex(0);
         jComboBox2.setSelectedIndex(0);
         jTextField1.setText(getNextId());
-        jButton1.setEnabled(false);
-        jButton2.setEnabled(false);
         jButton7.setEnabled(false);
     }
 
