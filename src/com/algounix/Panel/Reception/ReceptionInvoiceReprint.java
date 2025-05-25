@@ -33,6 +33,8 @@ public class ReceptionInvoiceReprint extends javax.swing.JPanel {
      */
     String prescriptionID;
     HashMap<String, String> methodMap = new HashMap<>();
+    
+    double prescriptionTotal = 0;
 
     public ReceptionInvoiceReprint() {
         initComponents();
@@ -608,7 +610,7 @@ public class ReceptionInvoiceReprint extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Medicine ID", "Medicine Name ", "Quantity ", "Duration ", "Price", "Total"
+                "Medicine ID", "Medicine Name ", "Duration ", "Quantity ", "Price", "Total"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -1138,12 +1140,12 @@ public class ReceptionInvoiceReprint extends javax.swing.JPanel {
 
 //              Charges For Days
                 jLabel42.setText(resultSet.getString("doctor_has_units.doctor_charges"));
-                jLabel44.setText(""); //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                jLabel44.setText("Rs. " + String.valueOf(prescriptionTotal)); 
                 jLabel46.setText(("room_chargers.total_charge"));
 
 //                Total Charges
                 jLabel49.setText(resultSet.getString("doctor_has_units.doctor_charges"));
-                jLabel51.setText(""); //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                jLabel51.setText("Rs. " + String.valueOf(prescriptionTotal)); 
                 jLabel53.setText(("room_chargers.total_charge"));
                 jLabel55.setText(resultSet.getString("hospital_invoice.total_amount"));
 
@@ -1172,19 +1174,15 @@ public class ReceptionInvoiceReprint extends javax.swing.JPanel {
                 Vector<String> vector = new Vector<>();
                 vector.add(resultSet1.getString("medicine.id"));
                 vector.add(resultSet1.getString("medicine.name"));
-                vector.add(resultSet1.getString("prescription_item.qty"));
                 vector.add(resultSet1.getString("prescription.duration_from_days"));
-                vector.add(resultSet1.getString("main_stock.selling_price"));
-
-                //Wrong!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//                int qty = Integer.parseInt(resultSet1.getString("prescription_item.qty"));
-//                double price = Double.parseDouble(resultSet1.getString("main_stock.selling_price"));
-//                double total = qty * price;
-//
-//                
-//                vector.add(total);
-//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                vector.add(resultSet1.getString("hospital_invoice.total_amount"));
+                String qty = resultSet1.getString("prescription_item.qty");
+                vector.add(qty);
+                String price = resultSet1.getString("main_stock.selling_price");
+                vector.add(price);
+                double total = Double.parseDouble(qty) * Double.parseDouble(price);
+                vector.add(String.valueOf(total));
+                
+                prescriptionTotal += total;
 
                 model.addRow(vector);
             }

@@ -776,8 +776,8 @@
                   <Table columnCount="6" rowCount="0">
                     <Column editable="false" title="Medicine ID" type="java.lang.Object"/>
                     <Column editable="false" title="Medicine Name " type="java.lang.Object"/>
-                    <Column editable="false" title="Quantity " type="java.lang.Object"/>
                     <Column editable="false" title="Duration " type="java.lang.Object"/>
+                    <Column editable="false" title="Quantity " type="java.lang.Object"/>
                     <Column editable="false" title="Price" type="java.lang.Object"/>
                     <Column editable="false" title="Total" type="java.lang.Object"/>
                   </Table>
