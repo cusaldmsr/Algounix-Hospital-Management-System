@@ -1348,7 +1348,7 @@ public class PatientAdmit extends javax.swing.JPanel {
         } else {
             try {
                 ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `patient_report` WHERE `patient_id`='" + patientID + "' AND `doctor_id`='" + doctorID + "' "
-                        + "AND `date`='" + date + "'");
+                        + "AND `date`='" + date + "' AND `description` = '"+description+"'");
                 if (resultSet.next()) {
                     JOptionPane.showMessageDialog(this, "Report already added  for this patient.", "Warning", JOptionPane.WARNING_MESSAGE);
                     return;
