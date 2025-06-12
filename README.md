@@ -157,6 +157,5 @@ This project is licensed under the MIT License. See the LICENSE file for more de
 <div align="center">
    <p>Thank you for checking out our project! We hope it serves as a valuable tool for hospital management.</p>
    <br>
-<p>This document should give an informative and professional overview of your project for anyone visiting the repository. If you want further customization, feel free to let me know!</p>
 
 </div>
